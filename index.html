@@ -1121,41 +1121,6 @@ body { overflow-x: hidden; }
   .nav-brand .nav-title { display: none; }
 }
 
-/* ── total repayment load (new advance on top of live ones) ── */
-.load-panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 16px 18px; box-shadow: var(--shadow); margin-bottom: 14px; }
-.load-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
-.load-title { font-size: 13px; font-weight: 700; letter-spacing: -0.2px; color: var(--text); }
-.load-sub { font-size: 11.5px; color: var(--text2); margin-top: 3px; }
-.load-toggle { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600;
-  color: var(--text2); cursor: pointer; user-select: none; white-space: nowrap; }
-.load-toggle input { width: 15px; height: 15px; accent-color: var(--navy); cursor: pointer; margin: 0; }
-.load-stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(135px,1fr)); gap: 10px; margin-bottom: 14px; }
-.load-stat { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius2); padding: 10px 12px; }
-.load-stat.hot { background: var(--red-bg); border-color: rgba(176,48,48,0.16); }
-.load-stat-lab { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text3); margin-bottom: 4px; }
-.load-stat-val { font-size: 17px; font-weight: 700; letter-spacing: -0.4px; font-variant-numeric: tabular-nums; }
-.load-stat-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
-
-.load-bars { display: flex; flex-direction: column; gap: 5px; }
-.lb-row { display: grid; grid-template-columns: 52px 1fr 86px; gap: 9px; align-items: center; }
-.lb-lab { font-size: 10.5px; font-weight: 600; color: var(--text3); text-align: right; }
-.lb-track { height: 17px; background: var(--surface3); border-radius: 4px; overflow: hidden; display: flex; }
-.lb-ex { background: var(--navy); height: 100%; }
-.lb-new { background: var(--amber); height: 100%; }
-.lb-val { font-size: 11px; font-weight: 700; color: var(--text); text-align: right; font-variant-numeric: tabular-nums; }
-.lb-row.peak .lb-val { color: var(--red); }
-.lb-row.peak .lb-lab { color: var(--red); }
-.load-key { display: flex; gap: 14px; font-size: 10.5px; color: var(--text2); margin-top: 9px; flex-wrap: wrap; }
-.load-key span { display: inline-flex; align-items: center; gap: 5px; }
-.load-key i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
-.load-note { font-size: 12.5px; line-height: 1.6; color: var(--text2); background: var(--surface2);
-  border-left: 3px solid var(--navy); border-radius: 0 var(--radius2) var(--radius2) 0; padding: 11px 14px; margin-top: 12px; }
-.load-note strong { color: var(--text); }
-.load-note.warn { background: var(--amber-bg); border-left-color: var(--amber); color: #6a4400; }
-.load-note.warn strong { color: #4a3000; }
-@media (max-width: 560px) { .lb-row { grid-template-columns: 44px 1fr 74px; gap: 6px; } }
-
 /* ── toast ── */
 .app-toast {
   position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(14px);
@@ -1534,7 +1499,7 @@ body { overflow-x: hidden; }
 @media (max-width: 560px) { .tabbtn { min-width: 104px; font-size: 11.5px; padding: 8px 10px; } }
 
 /* one card style, not six — the panels inside a pane shouldn't all shout */
-.tabpane .manage-card, .tabpane .load-panel, .tabpane .cash-panel,
+.tabpane .manage-card, .tabpane .cash-panel,
 .tabpane .cap-chart-wrap, .tabpane .pin-wrap { box-shadow: none; border-color: var(--border); }
 .tabpane > *:last-child { margin-bottom: 0; }
 
@@ -1682,7 +1647,7 @@ body { overflow-x: hidden; }
 <nav class="nav">
   <div class="nav-brand">
     <div class="nav-logo">£</div>
-    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v32.3</span></div>
+    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v32.5</span></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
@@ -1697,12 +1662,15 @@ body { overflow-x: hidden; }
      glance whether the page you're looking at is the one you just uploaded. -->
 <div class="ver-pop" id="ver-pop" onclick="this.classList.remove('open')">
   <div class="ver-card" onclick="event.stopPropagation()">
-    <div class="ver-head">Loan Tracker <b>v32.3</b> <span>built 22 Sep 2026</span>
+    <div class="ver-head">Loan Tracker <b>v32.5</b> <span>built 22 Sep 2026</span>
       <button class="pin-x" onclick="document.getElementById('ver-pop').classList.remove('open')">✕</button></div>
     <div class="ver-body">
-      <p>If the page you're looking at doesn't say <b>v32.3</b> in the top-left, it's an older
+      <p>If the page you're looking at doesn't say <b>v32.5</b> in the top-left, it's an older
          upload — hard-refresh with <b>Cmd+Shift+R</b>, and check the file you pushed.</p>
       <div class="ver-list">
+        <span>Calculator and Offer Slider judge the new offer alone — current loans don't enter</span>
+        <span>Gross → fee → kept, and how deep you go if you reinvest everything</span>
+        <span>Paste box clears itself after a successful read, with a Clear button</span>
         <span>Part-cycles counted on cash landed by default — the most conservative basis</span>
         <span>Profit is pro-rated across the real cycle span — no more whole-cycle flooring</span>
         <span>A loan repaid before one cycle completes now shows a loss, not a phantom profit</span>
@@ -1858,7 +1826,8 @@ body { overflow-x: hidden; }
           </div>
           <textarea class="cap-curve-ta" id="cap-paste-ta" rows="5" spellcheck="false" placeholder="You will receive&#10;£86,000&#10;&#10;Remittance (2 weeks)&#10;£8,162.00&#10;Term&#10;6 months&#10;Deployed&#10;24 Sep 2026&#10;+ Fixed fee (5.94%)&#10;£5,111.78&#10;Total to remit&#10;£91,111.78"></textarea>
           <div id="cap-paste-msg" class="cap-curve-msg"></div>
-          <div class="cap-send"><button class="btn-sm primary" onclick="capApplyPaste()">Read the offer</button></div>
+          <div class="cap-send"><button class="btn-sm primary" onclick="capApplyPaste()">Read the offer</button>
+            <button class="btn-sm" onclick="capClearPaste()">Clear</button></div>
         </div>
       </div>
       <div class="manage-card" style="box-shadow:var(--shadow);margin-top:14px;">
@@ -1976,6 +1945,9 @@ function saveLoans(loans) {
 }
 
 let LOANS = loadLoans();
+// Retired setting: clear it so a browser that ticked it long ago doesn't keep
+// silently reporting combined figures.
+try { localStorage.removeItem('wf_count_existing'); } catch(e) {}
 
 // ═══════════════════════════════════════════════════════
 // HELPERS
@@ -3440,16 +3412,14 @@ function loadByMonth(from, newPayments, months) {
 }
 
 // Is the "count my existing advances" switch on? Stored so it survives a reload.
-// Off by default: the question is "what does THIS loan do", and folding in
-// advances you're already repaying pushed the pressure figure to 109% when the
-// loan on its own is 61%. Turn it on deliberately to see the combined picture.
-function countExisting() {
-  try { return localStorage.getItem('wf_count_existing') === '1'; } catch(e) { return false; }
-}
-function setCountExisting(on) {
-  try { localStorage.setItem('wf_count_existing', on ? '1' : '0'); } catch(e) {}
-  renderCalculator(); renderCalculatorCompare(); if(document.getElementById('cap-results')) renderCapitalResults();
-}
+// The Calculator and Offer Slider answer one question: is THIS offer any good?
+// Advances already running are not part of that — they're the Dashboard's job.
+// Folding them in also made the numbers unreadable: 109% pressure for a loan
+// that is 61% on its own, and a cash trough £35k deeper than the offer causes.
+// Hard-coded rather than a setting, because a stale setting kept resurfacing
+// the combined figures with nothing on screen saying so.
+function countExisting() { return false; }
+function setCountExisting() { /* retired — see countExisting() */ }
 
 // ─── SCORING CONFIG — tune these to reshape the score ───────────────
 // The score answers: "how attractive is this loan as a tool for generating
@@ -3518,86 +3488,6 @@ function computeScores({ capital, roi, cost, costPct, netProfit, grossProfit, re
     conservative: packScore(cs, { profit: cProfit, breakeven: breakevenSub, pressure: pressureSub }),
     realised:     packScore(rs, { profit: rProfit, pressure: pressureSub, cost: costSub }),
   };
-}
-
-// The panel that answers "can I actually carry this on top of what I already
-// pay?" — the new advance stacked on every live one, month by month.
-function renderLoadPanel(S, M) {
-  const { inputs, P } = S;
-  const start = parseDate(inputs.start);
-  const EX = M.EX;
-  const on = countExisting();
-  const toggle = `<label class="load-toggle" title="When on, the cash-flow score is judged on your combined outflow rather than this advance alone">
-      <input type="checkbox" ${on?'checked':''} onchange="setCountExisting(this.checked)"> Also judge the score on my existing advances
-    </label>`;
-
-  if(!EX.all.length) {
-    return `<div class="load-panel">
-      <div class="load-head"><div><div class="load-title">Total repayment load</div>
-        <div class="load-sub">No live advances on the Dashboard, so this one stands alone — its own repayments are the whole load.</div></div></div>
-    </div>`;
-  }
-
-  // months from deployment until the new advance is paid off
-  const months = Math.min(18, Math.max(3, Math.ceil(((M.EX.lastDate && S.SF.finalDate ? Math.max(M.EX.lastDate, S.SF.finalDate) : S.SF.finalDate) - start) / 2629800000) + 1));
-  const rows = loadByMonth(start, S.payments, months);
-  const peak = Math.max(...rows.map(r => r.total), 1);
-  const peakRow = rows.find(r => r.total === peak);
-
-  const bars = rows.map(r => {
-    const isPeak = r.total === peak;
-    return `<div class="lb-row ${isPeak?'peak':''}">
-      <span class="lb-lab">${r.label}</span>
-      <span class="lb-track">
-        <span class="lb-ex" style="width:${(r.existing/peak*100).toFixed(1)}%" title="Existing advances: ${fmt(r.existing)}"></span>
-        <span class="lb-new" style="width:${(r.fresh/peak*100).toFixed(1)}%" title="This advance: ${fmt(r.fresh)}"></span>
-      </span>
-      <span class="lb-val">${fmt(r.total)}</span>
-    </div>`;
-  }).join('');
-
-  // the fortnight where both run together
-  const perPeriod = EX.loans.length
-    ? liveCommitments(start).filter(x => daysFrom(start, x.date) <= inputs.freq * 1.5)
-        .reduce((a,x)=>a+x.amount, 0)
-    : 0;
-  const overlapEnd = EX.lastDate;
-  const overlapsAfter = overlapEnd && S.SF.finalDate && overlapEnd < S.SF.finalDate;
-
-  const pressureLine = `In the <strong>${P.cycleDays} days</strong> before this advance's first stock cycle turns back into cash,
-    <strong>${fmt(M.cashBeforeFirstCycle)}</strong> leaves for the new advance and <strong>${fmt(EX.total)}</strong> for the
-    ${EX.loans.length} you are already repaying — <strong>${fmt(M.combinedCash)} in total</strong>, which is
-    <strong>${M.combinedPressurePct.toFixed(0)}%</strong> of the ${fmt(inputs.advanced)} you'd be taking.
-    On its own the new advance would look like ${M.soloPressurePct.toFixed(0)}%.`;
-
-  const noteCls = M.combinedPressurePct > 100 ? 'warn' : '';
-  const extra = M.combinedPressurePct > 100
-    ? ` That means more cash goes out in the first cycle than the advance brings in — the new money is funding the old repayments before any of it reaches stock.`
-    : '';
-
-  return `<div class="load-panel">
-    <div class="load-head">
-      <div>
-        <div class="load-title">Total repayment load — this advance on top of what you already owe</div>
-        <div class="load-sub">${EX.loans.length} live advance${EX.loans.length===1?'':'s'}: ${EX.loans.join(' · ')}</div>
-      </div>
-      ${toggle}
-    </div>
-    <div class="load-stats">
-      <div class="load-stat"><div class="load-stat-lab">Already committed</div><div class="load-stat-val">${fmt(EX.remaining)}</div><div class="load-stat-sub">still to repay${EX.lastDate?` · clears ${fmtShort(EX.lastDate)}`:''}</div></div>
-      <div class="load-stat"><div class="load-stat-lab">This advance adds</div><div class="load-stat-val" style="color:var(--amber);">${fmt(inputs.total)}</div><div class="load-stat-sub">${S.SF.n} payments to ${fmtShort(S.SF.finalDate)}</div></div>
-      <div class="load-stat hot"><div class="load-stat-lab">Worst month</div><div class="load-stat-val" style="color:var(--red);">${fmt(peak)}</div><div class="load-stat-sub">${peakRow?peakRow.label:'—'} · out of the bank</div></div>
-      <div class="load-stat"><div class="load-stat-lab">Combined pressure</div><div class="load-stat-val">${M.combinedPressurePct.toFixed(0)}%</div><div class="load-stat-sub">vs ${M.soloPressurePct.toFixed(0)}% for this one alone</div></div>
-      ${overlapsAfter?`<div class="load-stat"><div class="load-stat-lab">Load drops</div><div class="load-stat-val">${fmtShort(overlapEnd)}</div><div class="load-stat-sub">when the old advances clear</div></div>`:''}
-    </div>
-    <div class="load-bars">${bars}</div>
-    <div class="load-key">
-      <span><i style="background:var(--navy);"></i>Existing advances</span>
-      <span><i style="background:var(--amber);"></i>This advance</span>
-      <span style="color:var(--text3);">hover a bar for the split</span>
-    </div>
-    <div class="load-note ${noteCls}">${pressureLine}${extra}</div>
-  </div>`;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -3686,7 +3576,7 @@ function renderCashPanel(S, M) {
       <div class="cash-head">
         <div>
           <div class="cash-title">Cash position — can you still buy stock while repaying?</div>
-          <div class="cash-sub">The advance goes into stock on day one, repayments leave on their real dates${C.withExisting?' (including your live advances)':''},
+          <div class="cash-sub">The advance goes into stock on day one, repayments leave on their real dates,
             and stock turns back into cash after ${P.cycleDays} days.</div>
         </div>
         <span class="pressure-pill ${band.cls}">${band.lab}</span>
@@ -3845,12 +3735,12 @@ function renderScenarioResults(S) {
         <div class="score-bars">
           ${barRow('Profit (worst-case)', sp.profit, W.PROFIT_WEIGHT)}
           ${barRow('Break-even comfort', sp.breakeven, W.BREAKEVEN_WEIGHT)}
-          ${barRow(M.useEx ? 'Cash-flow ease <span class="sb-wt" style="background:var(--amber-bg);color:var(--amber);">incl. existing</span>' : 'Cash-flow ease', sp.pressure, W.PRESSURE_WEIGHT)}
+          ${barRow('Cash-flow ease', sp.pressure, W.PRESSURE_WEIGHT)}
         </div>
         <div class="score-pills">
           <span class="mini-pill"><strong style="color:${netColor};">${fmt(P.netProfit)}</strong> worst-case net</span>
           <span class="mini-pill"><strong style="color:#1e4f8a;">${fmt(P.netProfit + inputs.advanced*P.roi*partial)}</strong> realised net</span>
-          <span class="pressure-pill ${pressure.cls}">${pressure.dot} ${pressure.lab} pressure ${M.useEx?`<small style="font-weight:600;">(${pressurePct.toFixed(0)}% incl. your live advances)</small>`:''}</span>
+          <span class="pressure-pill ${pressure.cls}">${pressure.dot} ${pressure.lab} pressure</span>
         </div>
       </div>
     </div>`;
@@ -4019,14 +3909,14 @@ function renderScenarioResults(S) {
         <span class="pressure-pill ${pressure.cls}">${pressure.dot} ${pressure.lab} pressure · ${pressurePct.toFixed(0)}%</span>
         <span class="ph-press-note">Before the first stock turns back into cash (day ${P.cycleDays}),
           <b>${paysBeforeFirstCycle} payments totalling ${fmt(cashBeforeFirstCycle)}</b> will have left the bank —
-          ${pressurePct.toFixed(0)}% of the ${fmt(inputs.advanced)} you took.${M.useEx ? ` This figure <b>includes your ${M.EX.loans.length} live advance${M.EX.loans.length===1?'':'s'}</b>; on this loan alone it is ${M.soloPressurePct.toFixed(0)}%.` : ''}
+          ${pressurePct.toFixed(0)}% of the ${fmt(inputs.advanced)} you took.
           It isn't money lost — it's money you need to have while you wait.</span>
       </div>
     </div>`;
   // Each scenario gets its own tabset id so A and B don't fight in compare mode.
   return headline + tabset('res-' + (S.tabId || 'calc'), [
     { key:'now',    label:'The offer',   note:`${SF.n} dates · ${weeksTxt}`, html: summary + schedStrip },
-    { key:'cash',   label:'Cash flow',   note:`${pressurePct.toFixed(0)}% pressure`, html: renderLoadPanel(S, M) + renderCashPanel(S, M) },
+    { key:'cash',   label:'Cash flow',   note:`${pressurePct.toFixed(0)}% pressure`, html: renderCashPanel(S, M) },
     { key:'profit', label:'Profit detail', note:`${fmt(partialNet)}`, html: profitBlock + deep },
   ]);
 }
@@ -4833,6 +4723,13 @@ function parseOfferText(text) {
            fundsMin: fundsRange ? fundsRange.min : null, fundsMax: fundsRange ? fundsRange.max : null };
 }
 
+function capClearPaste() {
+  const ta = document.getElementById('cap-paste-ta');
+  const msg = document.getElementById('cap-paste-msg');
+  if(ta) ta.value = '';
+  if(msg) { msg.textContent = ''; msg.className = 'cap-curve-msg'; }
+}
+
 function capApplyPaste() {
   const ta = document.getElementById('cap-paste-ta');
   const msg = document.getElementById('cap-paste-msg');
@@ -4876,10 +4773,12 @@ function capApplyPaste() {
       ? ` · ⚠ ${mismatch.length} of ${o.rows.length} pasted rows don't match the schedule — check the figures`
       : ` · all ${o.rows.length} rows of their balance table match exactly`;
   }
+  const okText = `Read ${got.join(' · ')}${o.termLabel ? ` · they call it ${o.termLabel}` : ''}${check}.`;
+  ta.value = '';                     // it's been read — don't leave it sitting there
   msg.className = 'cap-curve-msg ok';
-  msg.textContent = `Read ${got.join(' · ')}${o.termLabel ? ` · they call it ${o.termLabel}` : ''}${check}.`;
+  msg.textContent = okText;
   renderCapital(true);
-  setTimeout(() => { const m2 = document.getElementById('cap-paste-msg'); if(m2) { m2.className = msg.className; m2.textContent = msg.textContent; } }, 0);
+  setTimeout(() => { const m2 = document.getElementById('cap-paste-msg'); if(m2) { m2.className = 'cap-curve-msg ok'; m2.textContent = okText; } }, 0);
 }
 
 // ── RECOMMENDATION ─────────────────────────────────────
@@ -5065,7 +4964,11 @@ function renderAllTogether(ladder, m, R) {
   if(slide && slide.idle) steps.push(`<li>Then slide to <b>${fmt(slide.to)}</b> — <b>${fmt(slide.feeSaved)}</b> off the fee for nothing, because you're never more than ${fmt(slide.peak)} out and that was never going to be stock.</li>`);
   else if(slide && slide.net > 0) steps.push(`<li>Then slide to <b>${fmt(slide.to)}</b> — ${fmt(slide.feeSaved)} off the fee, worth ${fmt(slide.net)} net.</li>`);
   else if(slide) steps.push(`<li>Stay at the bottom of that band — sliding up saves ${fmt(slide.feeSaved)} in fee but costs ${fmt(slide.cost)} of stock profit.</li>`);
-  steps.push(`<li>Leaves <b>${fmt(pick.free)}</b> free to restock when the first cycle lands, and <b>${fmt(pick.realised)}</b> profit once it's all run.</li>`);
+  const P = pick.S.P;
+  steps.push(`<li><b>${fmt(P.grossProfit)}</b> gross − <b>${fmt(P.advanceCost)}</b> fee = <b>${fmt(pick.realised)}</b> kept,
+    over ${P.effectiveCycles.toFixed(2)} earned cycles at ${P.roiPct}%.</li>`);
+  steps.push(`<li>If you put <b>everything</b> back into stock: you'd be <b>${fmt(pick.trough)}</b> down at the worst point, then
+    <b>${fmt(pick.free)}</b> comes free to restock when the first cycle lands.</li>`);
 
   return `
     <div class="rec-panel ${blocked ? 'blocked' : ''}">
@@ -5953,37 +5856,9 @@ function renderCapitalResults() {
       </div>
     </div>`;
 
-  // What this advance would sit ON TOP of. The slider is about one offer, but
-  // the money leaves one bank account.
-  let stackBlock = '';
-  const d0x = parseDate(CAP.deploy);
-  if(d0x) {
-    const EX = commitmentsOver(d0x, CAP.cycleDays);
-    if(EX.all.length) {
-      const newInWindow = m.payments
-        .filter(p => daysFrom(d0x, parseDate(p.periodDate)) <= CAP.cycleDays)
-        .reduce((a,p) => a + p.amount, 0);
-      const combined = EX.total + newInWindow;
-      const pct = CAP.principal > 0 ? (combined / CAP.principal) * 100 : 0;
-      const perFortnight = EX.all.length
-        ? EX.all.filter(x => daysFrom(d0x, x.date) <= CAP.freq).reduce((a,x)=>a+x.amount, 0)
-        : 0;
-      stackBlock = `
-        <div class="cap-alert ${pct > 100 ? 'near' : 'info'}">
-          <strong>On top of what you already repay</strong>
-          You have ${EX.loans.length} live advance${EX.loans.length===1?'':'s'} (${EX.loans.join(' · ')}) with <b>${fmt(EX.remaining)}</b> still to go${EX.lastDate?`, clearing ${fmtDate(EX.lastDate)}`:''}.
-          They take <b>${fmt(perFortnight)}</b> in the first ${CAP.freq} days alone. Add this advance at ${fmt(m.repayment)} and
-          <b>${fmt(combined)}</b> leaves the bank over the ${CAP.cycleDays} days before the new stock turns back into cash —
-          <b>${pct.toFixed(0)}%</b> of the ${fmt(CAP.principal)} you'd receive.
-          ${pct > 100 ? `That is more going out than coming in over the first cycle: the new advance would be part-funding the old ones before any of it reaches stock.` : ''}
-          <div class="cap-alert-act"><button class="cap-step-btn" onclick="showPage('calculator');setCalcMode('single');">See the month-by-month load</button></div>
-        </div>`;
-    }
-  }
-
   box.innerHTML = sticky + renderRecommend(ladder, m) + headline + tabset('cap-tabs', [
     { key:'move',  label:'What to do',   note:up ? `+${fmt(r2(up.repayment - m.repayment))} to drop a date` : 'shortest in range',
-      html: renderBenchmark(m) + renderBand(ladder, m) + capChart(ladder, m, lo, hi) + cliffBlock + downBlock + stackBlock },
+      html: renderBenchmark(m) + renderBand(ladder, m) + capChart(ladder, m, lo, hi) + cliffBlock + downBlock },
     { key:'all',   label:'Every option', note:`${ladder.length} boundaries`, html: ladderBlock },
     { key:'pin',   label:'Compare',      note:[CAP.pinA,CAP.pinB,CAP.pinC].filter(Boolean).length ? `${[CAP.pinA,CAP.pinB,CAP.pinC].filter(Boolean).length} pinned` : 'pin up to 3', html: renderPinCompare(m) },
     { key:'sched', label:'Schedule',     note:`${m.facts.n} dates`, html: schedBlock },
