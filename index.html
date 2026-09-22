@@ -16,7 +16,10 @@
   --border2: rgba(20,24,40,0.15);
   --text: #16181f;
   --text2: #565a66;
-  --text3: #8a8f9e;
+  /* #8a8f9e read at 2.83:1 on panels — below the 4.5:1 WCAG AA floor, and this
+     is the colour of nearly every label, date and hint in the app. Same hue,
+     darkened until it clears AA on the worst background it sits on. */
+  --text3: #686d7c;
   --navy: #1d2942;
   --navy2: #2a3a60;
   --green: #15794a;
@@ -1106,7 +1109,8 @@ body { overflow-x: hidden; }
   .nav { padding: 0 14px; gap: 10px; }
   .nav-title { font-size: 13px; }
   .nav-date { display: none; }
-  .nav-tabs { overflow-x: auto; flex: 1 1 auto; justify-content: flex-end;
+  /* flex-end parked the strip at its right edge, hiding Dashboard off-screen */
+  .nav-tabs { overflow-x: auto; flex: 1 1 auto; justify-content: flex-start;
               scrollbar-width: none; -ms-overflow-style: none; }
   .nav-tabs::-webkit-scrollbar { display: none; }
   .nav-tab { white-space: nowrap; padding: 6px 11px; font-size: 12px; }
@@ -1176,6 +1180,100 @@ body { overflow-x: hidden; }
 .fr-body { font-size: 13px; line-height: 1.6; color: var(--text2); max-width: 520px; margin: 0 auto 16px; }
 .fr-actions { display: flex; gap: 9px; justify-content: center; flex-wrap: wrap; }
 .fr-hint { font-size: 11.5px; color: var(--text3); margin-top: 15px; }
+
+/* ── upcoming payments, grouped by debit date ── */
+.pay-group { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden; transition: box-shadow 0.15s ease, border-color 0.15s ease; }
+.pay-group:hover { box-shadow: var(--shadow2); }
+.pay-group.is-next { border-color: rgba(29,41,66,0.28); }
+.pay-group.warn { border-left: 3px solid var(--amber); }
+.pay-group.overdue { border-left: 3px solid var(--red); }
+.pg-head { display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 13px 18px; background: var(--surface2); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.pg-when { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.pg-next-pill { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.7px;
+  background: var(--navy); color: #fff; padding: 3px 8px; border-radius: 999px; }
+.pg-date { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; color: var(--text); }
+.pg-days { font-size: 11.5px; font-weight: 600; }
+.pg-days.ok { color: var(--text3); }
+.pg-days.soon { color: var(--amber); }
+.pg-days.overdue { color: var(--red); }
+.pg-total { text-align: right; }
+.pg-total-val { display: block; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;
+  color: var(--text); font-variant-numeric: tabular-nums; line-height: 1.15; }
+.pg-total-lab { font-size: 10.5px; color: var(--text3); }
+.pg-rows { padding: 4px 18px 10px; }
+.pg-row { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: baseline;
+  padding: 7px 0; border-bottom: 1px solid var(--border); }
+.pg-row:last-child { border-bottom: none; }
+.pg-name { font-size: 12.5px; font-weight: 600; color: var(--text); }
+.pg-lender { font-weight: 400; color: var(--text3); font-size: 11px; }
+.pg-period { font-size: 11px; color: var(--text3); }
+.pg-amt { font-size: 13px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; min-width: 84px; text-align: right; }
+@media (max-width: 560px) {
+  .pg-row { grid-template-columns: 1fr auto; }
+  .pg-period { display: none; }
+  .pg-total-val { font-size: 17px; }
+}
+
+/* ── repayment runway ── */
+.runway { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; box-shadow: var(--shadow); }
+.rw-row { display: grid; grid-template-columns: minmax(96px,168px) 1fr 58px; gap: 11px; align-items: center; margin-bottom: 9px; }
+.rw-row:last-of-type { margin-bottom: 0; }
+.rw-name { font-size: 12px; font-weight: 600; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rw-track { height: 26px; background: var(--surface3); border-radius: 5px; overflow: hidden; }
+.rw-fill { height: 100%; border-radius: 5px; display: flex; align-items: center; padding: 0 9px;
+  transition: width 0.35s cubic-bezier(.4,0,.2,1); min-width: 0; }
+.rw-inner { font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap;
+  font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+.rw-end { font-size: 11px; font-weight: 600; color: var(--text3); text-align: right; font-variant-numeric: tabular-nums; }
+.rw-note { font-size: 11.5px; color: var(--text2); margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--border); line-height: 1.55; }
+.rw-note strong { color: var(--text); }
+@media (max-width: 560px) { .rw-row { grid-template-columns: 82px 1fr 44px; gap: 7px; } .rw-inner { font-size: 10px; } }
+
+/* ── KPI strip: stop the labels wrapping into three lines ── */
+.kpi-label { text-wrap: balance; }
+.kpi-val { font-variant-numeric: tabular-nums; }
+.kpi { transition: box-shadow 0.15s ease, transform 0.12s ease; }
+.kpi:hover { box-shadow: var(--shadow2); }
+
+/* ── loan cards: payment ticks instead of a featureless bar ── */
+.prog-ticks { display: flex; gap: 2px; height: 9px; margin: 2px 0 7px; }
+.pt { flex: 1 1 0; border-radius: 2px; background: var(--surface3); min-width: 2px; }
+.pt.done { background: var(--green); }
+.pt.next { background: var(--amber); }
+.loan-card { transition: box-shadow 0.15s ease, transform 0.12s ease, border-color 0.15s ease; }
+.loan-card:hover { transform: translateY(-1px); }
+.la-val, .lc-meta .lcm-val { font-variant-numeric: tabular-nums; }
+
+/* Six KPIs: 6 across when there's room, then 3, then 2 — never a lone
+   orphan card on a half-empty row. */
+.kpi-grid-6 { grid-template-columns: repeat(6, minmax(0,1fr)); align-items: stretch; }
+@media (max-width: 1240px) { .kpi-grid-6 { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+@media (max-width: 660px)  { .kpi-grid-6 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+.kpi-grid-6 .kpi { display: flex; flex-direction: column; }
+.kpi-grid-6 .kpi-sub { margin-top: auto; padding-top: 5px; }
+.kpi-grid-6 .kpi-val { font-size: clamp(19px, 2vw, 26px); }
+.kpi-grid-6 .kpi-label { min-height: 2.2em; }
+
+.pg-solo { font-size: 12px; color: var(--text2); font-weight: 600; }
+.pay-group.solo .pg-head { border-bottom: none; background: var(--white); }
+.pg-more { font-size: 11.5px; color: var(--text3); text-align: center; padding: 4px 0 0; }
+.rw-track { display: flex; align-items: center; }
+.rw-outer { font-size: 11px; font-weight: 700; color: var(--text2); white-space: nowrap;
+  padding-left: 9px; font-variant-numeric: tabular-nums; }
+@media (max-width: 660px) { .pg-solo { display: none; } }
+
+@media (max-width: 560px) {
+  .pg-lender { display: none; }          /* keep each advance on one line */
+  .pg-row { padding: 6px 0; }
+}
+
+.sched-warn { background: var(--red-bg); border: 1px solid rgba(176,48,48,0.28); border-left: 3px solid var(--red);
+  border-radius: var(--radius2); padding: 12px 15px; margin-bottom: 14px; font-size: 12.5px;
+  line-height: 1.6; color: #7a1f1f; }
+.sched-warn strong { display: block; font-size: 13px; margin-bottom: 3px; color: var(--red); }
 </style>
 </head>
 <body>
@@ -1200,17 +1298,20 @@ body { overflow-x: hidden; }
 
 <!-- ═══════════════════ DASHBOARD PAGE ═══════════════════ -->
 <div class="page active" id="page-dashboard">
-  <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(155px,1fr));">
+  <div class="kpi-grid kpi-grid-6">
     <div class="kpi"><div class="kpi-label">Total Still Owed</div><div class="kpi-val kv-red" id="kpi-owed">—</div><div class="kpi-sub">Across all active loans</div></div>
     <div class="kpi"><div class="kpi-label">Total Repaid</div><div class="kpi-val kv-green" id="kpi-repaid">—</div><div class="kpi-sub" id="kpi-repaid-sub">—</div></div>
-    <div class="kpi"><div class="kpi-label">Profit Banked (all loans)</div><div class="kpi-val kv-green" id="kpi-realised">—</div><div class="kpi-sub" id="kpi-realised-sub">—</div></div>
+    <div class="kpi"><div class="kpi-label">Profit Banked</div><div class="kpi-val kv-green" id="kpi-realised">—</div><div class="kpi-sub" id="kpi-realised-sub">—</div></div>
     <div class="kpi"><div class="kpi-label">Next Payment Out</div><div class="kpi-val kv-amber" id="kpi-next-amt">—</div><div class="kpi-sub" id="kpi-next-sub">—</div></div>
     <div class="kpi"><div class="kpi-label">Profit by Loan End</div><div class="kpi-val kv-purple" id="kpi-profit">—</div><div class="kpi-sub" id="kpi-profit-sub">—</div></div>
-    <div class="kpi"><div class="kpi-label">Net After Loan Costs</div><div class="kpi-val kv-teal" id="kpi-net">—</div><div class="kpi-sub" id="kpi-net-sub">—</div></div>
+    <div class="kpi"><div class="kpi-label">Net After Costs</div><div class="kpi-val kv-teal" id="kpi-net">—</div><div class="kpi-sub" id="kpi-net-sub">—</div></div>
   </div>
 
   <div class="sec-hdr"><div class="sec-label">Upcoming Payments — Bank Debit Dates</div></div>
   <div class="upcoming-list" id="upcoming-list"></div>
+
+  <div class="sec-hdr" style="margin-top:26px;"><div class="sec-label">Repayment Runway — how long each advance still runs</div></div>
+  <div id="runway-strip"></div>
 
   <div class="sec-hdr" style="margin-top:28px;"><div class="sec-label">Your Loans</div></div>
   <div class="loans-grid" id="loans-grid"></div>
@@ -1494,15 +1595,20 @@ function generatePaymentSchedule(remittanceTotal, paymentAmount, freqDays, first
 // Everything the decision actually turns on, read off the schedule itself.
 function scheduleFacts(payments, paymentAmount) {
   const n = payments.length;
-  if(!n) return { n:0, full:0, finalAmt:0, finalDate:null, firstDate:null, isPartialFinal:false, finalPctOfFull:0, days:0 };
+  if(!n) return { n:0, full:0, finalAmt:0, finalDate:null, firstDate:null, isPartialFinal:false, finalPctOfFull:0, days:0, cleared:true, shortfall:0 };
   const last = payments[n-1];
+  // The builder stops at 400 dates. If the balance is still standing at that
+  // point the repayment is too small to ever clear this advance, and saying
+  // "400 payments" as though that were the answer would be a lie.
+  const shortfall = Math.max(0, last.balanceAfter == null ? 0 : last.balanceAfter);
+  const cleared = shortfall <= 0.005;
   const finalAmt = last.amount;
   const full = payments.filter(p => p.amount >= paymentAmount - 0.005).length;
   const firstDate = parseDate(payments[0].periodDate);
   const finalDate = parseDate(last.periodDate);
   return {
-    n, full, finalAmt, firstDate, finalDate,
-    isPartialFinal: finalAmt < paymentAmount - 0.005,
+    n, full, finalAmt, firstDate, finalDate, cleared, shortfall,
+    isPartialFinal: cleared && finalAmt < paymentAmount - 0.005,
     finalPctOfFull: paymentAmount > 0 ? finalAmt/paymentAmount : 0,
     days: (firstDate && finalDate) ? daysFrom(firstDate, finalDate) : 0,
   };
@@ -1513,6 +1619,7 @@ function scheduleFacts(payments, paymentAmount) {
 function scheduleLine(payments, paymentAmount) {
   const f = scheduleFacts(payments, paymentAmount);
   if(!f.n) return '—';
+  if(!f.cleared) return `⚠️ never clears — after ${f.n} payments of ${fmt(paymentAmount)} there is still ${fmt(f.shortfall)} outstanding`;
   if(!f.isPartialFinal) return `${f.n} payment date${f.n===1?'':'s'} · ${f.n} × ${fmt(paymentAmount)}`;
   // A final payment a few pence short of a full one is a full payment in
   // practice — don't dress it up as a partial.
@@ -1564,7 +1671,7 @@ function calcProfit(loan) {
   const netProfit   = grossProfit - advanceCost;
   const breakEvenPct = advanceCost > 0 ? Math.min(100, (grossProfit / advanceCost) * 100) : 100;
   const isProfitable = netProfit > 0;
-  const netRoiPct = (netProfit / principal) * 100;
+  const netRoiPct = principal > 0 ? (netProfit / principal) * 100 : 0;
   const stillNeeded = Math.max(0, advanceCost - grossProfit);
 
   // Gross-to-net: how much of gross profit survives after loan costs
@@ -1840,36 +1947,104 @@ function renderDashboard() {
   }
 
   // Upcoming list
+  // ── Upcoming payments, grouped by the day the money actually leaves ──
+  // Two advances debiting on the same morning is one number to the bank
+  // account, not two rows to add up in your head.
   const ul = document.getElementById('upcoming-list');
-  ul.innerHTML = '';
-  if(!allUpcoming.length) {
+  const pool = [];
+  LOANS.forEach((l, i) => {
+    infos[i].upcoming.forEach(p => {
+      const bank = p.effBankDate;
+      if(!bank) return;
+      pool.push({ loan: l, pay: p, bank, key: isoDate(bank) });
+    });
+  });
+  pool.sort((a,b) => a.bank - b.bank);
+
+  const groups = [];
+  pool.forEach(x => {
+    const g = groups.find(g => g.key === x.key);
+    if(g) { g.items.push(x); g.total += x.pay.amount; }
+    else groups.push({ key: x.key, bank: x.bank, items: [x], total: x.pay.amount });
+  });
+
+  if(!groups.length) {
     ul.innerHTML = '<div class="empty-state">No upcoming payments across any loans.</div>';
   } else {
-    allUpcoming.slice(0,6).forEach(x=>{
-      const d = x.info.daysToNext;
-      const isOverdue = d!==null && d<0;
-      const isSoon = d!==null && d>=0 && d<=7;
-      const cls = isOverdue?'overdue':isSoon?'warn':'';
-      const dStr = d===null?'—':d===0?'Today':d<0?Math.abs(d)+'d overdue':'In '+d+' days';
-      const dCls = isOverdue?'overdue':isSoon?'soon':'ok';
-      const bankD = x.info.nextBankDate ? fmtDate(x.info.nextBankDate) : '—';
-      const isEst = x.info.nextPay.estimated;
-      const periodD = x.info.nextPay.periodDate ? fmtShort(parseDate(x.info.nextPay.periodDate)) : '—';
-      ul.innerHTML += `<div class="upcoming-item ${cls}">
-        <div class="ui-left">
-          <div class="ui-name">${x.loan.name} <span style="font-weight:400;color:var(--text3);font-size:11px;">· ${x.loan.lender}</span></div>
-          <div class="ui-date">Period date: ${periodD}</div>
-          <div class="ui-bank">Leaves your bank: <strong>${bankD}</strong>${isEst?' <span style="color:var(--text3);font-weight:400;">(estimated)</span>':''}</div>
+    ul.innerHTML = groups.slice(0, 5).map((g, gi) => {
+      const d = daysFrom(TODAY, g.bank);
+      const isOverdue = d < 0, isSoon = d >= 0 && d <= 7;
+      const cls = isOverdue ? 'overdue' : isSoon ? 'warn' : '';
+      const dStr = d === 0 ? 'Today' : d < 0 ? Math.abs(d)+'d overdue' : 'in '+d+' day'+(d===1?'':'s');
+      const dCls = isOverdue ? 'overdue' : isSoon ? 'soon' : 'ok';
+      const anyEst = g.items.some(x => x.pay.estimated);
+      const solo = g.items.length === 1;
+      // One advance on a date needs one line, not a header repeating a row
+      // underneath it — the breakdown only earns its space when there's more
+      // than one thing to break down.
+      const rows = solo ? '' : `<div class="pg-rows">${g.items.map(x => `
+        <div class="pg-row">
+          <span class="pg-name">${x.loan.name}<span class="pg-lender"> · ${x.loan.lender}</span></span>
+          <span class="pg-period">period ${fmtShort(parseDate(x.pay.periodDate))}</span>
+          <span class="pg-amt">${fmt(x.pay.amount)}</span>
+        </div>`).join('')}</div>`;
+      const soloName = solo
+        ? `<span class="pg-solo">${g.items[0].loan.name} · period ${fmtShort(parseDate(g.items[0].pay.periodDate))}</span>`
+        : '';
+      return `<div class="pay-group ${cls} ${gi===0?'is-next':''} ${solo?'solo':''}">
+        <div class="pg-head">
+          <div class="pg-when">
+            ${gi===0?'<span class="pg-next-pill">Next out</span>':''}
+            <span class="pg-date">${fmtDate(g.bank)}</span>
+            <span class="pg-days ${dCls}">${dStr}</span>
+            ${soloName}
+          </div>
+          <div class="pg-total">
+            <span class="pg-total-val">${fmt(g.total)}</span>
+            <span class="pg-total-lab">${solo ? 'leaves your bank' : `across ${g.items.length} advances`}${anyEst?' · est.':''}</span>
+          </div>
         </div>
-        <div class="ui-right">
-          <div class="ui-amount">${fmt(x.info.nextPay.amount)}</div>
-          <div class="ui-days ${dCls}">${dStr}</div>
-        </div>
+        ${rows}
       </div>`;
-    });
+    }).join('') + (groups.length > 5
+      ? `<div class="pg-more">${groups.length - 5} more payment date${groups.length-5===1?'':'s'} after that, ending ${fmtDate(groups[groups.length-1].bank)}.</div>`
+      : '');
   }
 
-  // Loan cards
+  // ── Runway: every live advance on one shared timeline ──
+  const runway = document.getElementById('runway-strip');
+  if(runway) {
+    const live = LOANS.map((l,i)=>({l, info: infos[i]})).filter(x => !x.info.isComplete && x.info.finalPay);
+    if(live.length < 1) { runway.innerHTML = ''; }
+    else {
+      const ends = live.map(x => parseDate(x.info.finalPay.periodDate));
+      const lastEnd = new Date(Math.max(...ends));
+      const span = Math.max(1, daysFrom(TODAY, lastEnd));
+      const colours = ['var(--navy)', 'var(--purple)', 'var(--teal)', 'var(--amber)'];
+      const bars = live.map((x, i) => {
+        const end = parseDate(x.info.finalPay.periodDate);
+        const w = clamp((daysFrom(TODAY, end) / span) * 100, 2, 100);
+        const left = x.info.remaining;
+        // Below about a quarter of the track the amount won't fit inside the
+        // bar, so it sits next to it in dark text rather than being clipped.
+        const inside = w >= 26;
+        return `<div class="rw-row">
+          <span class="rw-name" title="${x.l.name}">${x.l.name}</span>
+          <span class="rw-track"><span class="rw-fill" style="width:${w.toFixed(1)}%;background:${colours[i%colours.length]};">
+            ${inside ? `<span class="rw-inner">${fmt(left)} left</span>` : ''}</span>
+            ${inside ? '' : `<span class="rw-outer">${fmt(left)} left</span>`}</span>
+          <span class="rw-end">${fmtShort(end)}</span>
+        </div>`;
+      }).join('');
+      const drops = live.length > 1 ? (() => {
+        const sorted = ends.slice().sort((a,b)=>a-b);
+        return `<div class="rw-note">Your fortnightly outgoings drop on <strong>${fmtShort(sorted[0])}</strong> when the first advance clears, and the last remittance is <strong>${fmtDate(sorted[sorted.length-1])}</strong>. These are remittance dates — the money leaves the bank a few days later.</div>`;
+      })() : '';
+      runway.innerHTML = `<div class="runway">${bars}${drops}</div>`;
+    }
+  }
+
+  // Loan cards  // Loan cards
   const grid = document.getElementById('loans-grid');
   grid.innerHTML = '';
   if(!LOANS.length) {
@@ -1921,6 +2096,9 @@ function renderDashboard() {
           <div><div class="la-label">Advanced</div><div class="la-val lav-navy">${fmt(loan.cashAdvanced)}</div></div>
         </div>
         <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${pct}%"></div></div>
+        <div class="prog-ticks" title="${info.doneCount} of ${info.totalCount} payments made">
+          ${loan.payments.map((pm,pi)=>`<span class="pt ${pi < info.doneCount ? 'done' : pi === info.doneCount ? 'next' : ''}" title="${fmtShort(parseDate(pm.periodDate))} · ${fmt(pm.amount)}"></span>`).join('')}
+        </div>
         <div class="prog-meta"><span>${pctInt}% repaid</span><span>${info.doneCount} of ${info.totalCount} payments</span></div>
         <div class="lc-meta" style="grid-template-columns:1fr 1fr 1fr 1fr;">
           <div class="lm-item"><div class="lm-label">Started</div><div class="lm-val">${startD ? fmtShort(startD) : '—'}</div></div>
@@ -2909,7 +3087,15 @@ function renderScenarioResults(S) {
     </div>`;
 
   // ── The real schedule, not the month label ──
-  const schedStrip = `
+  const notCleared = !SF.cleared ? `
+    <div class="sched-warn">
+      <strong>This repayment never clears the advance.</strong>
+      At ${fmt(inputs.payment)} every ${inputs.freq} days, ${fmt(inputs.total)} is still not repaid after
+      ${SF.n} payments (${(SF.n*inputs.freq/365).toFixed(1)} years) — <b>${fmt(SF.shortfall)}</b> would still be outstanding.
+      Check the repayment amount: it needs to be at least <b>${fmt(Math.ceil((inputs.total / 400) * 100) / 100)}</b> to finish at all,
+      and realistically far more. Every figure below is meaningless until that's fixed.
+    </div>` : '';
+  const schedStrip = notCleared + `
     <div class="sched-strip">
       <div class="ss-head">The actual schedule</div>
       <b>${SF.n}</b> payment date${SF.n===1?'':'s'} — ${SF.full} × <b>${fmt(inputs.payment)}</b>${SF.isPartialFinal?` then a final <b>${fmt(SF.finalAmt)}</b>`:''}.
@@ -3539,6 +3725,7 @@ function capModel(repayment, cfg) {
 // Solved by bisection because the fee moves as the repayment moves:
 // g(R) = N·R − principal − fee(R) rises with R, so there is one crossing.
 function capCliff(N, cfg) {
+  if(!(N >= 1)) return NaN;
   cfg = cfg || CAP;
   const pts = capPoints();
   let lo = 1, hi = Math.max(cfg.principal, pts[pts.length-1].r * 3);
@@ -3697,6 +3884,9 @@ function parseCurveLine(line, principal) {
     term = n + (/^(mo|month)/i.test(unit) ? ' months' : ' weeks'); return ' ';
   });
   t = t.replace(/(\d+(?:[.,]\d+)?)\s*%/g, ' ');            // fee % is descriptive
+  // A minus sign or an exponent means we are not reading what we think we are
+  // reading — a typo'd "-200" would otherwise sail through as a £200 fee.
+  if(/-\s*\d/.test(t) || /\d\s*[eE]\s*[-+]?\d/.test(t)) return null;
   const nums = (t.match(/\d[\d,]*(?:\.\d+)?/g) || [])
     .map(x => parseFloat(x.replace(/,/g, ''))).filter(n => isFinite(n) && n > 0);
   if(nums.length < 2) return null;
@@ -3711,7 +3901,14 @@ function parseCurveLine(line, principal) {
     fee = matched != null ? matched : Math.min(...rest);   // else: total is the bigger one
   }
   if(!(r > 0) || !(fee > 0)) return null;
-  if(principal > 0 && fee >= principal) return null;       // a fee bigger than the advance is a misread
+  if(principal > 0) {
+    // Plausibility, so a mangled line is reported rather than quietly becoming
+    // a point that bends the whole fee curve: a fee is a small slice of the
+    // advance, and a repayment can't be so tiny it would never repay it.
+    if(fee >= principal * 0.6) return null;
+    if(fee <= principal * 0.001) return null;
+    if(r < principal / 400) return null;
+  }
   return { r, fee: r2(fee), term };
 }
 
@@ -4350,6 +4547,27 @@ function saveNewLoan() {
   const notes = document.getElementById('fm-notes').value.trim();
 
   if(!name||!lender||!advanced||!total||!payment) { alert('Please fill in all required fields.'); return; }
+  if(total < advanced) {
+    alert(`The total to repay (${fmt(total)}) is less than the amount advanced (${fmt(advanced)}).\n\nCheck those two figures — the total should be the advance plus the lender's fee.`);
+    return;
+  }
+  if(!firstPay && !editingLoanId) { alert('Please set the first payment date — it decides every date in the schedule.'); return; }
+
+  // Refuse to save a repayment that can never clear the balance. Without this
+  // the app quietly builds a 400-payment schedule, leaves thousands unpaid and
+  // then reports the result as though it were the loan's real terms.
+  if(!editingLoanId) {
+    const trial = generatePaymentSchedule(total, payment, freq, firstPay);
+    const tf = scheduleFacts(trial, payment);
+    if(!tf.cleared) {
+      const minPay = Math.ceil((total / 400) * 100) / 100;
+      alert(`A payment of ${fmt(payment)} every ${freq} days never clears ${fmt(total)}.\n\n` +
+            `After 400 payments there would still be ${fmt(tf.shortfall)} outstanding. ` +
+            `It needs to be at least ${fmt(minPay)}, and realistically far more.\n\n` +
+            `Check the payment amount against your offer.`);
+      return;
+    }
+  }
 
   if(editingLoanId) {
     const loan = LOANS.find(l=>l.id===editingLoanId);
