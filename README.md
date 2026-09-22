@@ -98,38 +98,38 @@ turning an estimated fee into an exact one.
 
 ## Where your data lives
 
+**This file ships empty.** No loans, no balances, no dates — `DEFAULT_LOANS` is
+`[]`, so nothing real is in the published source. Open it and it asks you to
+load your own data.
+
 There is no server, no database and no account. The app makes **zero network
 requests** and loads **zero external files** — no fonts, no CDN scripts, no
 analytics. Open it from a local file with the wifi off and it works identically.
 
-Your figures are held in the browser's `localStorage`, which means they never
-leave the machine. It also means they are not a backup: clearing site data,
-switching browser, or moving to another machine loses the lot.
+Your figures live in the browser's `localStorage`, which means they never leave
+the machine. It also means they are not a backup: clearing site data, switching
+browser, or moving to another machine loses the lot.
 
-So use **Save a backup** on the Manage Loans page. It writes everything — loans,
-payment history, offer-slider settings — to a single `.json` file in your
-Downloads. That file is written by the browser to your own disk; nothing is
-uploaded. **Restore a backup** reads one back, after confirming, and rejects
-anything that isn't a Loan Tracker export.
+So the two buttons on **Manage Loans**:
 
-Treat that file like a bank statement: keep it wherever you keep those, and
-keep it out of this repo. If you want a safety net, add a `.gitignore`
-containing `loan-tracker-data-*.json` so it can never be pushed by accident.
+- **Save a backup** writes everything — loans, payment history, offer-slider
+  settings — to a `.json` file in your Downloads. Written by the browser
+  straight to your own disk; nothing is uploaded.
+- **Restore a backup** reads one back, after confirming. It rejects anything
+  that isn't a Loan Tracker export and leaves your existing data untouched if
+  the file is wrong.
 
-### If you'd rather nothing real shipped in the repo at all
-
-`index.html` currently seeds two real advances so the Dashboard is useful the
-moment it opens — which also means those figures are in the published source.
-If you'd rather the repo carried none of it, empty `DEFAULT_LOANS` to `[]` and
-load your own data from a backup file instead. The app works exactly the same;
-it just opens empty the first time.
+That backup file is the only place your real figures exist outside the browser.
+Treat it like a bank statement, and keep it out of this repo — if you ever put
+one alongside the app, add a `.gitignore` with `loan-tracker-data-*.json`.
 
 ## Tests
 
-The repayment engine is covered by 124 headless checks — the full balance table
-of a real offer letter, both advances reconciled against the lender's own
-remitted/remaining figures, the payment-date boundary solver, the paste parser
-and the schedule edge cases.
+The repayment engine is covered by 129 headless checks — the full balance table
+of a real offer letter, the payment-date boundary solver, the paste parser, the
+schedule edge cases, and a guard that this file still ships with no real data
+in it. If a backup file is present they also reconcile it against the lender's
+own remitted/remaining figures.
 
 They're kept outside this repo, next to it rather than in it. To run them:
 
@@ -140,18 +140,16 @@ deno run --allow-read checks.js /path/to/index.html
 `checks.js` finds `index.html` on its own if it sits beside it or one folder
 across; otherwise pass the path.
 
-## Seed data
+## Bundled data
 
-Two advances are seeded — the ones actually running — taken straight off the
-lender's drawdown pages. Amounts, remittance dates and bank transaction dates
-are real and reconcile to the penny against the portal's own remitted/remaining
-figures. Only the lender's name is generic. Delete them from **Manage Loans**
-and they won't come back.
+None. The app opens with nothing in it — that's deliberate, so the published
+source carries no real figures. Load your own via **Restore a backup**, or add
+a loan by hand.
 
-| | Advance | Fee | Per fortnight | Deployed | Dates | State |
-|---|---|---|---|---|---|---|
-| #126988 | £50,000 | £3,750 (7.5%) | £3,762.50 | 16 Mar 2026 | 15 | 91.0% repaid, £4,837.50 left |
-| 22 Jun 2026 | £60,000 | £5,100 (8.5%) | £4,004.00 | 22 Jun 2026 | 17 | 36.9% repaid, £41,076.00 left |
+The example fee curve on the Offer Slider is the one exception: fourteen
+reference points for an £86,000 advance, so the boundary maths has something to
+demonstrate on. They're lender pricing, not anyone's account. Replace them with
+your own quote's numbers whenever you like.
 
 ## First payment isn't always a full period
 
