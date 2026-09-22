@@ -1799,7 +1799,7 @@ body { overflow-x: hidden; }
 .calc-pick { margin-top: 10px; padding-top: 9px; border-top: 1px dashed var(--border2); gap: 4px; }
 .calc-pick-btn { min-width: 33px; padding: 4px 6px; }
 
-/* ── v33.3: the verdict card was 1fr + auto columns, so the labels ate all the
+/* ── v33.7: the verdict card was 1fr + auto columns, so the labels ate all the
    width and the figures hid against the right edge of a 1,450px card. Give the
    value columns equal shares, rule every row, and take the padding down. ── */
 .bv { padding: 15px 17px; }
@@ -1839,7 +1839,7 @@ body { overflow-x: hidden; }
 .calc-follow.off { cursor: default; opacity: 0.72; }
 .calc-follow.off input { cursor: not-allowed; }
 
-/* ── v33.3: on a phone the third scenario's column ran off the card and
+/* ── v33.7: on a phone the third scenario's column ran off the card and
    body{overflow-x:hidden} swallowed it — column A's figures were simply not
    there. Let the figures scroll and pin the labels beside them. ── */
 .bv-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch;
@@ -1865,7 +1865,7 @@ body { overflow-x: hidden; }
 <nav class="nav">
   <div class="nav-brand">
     <div class="nav-logo">£</div>
-    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v33.3</span></div>
+    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v33.7</span></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
@@ -1880,12 +1880,20 @@ body { overflow-x: hidden; }
      glance whether the page you're looking at is the one you just uploaded. -->
 <div class="ver-pop" id="ver-pop" onclick="this.classList.remove('open')">
   <div class="ver-card" onclick="event.stopPropagation()">
-    <div class="ver-head">Loan Tracker <b>v33.3</b> <span>built 22 Sep 2026</span>
+    <div class="ver-head">Loan Tracker <b>v33.7</b> <span>built 22 Sep 2026</span>
       <button class="pin-x" onclick="document.getElementById('ver-pop').classList.remove('open')">✕</button></div>
     <div class="ver-body">
-      <p>If the page you're looking at doesn't say <b>v33.3</b> in the top-left, it's an older
+      <p>If the page you're looking at doesn't say <b>v33.7</b> in the top-left, it's an older
          upload — hard-refresh with <b>Cmd+Shift+R</b>, and check the file you pushed.</p>
       <div class="ver-list">
+        <span><b>Fixed: a large "first payment after (days)" locked the page up completely</b></span>
+        <span><b>Fixed: "how many payments" was using total ÷ N</b> — the one calculation this app exists to say is wrong</span>
+        <span>Fixed: a payment count left the slider showing a different repayment from the one being scheduled</span>
+        <span>Fixed: 34 weeks read as "7 months 4 weeks" instead of 8 months</span>
+        <span><b>Months are back as a figure</b> — 7.2m means 7 months and a week; spelled out where there's room</span>
+        <span><b>Type the fee % and the repayment moves</b> — the curve read backwards, so all three fields stay one setting</span>
+        <span>Same from the total: type what you want to repay and it finds the repayment that gets you there</span>
+        <span>Asking for a fee the offer doesn't do says which way it clamped and to what</span>
         <span><b>Fixed on phones: the third scenario's figures were being cut off the verdict table entirely</b></span>
         <span><b>Fixed: it was recommending £5,507.48, which your lender's slider can't be set to</b> — the longest option is £5,516</span>
         <span>Every boundary is now clamped to what the lender will actually accept</span>
@@ -2249,7 +2257,9 @@ function buildSchedule(totalToRemit, paymentAmount, freqDays, anchorDate, opts) 
   if(!d0) return payments;
   let d = new Date(d0);
   if(!opts.firstOnDeploy) {
-    const gap = (opts.firstGapDays > 0) ? Math.round(opts.firstGapDays) : freqDays;
+    // Clamped: no lender waits more than a few months for the first debit, and
+    // an unbounded gap here runs the cash-flow day loops for millions of days.
+    const gap = (opts.firstGapDays > 0) ? clamp(Math.round(opts.firstGapDays), 1, 180) : freqDays;
     d.setDate(d.getDate() + gap);          // deployment day is not a payment day
   }
   let bal = r2(totalToRemit), idx = 0;
@@ -3388,9 +3398,9 @@ function calcFormHTML(prefix, onChange, d) {
 
     <div class="calc-field-row">
       <div class="fm-group"><label class="fm-label">How much was the loan? (£)</label><input class="fm-input" type="text" inputmode="decimal" id="${prefix}-advanced" value="${mv(advanced)}" placeholder="60000" ${moneyAttrs} oninput="${cin('advanced')}"></div>
-      <div class="fm-group"><label class="fm-label">Interest / fee %</label><input class="fm-input" type="number" id="${prefix}-feepct" value="${feePct}" placeholder="8.5" min="0" max="100" step="0.1" oninput="${cin('feepct')}"></div>
+      <div class="fm-group"><label class="fm-label">Interest / fee %</label><input class="fm-input" type="number" id="${prefix}-feepct" value="${feePct}" placeholder="8.5" min="0" max="100" step="0.1" oninput="${cin('feepct')}" onchange="calcSyncFee('${prefix}')"></div>
     </div>
-    <div class="fm-group"><label class="fm-label">Total to repay (£) — fills in from the fee, or type it</label><input class="fm-input" type="text" inputmode="decimal" id="${prefix}-total" value="${mv(total)}" placeholder="64800" ${moneyAttrs} oninput="${cin('total')}"></div>
+    <div class="fm-group"><label class="fm-label">Total to repay (£) — fills in from the fee, or type it</label><input class="fm-input" type="text" inputmode="decimal" id="${prefix}-total" value="${mv(total)}" placeholder="64800" ${moneyAttrs} oninput="${cin('total')}" onchange="calcSyncFee('${prefix}')"></div>
 
     <div class="fm-group"><label class="fm-label">Repayment each time (£) <span class="fm-hint">the figure on your offer — this drives everything</span></label>
       <input class="fm-input fm-primary" type="text" inputmode="decimal" id="${prefix}-remit" value="${mv(remit)}" placeholder="e.g. 7,056" ${moneyAttrs} oninput="${cin('remit')}">
@@ -3433,6 +3443,25 @@ function calcFormHTML(prefix, onChange, d) {
   </div>`;
 }
 
+// Months as a decimal, for the feel of it. A calendar month is 52/12 weeks, so
+// a week reads as 0.23 — 7 months and a week is 7.2. That basis is deliberate:
+// it reproduces the lender's own labels exactly (26 weeks = 6.0, their "6
+// months"; 34 weeks = 7.8, their "8 months"), which four-week months would not.
+// Months stay descriptive only — nothing in the decision maths touches them.
+const MONTH_WEEKS = 52 / 12;
+function monthsOf(weeks) { return (weeks || 0) / MONTH_WEEKS; }
+function fmtMonths(weeks) { return monthsOf(weeks).toFixed(1) + 'm'; }
+// "7 months 1 week", for the places with room to spell it out.
+function monthsLong(weeks) {
+  let m = Math.floor(monthsOf(weeks));
+  let w = Math.round(weeks - m * MONTH_WEEKS);
+  // 34 weeks was reading "7 months 4 weeks". Four weeks is the next month.
+  if(w >= Math.round(MONTH_WEEKS)) { m += 1; w = 0; }
+  // Under a month, say it in weeks. "0 months 2 weeks" is not a thing.
+  if(m === 0) return w > 0 ? `${w} week${w === 1 ? '' : 's'}` : 'under a week';
+  return `${m} month${m === 1 ? '' : 's'}${w > 0 ? ` ${w} week${w === 1 ? '' : 's'}` : ''}`;
+}
+
 // Deployment → final payment, in whole weeks. This is the duration the lender
 // now quotes, and the only one the app reports: months are not a unit any
 // repayment schedule actually uses.
@@ -3449,7 +3478,8 @@ function readCalcInputs(prefix) {
   const freq = parseInt(g('-freq').value) || 14;
   const start = g('-start').value || isoDate(TODAY);
   const npayIn = parseInt(g('-npay').value) || 0;             // only used if no repayment given
-  const firstGap = parseInt(g('-firstgap').value) || null;    // null = one full period
+  const fgRaw = parseInt(g('-firstgap').value);
+  const firstGap = (isFinite(fgRaw) && fgRaw > 0) ? clamp(fgRaw, 1, 180) : null;   // null = one full period
 
   // The lender quotes a repayment, not a term. The repayment is therefore the
   // source of truth and the duration is whatever the schedule works out to —
@@ -3474,8 +3504,8 @@ function readCalcInputs(prefix) {
 
   return {
     advanced, total, payment, freq, nPay, termFromRemit, firstGap, npayIn,
-    roiPct: parseFloat(g('-roi').value) || 15,
-    cycleDays: parseInt(g('-cycle').value) || 124,
+    roiPct: clamp(parseFloat(g('-roi').value) || 15, 0.1, 500),
+    cycleDays: clamp(parseInt(g('-cycle').value) || 124, 7, 730),
     start,
   };
 }
@@ -3588,7 +3618,10 @@ function renderCalcSlider(prefix) {
   r.dataset.mode = linked ? 'offer' : 'free';
   if(linked) {
     const { lo, hi } = calcSliderBounds();
-    const typed = moneyToNum(box.value);
+    // Read the repayment the scenario is ACTUALLY using. With the payment-count
+    // field driving, the box is empty and the slider sat at the bottom of the
+    // range showing a fee for a repayment nothing else was using.
+    const typed = moneyToNum(box.value) || readCalcInputs(prefix).payment;
     const cur = clamp(typed || lo, lo, hi);
     r.min = String(lo); r.max = String(hi); r.step = '1';
     r.value = String(Math.round(cur));
@@ -3602,8 +3635,13 @@ function renderCalcSlider(prefix) {
         + ` — your lender never quoted this, so the fee and term below are extrapolated`;
     } else if(hint) {
       const mm = capModel(cur);
+      // If the fee box asks for something the curve can't reach, the repayment
+      // has been clamped to the nearest it can — say which way and by how much.
+      const asked = parseFloat((document.getElementById(prefix + '-feepct') || {}).value);
+      const off = isFinite(asked) && asked > 0 && Math.abs(asked - mm.feePct) > 0.015;
       hint.innerHTML = `<b>${fmt(lo)} – ${fmt(hi)}</b> · fee <b style="color:var(--amber);">${fmt(mm.fee)}</b> (${mm.feePct.toFixed(2)}%)`
-        + ` · total ${fmt(mm.total)} · <b>${mm.facts.n} dates · ${mm.facts.n * Math.round(CAP.freq / 7)}w</b>`;
+        + ` · total ${fmt(mm.total)} · <b>${mm.facts.n} dates · ${mm.facts.n * Math.round(CAP.freq / 7)}w · ${fmtMonths(mm.facts.n * Math.round(CAP.freq / 7))}</b>`
+        + (off ? ` · <b style="color:var(--red);">${asked.toFixed(2)}% isn't on this offer — ${mm.feePct > asked ? 'the least' : 'the most'} it charges is ${mm.feePct.toFixed(2)}%</b>` : '');
     }
   } else {
     r.min = '0'; r.max = '100'; r.step = '1';
@@ -3611,7 +3649,7 @@ function renderCalcSlider(prefix) {
     if(base == null) r.value = '50';
     r.title = 'Drag to try repayments either side — release to re-centre';
     if(hint) {
-      const val = moneyToNum(box.value);
+      const val = moneyToNum(box.value) || readCalcInputs(prefix).payment;
       hint.textContent = (base > 0 && val > 0 && Math.abs(val - base) > 0.005)
         ? `${val > base ? '+' : '−'}${fmt(Math.abs(val - base))} from ${fmt(base)} — the fee stays as typed`
         : 'drag to try repayments either side — the fee stays as typed';
@@ -3690,14 +3728,46 @@ function calcApplyPaste(prefix) {
 }
 
 // Single input dispatcher: keeps Advance / Fee% / Total in sync, then recomputes.
+// Fee → repayment → total. The other direction of calcInput's 'remit' branch:
+// on a curve these are not three independent fields, they are one setting seen
+// three ways, so moving any of them has to move the rest.
+function calcSolveFromFee(prefix, feeTarget) {
+  const rp = capRepaymentForFee(feeTarget);
+  if(!(rp > 0)) return;
+  const mm = capModel(rp);
+  const set = (suffix, v) => {
+    const e = document.getElementById(prefix + suffix);
+    if(e && document.activeElement !== e) e.value = v;
+  };
+  set('-remit', moneyFmt(mm.repayment));
+  set('-total', moneyFmt(mm.total));
+  set('-npay', '');
+}
+
+// On blur, snap the fee and total to what the offer can actually do. While you
+// are still typing you see your own number; once you commit, the three fields
+// agree again — and the line under the slider has already said why it moved.
+function calcSyncFee(prefix) {
+  if(!calcLinked(prefix)) return;
+  const rp = moneyToNum((document.getElementById(prefix + '-remit') || {}).value);
+  if(!(rp > 0)) return;
+  const mm = capModel(rp);
+  const set = (suffix, v) => { const e = document.getElementById(prefix + suffix); if(e) e.value = v; };
+  set('-feepct', mm.feePct.toFixed(2));
+  set('-total', moneyFmt(mm.total));
+  (prefix === 'calc' ? renderCalculator : renderCalculatorCompare)();
+}
+
 function calcInput(prefix, field) {
   const g = id => document.getElementById(prefix+id);
+  const linked = calcLinked(prefix);
   if(field === 'advanced' || field === 'feepct') {
     const adv = moneyToNum(g('-advanced').value);
     const fee = parseFloat(g('-feepct').value);
     if(adv > 0 && isFinite(fee)) {
       const totEl = g('-total');
       if(document.activeElement !== totEl) totEl.value = moneyFmt(Math.round(adv * (1 + fee/100) * 100) / 100);
+      if(linked && field === 'feepct' && fee > 0) calcSolveFromFee(prefix, adv * fee / 100);
     }
   } else if(field === 'total') {
     const adv = moneyToNum(g('-advanced').value);
@@ -3705,8 +3775,29 @@ function calcInput(prefix, field) {
     if(adv > 0) {
       const feeEl = g('-feepct');
       if(document.activeElement !== feeEl) feeEl.value = Math.round((tot/adv - 1) * 10000) / 100;
+      if(linked && tot > adv) calcSolveFromFee(prefix, r2(tot - adv));
     }
-  } else if(field === 'remit' && calcLinked(prefix)) {
+  } else if(field === 'npay' && linked && !(moneyToNum(g('-remit').value) > 0)) {
+    // total ÷ N is exactly the error the whole app is built to avoid: raising
+    // the repayment lowers the fee, so the repayment that clears in N dates is
+    // the solved cliff, not a division. Only fires when no repayment is typed,
+    // which is what this field is for.
+    const n = parseInt(g('-npay').value) || 0;
+    if(n >= 1) {
+      let rp = NaN;
+      try { const row = capLadderCached().find(x => x.N === n); rp = row ? row.repayment : capCliff(n); } catch(e) {}
+      const { lo, hi } = calcSliderBounds();
+      if(isFinite(rp) && rp > 0) {
+        const mm = capModel(clamp(rp, lo, hi));
+        if(mm.facts.n === n) {          // only if it really does clear in n dates
+          const put = (suffix, v) => { const e = g(suffix); if(e && document.activeElement !== e) e.value = v; };
+          put('-remit', moneyFmt(mm.repayment));
+          put('-total', moneyFmt(mm.total));
+          put('-feepct', mm.feePct.toFixed(2));
+        }
+      }
+    }
+  } else if(field === 'remit' && linked) {
     // On the lender's page the repayment is the only thing you set and the fee
     // follows it. Keep that true here, or a repayment typed in this box sits
     // against a fee that belongs to a different repayment entirely.
@@ -3964,7 +4055,7 @@ function cashProfile(S) {
   if(!start || !(inputs.advanced > 0)) return null;
   const cycle = Math.max(1, P.cycleDays);
   const lastDay = S.SF.finalDate ? daysFrom(start, S.SF.finalDate) : cycle;
-  const horizon = Math.max(lastDay, cycle) + 1;
+  const horizon = Math.min(Math.max(lastDay, cycle) + 1, 4000);   // ~11 years, hard stop
 
   // every pound leaving the bank on each day
   const out = {};
@@ -4440,7 +4531,7 @@ function renderCalculator() {
   renderCalcPicks('calc');
   renderCalcSlider('calc');
   if(!S) { showDerivedNote('calc', null); results.innerHTML = '<div class="empty-state">Enter the loan amount, the fee % (or total to repay), and a loan length to see your numbers.</div>'; return; }
-  showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`);
+  showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtMonths(weeksOf(S))} ≈ ${monthsLong(weeksOf(S))} · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`);
   results.innerHTML = renderScenarioResults(S);
 }
 
@@ -4467,10 +4558,10 @@ function renderCalculatorCompare() {
     renderCalcPicks(c.prefix);
     renderCalcSlider(c.prefix);
     showDerivedNote(c.prefix, S
-      ? `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`
+      ? `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtMonths(weeksOf(S))} ≈ ${monthsLong(weeksOf(S))} · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`
       : null);
     const note = document.getElementById('cmp-note-' + c.k);
-    if(note) note.textContent = S ? `${S.SF.n} dates · ${weeksOf(S)}w` : '';
+    if(note) note.textContent = S ? `${S.SF.n} dates · ${weeksOf(S)}w · ${fmtMonths(weeksOf(S))}` : '';
     const res = document.getElementById(c.res);
     if(res) res.innerHTML = S ? renderScenarioCompact(S, c.label, c.accent)
       : `<div class="empty-mini">
@@ -4535,7 +4626,7 @@ function renderRankedVerdict(list) {
         <div>
           <div class="bv-kicker">Better for the business${pool.length > 2 ? ` — best of ${pool.length}` : ''}${flagged.length ? ` · ${flagged.length} set aside` : ''}</div>
           <div class="bv-name">Scenario ${best.label}
-            <span class="bv-sub">${fmt(best.pay)} every ${best.S.inputs.freq} days · ${best.dates} dates · ${best.weeks} weeks · fee ${best.feePct.toFixed(2)}%</span></div>
+            <span class="bv-sub">${fmt(best.pay)} every ${best.S.inputs.freq} days · ${best.dates} dates · ${best.weeks} weeks (${monthsLong(best.weeks)}) · fee ${best.feePct.toFixed(2)}%</span></div>
         </div>
         <div class="bv-delta">
           <div class="bv-delta-val">${fmt(gap)}</div>
@@ -4563,6 +4654,7 @@ function renderRankedVerdict(list) {
         <span>Floor <small>(whole cycles only)</small></span>${rows.map(r => `<b>${fmt(r.floor)}</b>`).join('')}
         <span>Out every payment</span>${rows.map(r => `<b>${fmt(r.pay)}</b>`).join('')}
         <span>Payment dates · weeks</span>${rows.map(r => cell(r, x=>`${x.dates} · ${x.weeks}w`, x=>x.weeks===maxW)).join('')}
+        <span>Months <small>(52/12 weeks each)</small></span>${rows.map(r => cell(r, x=>fmtMonths(x.weeks), x=>x.weeks===maxW)).join('')}
         <span>Stock cycles</span>${rows.map(r => `<b>${r.cycles.toFixed(2)}</b>`).join('')}
         <span>Fee</span>${rows.map(r => cell(r, x=>`${fmt(x.fee)} <small>${x.feePct.toFixed(2)}%</small>`, x=>Math.abs(x.fee-minF)<0.01)).join('')}
         <span>Pressure</span>${rows.map(r => cell(r, x=>x.press.toFixed(0)+'%', x=>Math.abs(x.press-minP)<0.5)).join('')}
@@ -4748,6 +4840,34 @@ function capModel(repayment, cfg) {
   };
 }
 
+// The inverse of capFee. The fee falls as the repayment rises, so there is
+// exactly one repayment for any fee inside the range — bisect for it. This is
+// what lets you type the fee % and have the repayment move, which is the
+// lender's own slider read backwards.
+function capRepaymentForFee(fee, cfg) {
+  cfg = cfg || CAP;
+  const pts = capPoints();
+  if(!pts.length || !(fee > 0)) return NaN;
+  let lo = cfg.repayMin > 0 ? cfg.repayMin : pts[0].r;
+  let hi = cfg.repayMax > 0 ? cfg.repayMax : pts[pts.length - 1].r;
+  const feeAt = r => capFee(r, pts).fee;
+  if(fee >= feeAt(lo)) return lo;        // dearer than the cheapest repayment charges
+  if(fee <= feeAt(hi)) return hi;        // cheaper than the dearest repayment charges
+  for(let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2;
+    if(feeAt(mid) > fee) lo = mid; else hi = mid;
+  }
+  const r = Math.round(((lo + hi) / 2) * 100) / 100;
+  // capFee reads anything within 50p of a quoted point as that exact point, so
+  // fee(r) is flat across that window and the bisection stalls on its edge —
+  // landing on £7,433.50 for a fee that is quoted at £7,434. Snap onto the
+  // point when it is the better answer, which it is by definition: it is the
+  // lender's own figure rather than an interpolation next door to it.
+  const near = pts.find(p => Math.abs(p.r - r) < 1);
+  if(near && Math.abs(feeAt(near.r) - fee) <= Math.abs(feeAt(r) - fee)) return near.r;
+  return r;
+}
+
 // The repayment that clears the advance in exactly N payment dates.
 // Solved by bisection because the fee moves as the repayment moves:
 // g(R) = N·R − principal − fee(R) rises with R, so there is one crossing.
@@ -4803,7 +4923,7 @@ function capCashCost(mA, mB, cfg) {
     return out;
   };
   const A = cum(mA), B = cum(mB);
-  const lastDay = Math.max(A.length?A[A.length-1].day:0, B.length?B[B.length-1].day:0);
+  const lastDay = Math.min(Math.max(A.length?A[A.length-1].day:0, B.length?B[B.length-1].day:0), 4000);
   const at = (arr, day) => { let c = 0; for(const x of arr) { if(x.day <= day) c = x.cum; else break; } return c; };
   // Small sums don't buy stock. A few pounds a fortnight just pads the bank
   // account, so pricing it at a full stock return overstates the cost badly —
@@ -6159,6 +6279,7 @@ function renderCapitalResults() {
   const sticky = `
     <div class="cap-sticky">
       <div><dt>Dates</dt><dd>${m.facts.n}</dd></div>
+      <div><dt>Months</dt><dd>${fmtMonths(m.facts.n * Math.round(CAP.freq/7))}</dd></div>
       <div><dt>Repayment</dt><dd>${fmt(m.repayment)}</dd></div>
       <div><dt>Fee</dt><dd style="color:var(--amber);">${fmt(m.fee)} <small style="font-size:11px;font-weight:600;color:var(--text3);">${m.feePct.toFixed(2)}%</small></dd></div>
       <div><dt>Total</dt><dd>${fmt(m.total)}</dd></div>
@@ -6182,7 +6303,7 @@ function renderCapitalResults() {
       <div class="cap-hl-top">
         <div>
           <div class="cap-stat-lab">Real payment dates</div>
-          <div class="cap-hl-dates">${m.facts.n}<small>payment dates · <b>${m.facts.n * Math.round(CAP.freq/7)} weeks</b>${CAP.theirTerm ? ` · they call it ${CAP.theirTerm}` : ''}</small></div>
+          <div class="cap-hl-dates">${m.facts.n}<small>payment dates · <b>${m.facts.n * Math.round(CAP.freq/7)} weeks</b> · ${fmtMonths(m.facts.n * Math.round(CAP.freq/7))} ≈ ${monthsLong(m.facts.n * Math.round(CAP.freq/7))}${CAP.theirTerm ? ` · they call it ${CAP.theirTerm}` : ''}</small></div>
           <div class="cap-hl-sub">${scheduleLine(m.payments, m.repayment)} · first ${fmtDate(m.facts.firstDate)} · last <b>${fmtDate(m.facts.finalDate)}</b></div>
         </div>
         <div style="text-align:right;">${srcBadge}
