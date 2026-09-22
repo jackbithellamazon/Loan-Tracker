@@ -1349,6 +1349,331 @@ body { overflow-x: hidden; }
 .cs-row.cs-weeks { background: var(--blue-bg); }
 .cs-row.cs-weeks .cs-a-sm strong { color: var(--blue); }
 .paste-drop > summary { color: var(--blue); font-weight: 600; }
+
+.nav-ver { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 0.3px;
+  cursor: pointer; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.08); }
+.nav-ver:hover { color: #fff; background: rgba(255,255,255,0.18); }
+.ver-pop { position: fixed; inset: 0; background: rgba(20,24,40,0.5); z-index: 1600;
+  display: none; align-items: center; justify-content: center; padding: 20px; }
+.ver-pop.open { display: flex; }
+.ver-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow2);
+  max-width: 520px; width: 100%; overflow: hidden; }
+.ver-head { display: flex; align-items: center; gap: 9px; padding: 14px 18px; background: var(--navy); color: #fff; font-size: 15px; }
+.ver-head b { color: #c8a030; }
+.ver-head span { font-size: 11.5px; color: rgba(255,255,255,0.6); }
+.ver-head .pin-x { margin-left: auto; color: rgba(255,255,255,0.6); font-size: 14px; }
+.ver-head .pin-x:hover { color: #fff; }
+.ver-body { padding: 16px 18px; }
+.ver-body p { font-size: 12.5px; line-height: 1.6; color: var(--text2); margin-bottom: 12px; }
+.ver-body p b { color: var(--text); }
+.ver-list { display: flex; flex-direction: column; gap: 6px; }
+.ver-list span { font-size: 12px; color: var(--text2); padding-left: 20px; position: relative; line-height: 1.5; }
+.ver-list span::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+
+/* ── slider: a readout you can actually read ── */
+.cap-readout { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px;
+  flex-wrap: wrap; margin-bottom: 4px; }
+.cap-readout-main { display: flex; flex-direction: column; }
+.cap-slider-val { font-size: 30px; font-weight: 800; letter-spacing: -1px; color: var(--navy);
+  line-height: 1.05; font-variant-numeric: tabular-nums; }
+.cap-readout-side { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
+.cro-big { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.5px;
+  display: flex; align-items: baseline; gap: 4px; font-variant-numeric: tabular-nums; }
+.cro-big small { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--text3); }
+.cro-fin { font-size: 11.5px; font-weight: 600; color: var(--text2); padding-bottom: 3px; }
+.cap-ticks { height: 30px; }
+.cap-tick i { margin-top: 20px; }
+.cap-tick.active i { margin-top: 16px; }
+.cap-tick em { display: block; font-size: 8.5px; font-style: normal; font-weight: 600; color: var(--text3); margin-top: -1px; }
+.cap-tick.active em { color: var(--navy); }
+.cap-tick.next em { color: var(--amber); }
+.cap-track-wrap { padding-top: 30px; }
+.cap-range { height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--blue-bg), var(--surface3)); }
+.cap-range::-webkit-slider-thumb { width: 24px; height: 24px; border: 4px solid #fff;
+  box-shadow: 0 2px 6px rgba(20,24,40,0.28); }
+.cap-range-ends { font-size: 10px; color: var(--text3); line-height: 1.4; margin-top: 4px; }
+.cap-range-ends b { font-size: 11.5px; color: var(--text2); font-variant-numeric: tabular-nums; }
+
+/* ── three-way compare ── */
+.pin-title small { display: block; font-size: 11px; font-weight: 500; color: var(--text3); margin-top: 3px; }
+.pin-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+@media (max-width: 900px) { .pin-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .pin-grid { grid-template-columns: 1fr; } }
+.pin-summary { background: linear-gradient(180deg,#1d2942,#24324f); color: #fff; border-radius: var(--radius2);
+  padding: 14px 16px; margin-bottom: 12px; }
+.ps-kicker { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: #c8a030; margin-bottom: 6px; }
+.ps-main { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+.ps-rep { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+.ps-meta { font-size: 12px; color: rgba(255,255,255,0.7); }
+.ps-body { font-size: 12.5px; line-height: 1.6; color: rgba(255,255,255,0.85); margin-top: 7px; }
+.ps-body strong { color: #fff; }
+.ps-rank { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 11px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.14); }
+.ps-rank-row { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.8); font-variant-numeric: tabular-nums; }
+.ps-rank-row b { color: rgba(255,255,255,0.45); font-size: 10px; }
+.ps-rank-row em { font-style: normal; font-weight: 700; color: #c8a030; }
+.ps-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.7px; padding: 3px 8px; border-radius: 999px; color: #fff; }
+.ps-tag.sm { font-size: 9px; padding: 2px 6px; }
+.ps-tag.a { background: var(--navy); } .ps-tag.b { background: var(--purple); } .ps-tag.c { background: var(--teal); }
+.pin-summary .ps-tag.a { background: rgba(255,255,255,0.22); }
+
+.pin-tag.c { background: var(--teal); }
+.pin-card.here { border-color: var(--navy); box-shadow: 0 0 0 2px rgba(29,41,66,0.1); }
+.pin-now { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--navy); }
+.pin-goto { font-size: 10px; font-weight: 700; border: 1px solid var(--border2); background: var(--white);
+  color: var(--text2); border-radius: 4px; padding: 2px 7px; cursor: pointer; }
+.pin-goto:hover { border-color: var(--navy); color: var(--navy); background: var(--blue-bg); }
+.pin-head { gap: 7px; }
+.pin-x { margin-left: auto; }
+.pin-empty { display: flex; flex-direction: column; gap: 3px; align-items: center; }
+.pin-empty small { font-weight: 500; color: var(--text3); font-size: 10.5px; }
+.pin-rows b.win { color: var(--green); }
+.pin-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 11px; }
+
+/* ── the answer, first ── */
+.profit-hero { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--green);
+  border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); margin-bottom: 14px; }
+.profit-hero.bad { border-left-color: var(--red); }
+.ph-kicker { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: var(--text3); margin-bottom: 10px; }
+.ph-figures { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.ph-main { display: flex; flex-direction: column; }
+.ph-val { font-size: 34px; font-weight: 800; letter-spacing: -1.2px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.ph-lab { font-size: 11.5px; font-weight: 600; color: var(--text2); margin-top: 4px; }
+.ph-lab small { display: block; font-size: 10.5px; font-weight: 500; color: var(--text3); margin-top: 1px; }
+.ph-arrow { font-size: 18px; color: var(--text3); }
+.ph-line { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; color: var(--text2);
+  border-top: 1px solid var(--border); margin-top: 14px; padding-top: 12px; }
+.ph-line b { color: var(--text); font-variant-numeric: tabular-nums; }
+.ph-press { display: flex; gap: 11px; align-items: flex-start; margin-top: 12px; padding-top: 11px;
+  border-top: 1px solid var(--border); flex-wrap: wrap; }
+.ph-press-note { flex: 1 1 320px; font-size: 12px; line-height: 1.6; color: var(--text2); }
+.ph-press-note b { color: var(--text); }
+@media (max-width: 560px) { .ph-val { font-size: 27px; } .ph-arrow { display: none; } }
+
+/* ── the business verdict ── */
+.bv { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--green);
+  border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); margin-bottom: 14px; }
+.bv-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+.bv-kicker { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: var(--green); margin-bottom: 5px; }
+.bv-name { font-size: 24px; font-weight: 800; letter-spacing: -0.7px; color: var(--text); line-height: 1.1; }
+.bv-sub { display: block; font-size: 12px; font-weight: 500; color: var(--text2); letter-spacing: 0; margin-top: 4px; }
+.bv-delta { text-align: right; }
+.bv-delta-val { font-size: 26px; font-weight: 800; letter-spacing: -0.8px; color: var(--green); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.bv-delta-lab { font-size: 10.5px; color: var(--text3); font-weight: 600; }
+.bv-both { background: var(--green-bg); border-radius: var(--radius2); padding: 10px 13px; margin-top: 13px;
+  font-size: 12.5px; line-height: 1.55; color: #0f5a37; }
+.bv-both b { color: #0a4a2d; }
+.bv-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+@media (max-width: 680px) { .bv-cols { grid-template-columns: 1fr; } }
+.bv-col-h { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px; }
+.bv-col-h.good { color: var(--green); }
+.bv-col-h.warn { color: var(--amber); }
+.bv-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.bv-col li { font-size: 12.5px; line-height: 1.55; color: var(--text2); padding-left: 16px; position: relative; }
+.bv-col li::before { content: '·'; position: absolute; left: 4px; font-weight: 800; color: var(--text3); }
+.bv-col li b { color: var(--text); }
+.bv-table { display: grid; grid-template-columns: 1fr auto auto; gap: 1px 16px; margin-top: 16px;
+  padding-top: 13px; border-top: 1px solid var(--border); font-size: 12px; }
+.bv-table span { color: var(--text2); padding: 4px 0; }
+.bv-table b { text-align: right; padding: 4px 0; color: var(--text2); font-variant-numeric: tabular-nums; font-weight: 600; min-width: 82px; }
+.bv-table b.w { color: var(--green); font-weight: 700; }
+.bv-th { font-size: 9.5px !important; font-weight: 800; text-transform: uppercase; letter-spacing: 0.7px;
+  color: var(--text3) !important; text-align: right; }
+.bv-th.w { color: var(--green) !important; }
+.bv-foot { font-size: 11.5px; line-height: 1.55; color: var(--text3); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+/* ── realised is the headline figure; worst case is the floor beside it ── */
+.ph-figures { align-items: stretch; }
+.ph-primary .ph-val { font-size: 40px; }
+.ph-floor { border-left: 1px solid var(--border); padding-left: 20px; display: flex; flex-direction: column; justify-content: center; }
+.ph-floor-val { font-size: 21px; font-weight: 700; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+.ph-floor-lab { font-size: 11px; color: var(--text3); margin-top: 3px; max-width: 230px; line-height: 1.45; }
+.ph-floor-lab b { color: var(--text2); }
+.ph-floor-lab small { display: block; font-size: 10px; margin-top: 1px; }
+@media (max-width: 680px) {
+  .ph-primary .ph-val { font-size: 31px; }
+  .ph-floor { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 11px; width: 100%; }
+}
+/* realised card first, worst case second */
+.two-output-flip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.two-output-flip .to-card.worst { order: 2; }
+.two-output-flip .to-card.realised { order: 1; }
+.two-output-flip .to-card.realised .to-val { font-size: 30px; }
+@media (max-width: 680px) { .two-output-flip { grid-template-columns: 1fr; } }
+/* the realised score leads, worst case sits quieter next to it */
+.ds-lead .score-ring { transform: scale(1.08); }
+.ds-quiet { opacity: 0.72; }
+.ds-quiet .score-ring { transform: scale(0.92); }
+.bv-table span small { color: var(--text3); font-weight: 500; }
+
+.lw-wk { display: block; font-size: 9.5px; font-weight: 500; color: var(--text3); }
+.lw-cell { white-space: normal !important; min-width: 96px; }
+.lw { display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 999px; margin: 1px 2px 1px 0; }
+.lw.profit { background: var(--green-bg); color: var(--green); }
+.lw.fee { background: var(--amber-bg); color: var(--amber); }
+.lw.press { background: var(--blue-bg); color: var(--blue); }
+.cap-scroll table.cap-ladder { min-width: 820px; }
+
+/* ── tabs: one long scroll broken into short views ── */
+.tabset { margin-bottom: 14px; }
+.tabbar { display: flex; gap: 4px; background: var(--surface3); padding: 4px; border-radius: 10px;
+  margin-bottom: 14px; overflow-x: auto; scrollbar-width: none; }
+.tabbar::-webkit-scrollbar { display: none; }
+.tabbtn { flex: 1 1 0; min-width: 118px; font-family: inherit; font-size: 12.5px; font-weight: 600;
+  padding: 9px 12px; border-radius: 7px; border: none; cursor: pointer; background: transparent;
+  color: var(--text2); display: flex; flex-direction: column; gap: 2px; align-items: center;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease; white-space: nowrap; }
+.tabbtn small { font-size: 10px; font-weight: 600; color: var(--text3); font-variant-numeric: tabular-nums; }
+.tabbtn:hover { color: var(--text); background: rgba(255,255,255,0.55); }
+.tabbtn.on { background: var(--white); color: var(--navy); box-shadow: var(--shadow); }
+.tabbtn.on small { color: var(--text2); }
+.tabpane { display: none; }
+.tabpane.on { display: block; animation: tabIn 0.16s ease; }
+@keyframes tabIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .tabpane.on { animation: none; } }
+@media (max-width: 560px) { .tabbtn { min-width: 104px; font-size: 11.5px; padding: 8px 10px; } }
+
+/* one card style, not six — the panels inside a pane shouldn't all shout */
+.tabpane .manage-card, .tabpane .load-panel, .tabpane .cash-panel,
+.tabpane .cap-chart-wrap, .tabpane .pin-wrap { box-shadow: none; border-color: var(--border); }
+.tabpane > *:last-child { margin-bottom: 0; }
+
+/* ── palette additions: a warmer accent set so panels stop all reading navy ── */
+:root {
+  --gold: #b8860b;
+  --gold-bg: #fdf6e3;
+  --mint: #0d7a5f;
+  --mint-bg: #e6f5f0;
+  --ink: #161a24;
+  --ink2: #222838;
+}
+
+/* ── same term, cheaper fee ── */
+.band-panel { background: linear-gradient(135deg, var(--mint-bg) 0%, #f2faf7 100%);
+  border: 1px solid rgba(13,122,95,0.22); border-radius: var(--radius);
+  padding: 17px 19px; margin-bottom: 14px; }
+.band-panel.done { background: var(--surface2); border-color: var(--border2); }
+.band-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 15px; }
+.band-kicker { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--mint); margin-bottom: 5px; }
+.band-title { font-size: 17px; font-weight: 700; letter-spacing: -0.35px; color: var(--ink); line-height: 1.35; }
+.band-title b { color: var(--mint); }
+.band-panel.done .band-title { font-size: 14px; }
+.band-body { font-size: 12.5px; line-height: 1.6; color: var(--text2); }
+.band-panel .btn-sm.primary { background: var(--mint); border-color: var(--mint); }
+.band-panel .btn-sm.primary:hover { background: #0a6450; border-color: #0a6450; }
+
+.band-track { position: relative; height: 10px; background: rgba(13,122,95,0.14); border-radius: 5px; margin: 26px 0 34px; }
+.band-fill { position: absolute; inset: 0 auto 0 0; background: var(--mint); border-radius: 5px; opacity: 0.35; }
+.band-dot { position: absolute; top: 50%; width: 18px; height: 18px; border-radius: 50%; background: var(--mint);
+  border: 4px solid #fff; box-shadow: 0 2px 6px rgba(13,122,95,0.35); transform: translate(-50%,-50%); }
+.band-end { position: absolute; top: 18px; font-size: 10px; color: var(--text3); line-height: 1.35; }
+.band-end b { display: block; font-size: 12px; color: var(--text2); font-variant-numeric: tabular-nums; }
+.band-end.left { left: 0; } .band-end.right { right: 0; text-align: right; }
+
+.band-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 10px; }
+.band-cell { background: rgba(255,255,255,0.75); border: 1px solid rgba(13,122,95,0.14); border-radius: var(--radius2); padding: 11px 13px; }
+.band-cell.win { background: #fff; border-color: rgba(13,122,95,0.4); }
+.band-lab { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text3); margin-bottom: 4px; }
+.band-val { font-size: 13.5px; font-weight: 600; color: var(--text2); font-variant-numeric: tabular-nums; }
+.band-val b { color: var(--ink); font-weight: 800; }
+.band-sub { font-size: 10.5px; color: var(--text3); margin-top: 3px; }
+.band-note { font-size: 12px; line-height: 1.6; color: var(--text2); margin-top: 13px; padding-top: 12px;
+  border-top: 1px solid rgba(13,122,95,0.18); }
+.band-note b { color: var(--ink); }
+
+/* ── comparison: calmer, with the winner carried in colour not badges ── */
+.cmp-hero { background: linear-gradient(135deg,#fbfcfe 0%, #f4f6fb 100%) !important; border: 1px solid var(--border) !important; }
+.cmp-hero-kicker { color: var(--gold) !important; letter-spacing: 1.1px; }
+.cmp-badge.win { background: var(--mint) !important; }
+.cmp-badge.realised { background: var(--navy) !important; }
+.cmp-badge.cost, .cmp-badge.cash { background: var(--gold) !important; }
+.cons-pot { background: rgba(255,255,255,0.7); border-radius: var(--radius2); padding: 4px 12px; }
+.bv { border-left-color: var(--mint); }
+.bv-kicker { color: var(--mint); }
+.bv-delta-val { color: var(--mint); }
+.bv-both { background: var(--mint-bg); color: #0a4a3a; }
+.bv-col-h.good { color: var(--mint); }
+.bv-table b.w { color: var(--mint); }
+.bv-th.w { color: var(--mint) !important; }
+.profit-hero { border-left-color: var(--mint); }
+.profit-hero.bad { border-left-color: var(--red); }
+.ph-kicker { color: var(--mint); }
+
+.band-panel.caution { background: linear-gradient(135deg, var(--gold-bg) 0%, #fefaf0 100%);
+  border-color: rgba(184,134,11,0.28); }
+.band-panel.caution .band-kicker { color: var(--gold); }
+.band-panel.caution .band-track { background: rgba(184,134,11,0.16); }
+.band-panel.caution .band-fill { background: var(--gold); }
+.band-panel.caution .band-dot { background: var(--gold); box-shadow: 0 2px 6px rgba(184,134,11,0.35); }
+.band-panel.caution .band-cell { border-color: rgba(184,134,11,0.16); }
+.band-panel.caution .band-note { border-top-color: rgba(184,134,11,0.2); }
+.band-title b.warn { color: var(--amber); }
+.band-val b.warn { color: var(--amber); }
+.band-cell.lose { background: #fff; border-color: rgba(176,48,48,0.32); }
+
+.rec-title-sub { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65); letter-spacing: 0; }
+.rec-steps { list-style: none; counter-reset: rs; display: flex; flex-direction: column; gap: 9px; margin: 4px 0 0; }
+.rec-steps li { counter-increment: rs; position: relative; padding-left: 30px; font-size: 13px;
+  line-height: 1.6; color: rgba(255,255,255,0.86); }
+.rec-steps li::before { content: counter(rs); position: absolute; left: 0; top: 1px; width: 20px; height: 20px;
+  border-radius: 50%; background: rgba(255,255,255,0.14); color: #c8a030; font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; }
+.rec-steps li b { color: #fff; }
+.rec-panel.blocked { background: linear-gradient(180deg,#4a2330,#3a1c26); }
+.rec-panel.blocked .rec-kicker { color: #ff9a9a; }
+.rec-onit { font-size: 12.5px; font-weight: 600; color: #c8a030; }
+
+.rec-rate { background: rgba(200,160,48,0.12); border: 1px solid rgba(200,160,48,0.3);
+  border-radius: var(--radius2); padding: 12px 14px; margin-top: 13px; }
+.rr-main { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.5; }
+.rr-main b { color: #e8c468; font-weight: 800; }
+.rr-sub { font-size: 12px; line-height: 1.6; color: rgba(255,255,255,0.72); margin-top: 5px; }
+.rr-sub b { color: #fff; }
+
+/* ── benchmark against previous advances ── */
+.bench { border-radius: var(--radius); padding: 15px 17px; margin-bottom: 14px; border: 1px solid; }
+.bench.dear { background: var(--gold-bg); border-color: rgba(184,134,11,0.3); }
+.bench.good { background: var(--mint-bg); border-color: rgba(13,122,95,0.25); }
+.bench-kicker { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+.bench.dear .bench-kicker { color: var(--gold); }
+.bench.good .bench-kicker { color: var(--mint); }
+.bench-title { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.45; letter-spacing: -0.2px; }
+.bench.dear .bench-title b { color: var(--gold); }
+.bench.good .bench-title b { color: var(--mint); }
+.bench-rows { margin: 13px 0 11px; display: flex; flex-direction: column; gap: 1px; }
+.bench-row { display: grid; grid-template-columns: minmax(96px,1fr) auto auto; gap: 12px; align-items: baseline;
+  padding: 7px 9px; background: rgba(255,255,255,0.6); border-radius: 5px; font-size: 12px; }
+.bench-row.now { background: #fff; box-shadow: inset 0 0 0 1px rgba(20,24,40,0.1); }
+.bench-name { font-weight: 700; color: var(--text); }
+.bench-meta { color: var(--text3); font-size: 11px; }
+.bench-row b { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--ink); text-align: right; }
+.bench-row b small { display: block; font-size: 9px; font-weight: 600; color: var(--text3); }
+.bench-note { font-size: 12px; line-height: 1.6; color: var(--text2); }
+.bench-note b { color: var(--ink); }
+.bench-why { display: block; font-size: 11px; color: var(--text3); margin-top: 6px; }
+@media (max-width: 560px) { .bench-row { grid-template-columns: 1fr auto; } .bench-meta { display: none; } }
+
+.bench-rank { font-size: 11.5px; line-height: 1.6; color: var(--text2); background: rgba(255,255,255,0.55);
+  border-radius: 5px; padding: 9px 11px; margin-bottom: 10px; }
+.bench-rank b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.bench-rank em { font-style: normal; font-weight: 700; }
+
+.pin-actions .btn-sm { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 1px;
+  text-align: left; padding: 8px 13px; }
+.pin-actions .btn-sm small { font-size: 10px; font-weight: 500; color: var(--text3); }
+.pin-actions .btn-sm:hover small { color: var(--navy); }
+.pin-rows { grid-template-columns: auto 1fr; gap: 3px 10px; }
+.pin-rows b.win { color: var(--mint); font-weight: 800; }
+.cap-scroll table.cap-ladder { min-width: 960px; }
+
+.ph-basis { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 12px;
+  padding-top: 11px; border-top: 1px solid var(--border); }
+.ph-basis-lab { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text3); }
+.ph-basis-btn { font-family: inherit; font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--border2); background: var(--white); color: var(--text2); cursor: pointer; }
+.ph-basis-btn:hover { border-color: var(--mint); color: var(--mint); }
+.ph-basis-btn.on { background: var(--mint); border-color: var(--mint); color: #fff; }
+.ph-basis-note { flex: 1 1 260px; font-size: 11px; color: var(--text3); line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -1357,7 +1682,7 @@ body { overflow-x: hidden; }
 <nav class="nav">
   <div class="nav-brand">
     <div class="nav-logo">£</div>
-    <div class="nav-title">Loan Tracker <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.3px;">v30.1</span></div>
+    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v32.3</span></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
@@ -1367,6 +1692,51 @@ body { overflow-x: hidden; }
   </div>
   <div class="nav-date" id="live-date">—</div>
 </nav>
+
+<!-- Version check. Every build carries a number and a date so you can tell at a
+     glance whether the page you're looking at is the one you just uploaded. -->
+<div class="ver-pop" id="ver-pop" onclick="this.classList.remove('open')">
+  <div class="ver-card" onclick="event.stopPropagation()">
+    <div class="ver-head">Loan Tracker <b>v32.3</b> <span>built 22 Sep 2026</span>
+      <button class="pin-x" onclick="document.getElementById('ver-pop').classList.remove('open')">✕</button></div>
+    <div class="ver-body">
+      <p>If the page you're looking at doesn't say <b>v32.3</b> in the top-left, it's an older
+         upload — hard-refresh with <b>Cmd+Shift+R</b>, and check the file you pushed.</p>
+      <div class="ver-list">
+        <span>Part-cycles counted on cash landed by default — the most conservative basis</span>
+        <span>Profit is pro-rated across the real cycle span — no more whole-cycle flooring</span>
+        <span>A loan repaid before one cycle completes now shows a loss, not a phantom profit</span>
+        <span>Every option shows stock cycles and profit — expected and worst case</span>
+        <span>Pin three, then send any pairing to the Calculator for the full breakdown</span>
+        <span>Benchmarks the offer against what your past advances actually cost per payment date</span>
+        <span>Set a fee % ceiling as well as a cash limit — it respects both</span>
+        <span>Shows what 0.5% more fee actually buys you in profit</span>
+        <span><b>All together</b>: longest term you can fund, then the free slide to its cheap end</span>
+        <span>Tell it what cash you can cover and it won't suggest a term you can't survive</span>
+        <span>Small cash swings count as idle, not lost profit — £13 a payment isn't stock money</span>
+        <span>Inside a term band: fee saved vs stock profit given up, priced both ways</span>
+        <span>Calculator and Offer Slider split into short tabbed views, not one long scroll</span>
+        <span>Realised profit leads — the part-sold cycle counts, because you turn it</span>
+        <span>Every boundary scored on fee vs profit vs pressure, with the winners tagged</span>
+        <span>One verdict on which offer is better for the business, not a split decision</span>
+        <span>Profit is the first thing on the Calculator, with the pressure % explained</span>
+        <span>Your existing advances are NOT counted unless you tick the box</span>
+        <span>Compare three repayment levels, ranked, with the verdict on top</span>
+        <span>Slider shows payment dates and weeks on every notch</span>
+        <span>Paste a whole offer page — Offer Slider and Calculator both</span>
+        <span>Reads the lender's slider min/max and uses it as the range</span>
+        <span>Months removed — duration is payment dates and weeks</span>
+        <span>Recommendations: best on my numbers / longest term / lowest fee</span>
+        <span>Pin two repayment levels and compare them</span>
+        <span>Cash position — what you must self-fund, what's free to restock</span>
+        <span>Total repayment load stacked on your live advances</span>
+        <span>Dashboard: debits grouped by date, repayment runway, payment ticks</span>
+        <span>Backup / restore to a file on your own disk</span>
+        <span>Refuses a repayment that never clears, instead of answering anyway</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- shared file picker for restoring a backup (used from both pages) -->
 <input type="file" id="restore-file-input" accept="application/json,.json" style="display:none;" onchange="importData(this)">
@@ -1427,9 +1797,9 @@ body { overflow-x: hidden; }
       <button class="calc-mode-btn" id="calc-mode-compare" onclick="setCalcMode('compare')">Compare 2 Scenarios</button>
     </div>
   </div>
-  <div class="info-box">Try out an offer before accepting it — or compare two side by side (a higher vs lower repayment, different ROI,
-    faster vs slower stock cycle). Type the <strong>repayment from your offer</strong> and the number of payment dates, the exact payoff
-    date and the duration in weeks are worked out for you. Updates live, nothing is saved.</div>
+  <div class="info-box"><strong>For deciding your next advance.</strong> Paste or type an offer and see what it would actually leave you —
+    or put two side by side and get one answer on which suits the business better. Type the <strong>repayment from your offer</strong>;
+    the payment dates, exact payoff date and duration in weeks are worked out for you. Nothing here is saved to your loans.</div>
 
   <!-- SINGLE SCENARIO -->
   <div class="calc-layout" id="calc-single-layout">
@@ -1470,10 +1840,10 @@ body { overflow-x: hidden; }
     <button class="btn-sm" onclick="resetCapital()">Reset to saved offer</button>
   </div>
   <div class="info-box">
-    Lenders label an offer "7 months", but the month label is not what you repay. Move the repayment and this works out the
-    <strong>real schedule</strong> — how many payment dates there actually are, how big the last one is, and the exact day it finishes.
-    A <strong>payment-date cliff</strong> is the point where paying a little more each fortnight deletes a whole future payment date.
-    Everything here is saved in your browser.
+    <strong>For choosing the repayment on your next advance.</strong> Lenders quote a month term; that is not what you repay.
+    Move the slider and this works out the <strong>real schedule</strong> — how many payment dates there are, how many weeks it runs,
+    how big the last payment is and the exact day it finishes. A <strong>payment-date cliff</strong> is where paying slightly more
+    deletes a whole future payment date. Pin up to three levels to compare them. Saved in your browser.
   </div>
 
   <div class="cap-layout">
@@ -1729,6 +2099,17 @@ function scheduleLine(payments, paymentAmount) {
 // For ROI purposes: capital is deployed at Day 0, returned Day 124
 // 1 cycle = 124 days. Per year (365 days): ~2.94 cycles max
 // But we cap at 2 cycles as your stated worst case over a typical loan life.
+// How a part-finished cycle is credited. Defaults to the most conservative:
+// only profit whose cash has actually landed.
+function profitBasis() {
+  try { return localStorage.getItem('wf_profit_basis') || 'cash'; } catch(e) { return 'cash'; }
+}
+function setProfitBasis(b) {
+  try { localStorage.setItem('wf_profit_basis', b); } catch(e) {}
+  renderDashboard(); renderCalculator(); renderCalculatorCompare();
+  if(document.getElementById('cap-results')) { capLadderCache = { key:'', rows:null }; renderCapitalResults(); }
+}
+
 function calcProfit(loan) {
   const roiPct = loan.roiPct != null ? loan.roiPct : 15;
   const roi = roiPct / 100;
@@ -1750,15 +2131,45 @@ function calcProfit(loan) {
   const loanEnd = lastPay ? parseDate(lastPay.periodDate) : null;
   const loanDays = (loanEnd && loanStart) ? Math.max(1, daysFrom(loanStart, loanEnd)) : 200;
 
-  // How many FULL worst-case cycles complete within the loan life?
-  // (A partial cycle at the end doesn't count — that capital is still tied
-  // up in stock/transit when the loan ends, so its profit isn't realised.)
-  const cycles = Math.max(1, Math.floor(loanDays / cycleDays));
-  const totalCyclesInLoan = loanDays / cycleDays; // e.g. 3.15 (full + partial)
+  // Profit is PRO-RATED across the actual cycle time, not counted in whole
+  // cycles. Stock sells through a cycle rather than all on the last day, so
+  // 1.69 cycles of time earns 1.69 cycles of profit.
+  //
+  // This used to floor to whole cycles with a Math.max(1, …), which meant a
+  // loan shorter than one cycle was still credited with a full cycle of
+  // profit — an 0.90-cycle advance showed a risk-free gain when in truth it
+  // is repaid before the stock has sold once. The floor is gone.
+  const totalCyclesInLoan = loanDays / cycleDays;   // e.g. 1.69
+  const cyclesWhole = Math.floor(totalCyclesInLoan); // only for the floor figure
+  const cycles = cyclesWhole;                        // kept: callers read .cycles
 
-  // Gross profit: principal × roi × cycles (simple, conservative — no compounding)
-  const grossProfit = principal * roi * cycles;
+  // A part-finished cycle hasn't earned its profit evenly. Nothing is live for
+  // the first 20 days, then it sells over 90, then the cash takes another 14
+  // to arrive. Straight-line pro-rating flatters a short overhang and
+  // shortchanges a long one, so the part-cycle is credited on whichever basis
+  // is chosen:
+  //   cash   — only what has actually landed in the bank (most conservative)
+  //   sold   — what has sold, cash or not
+  //   linear — a straight line across the cycle
+  const lagDays = daysDelivery + daysAmazonHold + daysTransfer;
+  const partProgress = (fraction) => {
+    const basis = profitBasis();
+    if(basis === 'linear') return fraction;
+    const day = fraction * cycleDays - (basis === 'cash' ? lagDays : 0);
+    if(day <= daysToLive) return 0;
+    return Math.min(1, (day - daysToLive) / daysToSell);
+  };
+  const partFraction = totalCyclesInLoan - cyclesWhole;
+  const effectiveCycles = cyclesWhole + partProgress(partFraction);
+
+  // Gross profit over the earned span (simple — no compounding)
+  const grossProfit = principal * roi * effectiveCycles;
   const netProfit   = grossProfit - advanceCost;
+
+  // The floor: what's left if ONLY fully completed cycles are credited.
+  // Below one full cycle that is a loss, which is the honest answer.
+  const grossWhole = principal * roi * cyclesWhole;
+  const netWhole   = grossWhole - advanceCost;
   const breakEvenPct = advanceCost > 0 ? Math.min(100, (grossProfit / advanceCost) * 100) : 100;
   const isProfitable = netProfit > 0;
   const netRoiPct = principal > 0 ? (netProfit / principal) * 100 : 0;
@@ -1768,7 +2179,7 @@ function calcProfit(loan) {
   const grossToNetPct = grossProfit > 0 ? (netProfit / grossProfit) * 100 : 0;
 
   // Break-even ROI: the ROI% per cycle at which net profit = 0, given this loan's cycles
-  const breakEvenRoiPct = (cycles > 0 && principal > 0) ? (advanceCost / (principal * cycles)) * 100 : 0;
+  const breakEvenRoiPct = (totalCyclesInLoan > 0 && principal > 0) ? (advanceCost / (principal * totalCyclesInLoan)) * 100 : 0;
   const roiMarginMultiple = breakEvenRoiPct > 0 ? roiPct / breakEvenRoiPct : null;
 
   // Break-even cycle length: the slowest your stock could turn (days per cycle)
@@ -1779,8 +2190,10 @@ function calcProfit(loan) {
 
   // Cash conversion cycle breakdown for display
   const cycle = { daysToLive, daysToSell, daysDelivery, daysAmazonHold, daysTransfer, cycleDays };
+  const cyclesPartial = Math.max(0, totalCyclesInLoan - cyclesWhole);
+  const partEarned = partProgress(partFraction);
 
-  return { roi, roiPct, principal, advanceCost, cycles, totalCyclesInLoan, loanDays, cycleDays, grossProfit, netProfit, breakEvenPct, isProfitable, netRoiPct, stillNeeded, grossToNetPct, breakEvenRoiPct, roiMarginMultiple, breakEvenCycleDays, cycleMarginDays, cycle };
+  return { roi, roiPct, principal, advanceCost, cycles, cyclesWhole, cyclesPartial, partEarned, effectiveCycles, totalCyclesInLoan, loanDays, cycleDays, grossProfit, netProfit, grossWhole, netWhole, breakEvenPct, isProfitable, netRoiPct, stillNeeded, grossToNetPct, breakEvenRoiPct, roiMarginMultiple, breakEvenCycleDays, cycleMarginDays, cycle };
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2941,10 +3354,15 @@ function scenarioMetrics(S) {
   const pressure = band(pressurePct);
   const soloPressure = band(soloPressurePct);
 
-  const realisedNet = P.grossProfit + inputs.advanced * P.roi * partial - cost;  // steady across spans
+  // Gross is already pro-rated across the real span, so this IS the realised
+  // figure — no partial to bolt on afterwards.
+  const realisedNet = P.netProfit;
   const costPct = inputs.advanced > 0 ? (cost / inputs.advanced) * 100 : 0;
+  // The floor score must be fed the FLOOR figures, or it stops being a floor:
+  // gross is pro-rated now, so passing it here made the conservative score
+  // rise above the realised one.
   const scores = computeScores({ capital: inputs.advanced, roi: P.roi, cost, costPct,
-    netProfit: P.netProfit, grossProfit: P.grossProfit, realisedNet, spans, pressurePct });
+    netProfit: P.netWhole, grossProfit: P.grossWhole, realisedNet, spans, pressurePct });
   const score = scores.conservative;   // back-compat default
   const scoreR = scores.realised;
 
@@ -3022,8 +3440,11 @@ function loadByMonth(from, newPayments, months) {
 }
 
 // Is the "count my existing advances" switch on? Stored so it survives a reload.
+// Off by default: the question is "what does THIS loan do", and folding in
+// advances you're already repaying pushed the pressure figure to 109% when the
+// loan on its own is 61%. Turn it on deliberately to see the combined picture.
 function countExisting() {
-  try { return localStorage.getItem('wf_count_existing') !== '0'; } catch(e) { return true; }
+  try { return localStorage.getItem('wf_count_existing') === '1'; } catch(e) { return false; }
 }
 function setCountExisting(on) {
   try { localStorage.setItem('wf_count_existing', on ? '1' : '0'); } catch(e) {}
@@ -3082,6 +3503,8 @@ function computeScores({ capital, roi, cost, costPct, netProfit, grossProfit, re
   const cProfit = profitSub(netProfit, C.PROFIT_FULL_RATIO);
   let cs = cProfit * C.PROFIT_WEIGHT + breakevenSub * C.BREAKEVEN_WEIGHT + pressureSub * C.PRESSURE_WEIGHT;
   if(netProfit < 0) {
+    // Below break-even the score is capped and scaled by how close the
+    // completed cycles got to covering the cost.
     const floorC = Math.floor(spans), partial = Math.max(0, spans - floorC);
     const effGross = capital * roi * (floorC + partial * C.PARTIAL_CREDIT);
     cs = clamp(cost > 0 ? effGross / cost : 0, 0, 1) * C.LOSS_CAP;
@@ -3105,7 +3528,7 @@ function renderLoadPanel(S, M) {
   const EX = M.EX;
   const on = countExisting();
   const toggle = `<label class="load-toggle" title="When on, the cash-flow score is judged on your combined outflow rather than this advance alone">
-      <input type="checkbox" ${on?'checked':''} onchange="setCountExisting(this.checked)"> Count my existing advances in the score
+      <input type="checkbox" ${on?'checked':''} onchange="setCountExisting(this.checked)"> Also judge the score on my existing advances
     </label>`;
 
   if(!EX.all.length) {
@@ -3186,6 +3609,8 @@ function renderLoadPanel(S, M) {
 // redeployed. The trough is what you must fund from elsewhere; the surplus at
 // each cycle end is what you can actually put back into stock.
 // ═══════════════════════════════════════════════════════
+function minDeployOf() { return (CAP && CAP.minDeploy != null) ? CAP.minDeploy : 500; }
+
 function cashProfile(S) {
   const { inputs, P, payments } = S;
   const start = parseDate(inputs.start);
@@ -3308,6 +3733,32 @@ function renderCashPanel(S, M) {
     </div>`;
 }
 
+// ── TABS ───────────────────────────────────────────────
+// Both these pages had grown into an eight-panel scroll with everything
+// shouting at once. Same content, grouped into a few short views you can
+// actually finish reading. Switching panes doesn't re-render anything, so
+// the slider stays responsive and you keep your scroll position.
+const TAB_STATE = {};
+function tabset(id, items) {
+  const live = items.filter(i => i && i.html);
+  if(!live.length) return '';
+  const active = live.some(i => i.key === TAB_STATE[id]) ? TAB_STATE[id] : live[0].key;
+  return `<div class="tabset" id="${id}">
+    <div class="tabbar" role="tablist">${live.map(i => `
+      <button class="tabbtn ${i.key===active?'on':''}" data-k="${i.key}" role="tab"
+        onclick="setTab('${id}','${i.key}')">${i.label}${i.note?`<small>${i.note}</small>`:''}</button>`).join('')}
+    </div>
+    ${live.map(i => `<div class="tabpane ${i.key===active?'on':''}" data-k="${i.key}" role="tabpanel">${i.html}</div>`).join('')}
+  </div>`;
+}
+function setTab(id, k) {
+  TAB_STATE[id] = k;
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.querySelectorAll(':scope > .tabbar .tabbtn').forEach(b => b.classList.toggle('on', b.dataset.k === k));
+  el.querySelectorAll(':scope > .tabpane').forEach(p => p.classList.toggle('on', p.dataset.k === k));
+}
+
 // Renders the full results panel for one scenario.
 function renderScenarioResults(S) {
   const { inputs, P, CP, payments, finalDate } = S;
@@ -3380,17 +3831,17 @@ function renderScenarioResults(S) {
   const scoreHeader = `
     <div class="score-header ${score.cls}">
       <div class="dual-score">
-        <div class="ds-block">
-          <div class="score-ring ${score.cls}"><div class="score-num">${score.text}</div><div class="score-den">/10</div></div>
-          <div class="ds-cap"><div class="ds-name">Conservative</div><div class="ds-band ${score.cls}">${score.band}</div></div>
-        </div>
-        <div class="ds-block">
+        <div class="ds-block ds-lead">
           <div class="score-ring ${scoreR.cls}"><div class="score-num">${scoreR.text}</div><div class="score-den">/10</div></div>
           <div class="ds-cap"><div class="ds-name">Realised</div><div class="ds-band ${scoreR.cls}">${scoreR.band}</div></div>
         </div>
+        <div class="ds-block ds-quiet">
+          <div class="score-ring ${score.cls}"><div class="score-num">${score.text}</div><div class="score-den">/10</div></div>
+          <div class="ds-cap"><div class="ds-name">Worst case</div><div class="ds-band ${score.cls}">${score.band}</div></div>
+        </div>
       </div>
       <div class="score-meta">
-        <div class="score-line"><strong>Conservative</strong> counts completed cycles only (profit 50 · break-even 25 · cash-flow 25). <strong>Realised</strong> counts the part-sold cycle too (profit 60 · cash-flow 25 · cost 15).</div>
+        <div class="score-line"><strong>Realised</strong> is the headline: it counts the part-sold cycle (profit 60 · cash-flow 25 · cost 15). <strong>Worst case</strong> is the floor — completed cycles only (profit 50 · break-even 25 · cash-flow 25).</div>
         <div class="score-bars">
           ${barRow('Profit (worst-case)', sp.profit, W.PROFIT_WEIGHT)}
           ${barRow('Break-even comfort', sp.breakeven, W.BREAKEVEN_WEIGHT)}
@@ -3448,7 +3899,7 @@ function renderScenarioResults(S) {
     <div class="calc-analysis ${profitCls}">
       <div class="ca-head">Profit by Loan End</div>
 
-      <div class="two-output">
+      <div class="two-output two-output-flip">
         <div class="to-card worst">
           <div class="to-lab">Worst-case net profit ${tip('','Only fully completed stock cycles count (×'+completed+'). The floor — what you keep if nothing from the in-progress cycle has converted.')}</div>
           <div class="to-val" style="color:${netColor};">${fmt(P.netProfit)}</div>
@@ -3460,7 +3911,7 @@ function renderScenarioResults(S) {
           <div class="to-sub">${spans.toFixed(2)} cycles steady${partial>0.01?` · adds ${fmt(inputs.advanced*P.roi*partial)} from the part-sold cycle`:''}</div>
         </div>
       </div>
-      <div class="to-note"><strong>Worst case</strong> = only fully completed stock cycles count. <strong>Realised partial</strong> = assumes sales/profit are earned steadily through the cycle (an upside — not guaranteed, since cash can lag behind sales).</div>
+      <div class="to-note"><strong>Realised partial</strong> is the one to plan on if you genuinely turn part of another cycle — it counts profit earned steadily through the ${spans.toFixed(2)} cycles of loan time. <strong>Worst case</strong> is the floor: what's left if only fully completed cycles count and the part-sold one lands nothing. Neither can predict stock that doesn't sell or sells under target.</div>
 
       <div class="ca-metrics ca-metrics-sec">
         <div class="ca-metric ca-metric-sm"><div class="ca-m-label">${tip('Borrowing Cost','What the finance costs you in total — the expense the profit has to beat.')}</div><div class="ca-m-val" style="color:var(--amber);">${fmt(cost)}</div><div class="ca-m-sub">${costPct.toFixed(1)}% of the loan</div></div>
@@ -3530,7 +3981,54 @@ function renderScenarioResults(S) {
     </details>
   `;
 
-  return summary + schedStrip + renderLoadPanel(S, M) + renderCashPanel(S, M) + profitBlock + deep;
+  // The first thing on screen should be the thing he actually asked:
+  // how much does this loan make me?
+  const partialNet = P.netProfit;              // pro-rated over the real span
+  const floorNet = P.netWhole;                 // only fully completed cycles
+  const headline = `
+    <div class="profit-hero ${P.isProfitable ? 'good' : 'bad'}">
+      <div class="ph-kicker">What this loan makes you</div>
+      <div class="ph-figures">
+        <div class="ph-main ph-primary">
+          <div class="ph-val" style="color:${partialNet >= 0 ? 'var(--green)' : 'var(--red)'};">${fmt(partialNet)}</div>
+          <div class="ph-lab">what you'd keep<small>${spans.toFixed(2)} stock cycles of time — counts the part-sold one</small></div>
+        </div>
+        <div class="ph-floor">
+          <div class="ph-floor-val" style="color:${floorNet >= 0 ? 'var(--text)' : 'var(--red)'};">${fmt(floorNet)}</div>
+          <div class="ph-floor-lab">floor, if <b>nothing</b> from the part-sold cycle lands<small>${P.cyclesWhole} fully completed cycle${P.cyclesWhole===1?'':'s'} only${P.cyclesWhole===0?' — repaid before the stock sells once':''}</small></div>
+        </div>
+      </div>
+      <div class="ph-line">
+        <span><b>${fmt(inputs.advanced)}</b> borrowed</span>
+        <span><b style="color:var(--amber);">${fmt(cost)}</b> it costs you (${costPct.toFixed(1)}%)</span>
+        <span><b>${fmt(P.grossProfit)}</b> gross at ${inputs.roiPct}% a cycle</span>
+        <span><b>${pencePerPound.toFixed(1)}p</b> kept per £1 borrowed</span>
+      </div>
+      <div class="ph-basis">
+        <span class="ph-basis-lab">Part-finished cycle counted as</span>
+        ${['cash','sold','linear'].map(b => `<button class="ph-basis-btn ${profitBasis()===b?'on':''}"
+          onclick="setProfitBasis('${b}')" title="${b==='cash'?'Only profit whose cash has landed — the most conservative'
+            : b==='sold'?'What has sold, whether or not the cash has arrived'
+            : 'A straight line across the cycle'}">${b==='cash'?'Cash in bank':b==='sold'?'Sold':'Straight line'}</button>`).join('')}
+        <span class="ph-basis-note">${profitBasis()==='cash'
+          ? `Most conservative: ${(P.partEarned*100).toFixed(0)}% of the part-cycle counted, against ${(P.cyclesPartial*100).toFixed(0)}% of it elapsed.`
+          : profitBasis()==='sold' ? 'Counts stock sold, even if the cash is still in transit.'
+          : 'Assumes profit accrues evenly — flatters short overhangs, undersells long ones.'}</span>
+      </div>
+      <div class="ph-press">
+        <span class="pressure-pill ${pressure.cls}">${pressure.dot} ${pressure.lab} pressure · ${pressurePct.toFixed(0)}%</span>
+        <span class="ph-press-note">Before the first stock turns back into cash (day ${P.cycleDays}),
+          <b>${paysBeforeFirstCycle} payments totalling ${fmt(cashBeforeFirstCycle)}</b> will have left the bank —
+          ${pressurePct.toFixed(0)}% of the ${fmt(inputs.advanced)} you took.${M.useEx ? ` This figure <b>includes your ${M.EX.loans.length} live advance${M.EX.loans.length===1?'':'s'}</b>; on this loan alone it is ${M.soloPressurePct.toFixed(0)}%.` : ''}
+          It isn't money lost — it's money you need to have while you wait.</span>
+      </div>
+    </div>`;
+  // Each scenario gets its own tabset id so A and B don't fight in compare mode.
+  return headline + tabset('res-' + (S.tabId || 'calc'), [
+    { key:'now',    label:'The offer',   note:`${SF.n} dates · ${weeksTxt}`, html: summary + schedStrip },
+    { key:'cash',   label:'Cash flow',   note:`${pressurePct.toFixed(0)}% pressure`, html: renderLoadPanel(S, M) + renderCashPanel(S, M) },
+    { key:'profit', label:'Profit detail', note:`${fmt(partialNet)}`, html: profitBlock + deep },
+  ]);
 }
 
 // Compact scenario card for COMPARE mode — key numbers only, full report behind a toggle.
@@ -3590,6 +4088,7 @@ function renderCalculator() {
   }
   const inputs = readCalcInputs('calc');
   const S = computeScenario(inputs);
+  if(S) S.tabId = 'calc';
   const results = document.getElementById('calc-results');
   if(!S) { showDerivedNote('calc', null); results.innerHTML = '<div class="empty-state">Enter the loan amount, the fee % (or total to repay), and a loan length to see your numbers.</div>'; return; }
   showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`);
@@ -3609,6 +4108,8 @@ function renderCalculatorCompare() {
   const inputsB = readCalcInputs('cmpb');
   const SA = computeScenario(inputsA);
   const SB = computeScenario(inputsB);
+  if(SA) SA.tabId = 'a';
+  if(SB) SB.tabId = 'b';
   showDerivedNote('cmpa', SA ? `${scheduleLine(SA.payments, inputsA.payment)} · ${weeksOf(SA)} weeks · ${fmtDate(SA.SF.firstDate)} → ${fmtDate(SA.SF.finalDate)}` : null);
   showDerivedNote('cmpb', SB ? `${scheduleLine(SB.payments, inputsB.payment)} · ${weeksOf(SB)} weeks · ${fmtDate(SB.SF.firstDate)} → ${fmtDate(SB.SF.finalDate)}` : null);
 
@@ -3626,7 +4127,7 @@ function renderCalculatorCompare() {
 
   resA.innerHTML = renderScenarioCompact(SA, 'A', 'var(--navy)');
   resB.innerHTML = renderScenarioCompact(SB, 'B', 'var(--purple)');
-  document.getElementById('calc-compare-hero').innerHTML = renderComparisonHero(SA, SB);
+  document.getElementById('calc-compare-hero').innerHTML = renderBusinessVerdict(SA, SB) + renderComparisonHero(SA, SB);
   verdict.innerHTML = renderComparisonVerdict(SA, SB);
 }
 
@@ -3654,6 +4155,98 @@ function comparisonFacts(SA, SB) {
   const wIsA = W === 'A';
   return { a, b, ma, mb, winners, W, L, cashSimilar, pressGap, worstWinner, realisedWinner, split,
     wP: wIsA ? a : b, lP: wIsA ? b : a, wM: wIsA ? ma : mb, lM: wIsA ? mb : ma };
+}
+
+// ── ONE VERDICT, ON THE THING THAT MATTERS ────────────
+// "Split decision" ducked the question. What actually decides it for a stock
+// business is: which one leaves more money once the stock cycle is allowed to
+// run, and which one takes less out of the bank each fortnight while it does.
+// A longer term wins twice over — more of the cycle completes, AND the
+// payment is smaller — which is exactly why the shorter, cheaper-looking
+// option can be the worse deal.
+function businessVerdict(SA, SB) {
+  const F = comparisonFacts(SA, SB);
+  const side = (S, M) => ({
+    S, M,
+    realised: M.realisedNet,                 // profit once the part-sold cycle counts
+    perPay: S.inputs.payment,
+    weeks: weeksOf(S),
+    dates: S.SF.n,
+    cycles: S.P.totalCyclesInLoan,
+    fee: M.cost,
+    monthly: S.inputs.payment * (365 / S.inputs.freq) / 12,
+    freeCash: (cashProfile(S) || {}).reinvestable || [],
+  });
+  const a = side(SA, F.ma), b = side(SB, F.mb);
+  const win = a.realised === b.realised ? null : (a.realised > b.realised ? 'A' : 'B');
+  const w = win === 'B' ? b : a, l = win === 'B' ? a : b;
+  const wL = win === 'B' ? 'B' : 'A', lL = wL === 'A' ? 'B' : 'A';
+
+  const profitGap = r2(Math.abs(w.realised - l.realised));
+  const payGap = r2(w.perPay - l.perPay);          // negative = winner also costs less per payment
+  const monthGap = r2(w.monthly - l.monthly);
+  const feeGap = r2(w.fee - l.fee);
+  const weekGap = w.weeks - l.weeks;
+  const cycleGap = w.cycles - l.cycles;
+  const wFree = w.freeCash.length ? w.freeCash[0].amount : 0;
+  const lFree = l.freeCash.length ? l.freeCash[0].amount : 0;
+
+  const pros = [], cons = [];
+  if(profitGap > 1) pros.push(`<b>${fmt(profitGap)} more profit</b> — ${weekGap > 0 ? `the extra ${weekGap} weeks let more of the stock cycle finish before the last payment` : `it clears sooner, so less of the advance is spent on fee`}`);
+  if(payGap < -0.5) pros.push(`<b>${fmt(Math.abs(payGap))} less out every ${w.S.inputs.freq} days</b> (${fmt(Math.abs(monthGap))} a month easier on the bank)`);
+  else if(payGap > 0.5) cons.push(`<b>${fmt(payGap)} more out every ${w.S.inputs.freq} days</b> (${fmt(monthGap)} a month tighter)`);
+  if(weekGap > 0) pros.push(`<b>${weekGap} more weeks</b> with the money — ${w.cycles.toFixed(2)} stock cycles of time instead of ${l.cycles.toFixed(2)}`);
+  else if(weekGap < 0) pros.push(`<b>debt-free ${Math.abs(weekGap)} weeks sooner</b>`);
+  if(wFree - lFree > 1) pros.push(`<b>${fmt(wFree - lFree)} more free to restock</b> when the first stock comes back`);
+  if(feeGap > 1) cons.push(`<b>${fmt(feeGap)} more in fee</b> — already taken off the profit figure above`);
+  else if(feeGap < -1) pros.push(`<b>${fmt(Math.abs(feeGap))} less in fee</b>`);
+
+  return { win: wL, lose: lL, w, l, profitGap, payGap, monthGap, feeGap, weekGap, cycleGap, pros, cons, F };
+}
+
+function renderBusinessVerdict(SA, SB) {
+  const V = businessVerdict(SA, SB);
+  if(!V.win) return '';
+  const { w, l, win, lose } = V;
+  const bothWays = V.profitGap > 1 && V.payGap < -0.5;
+  return `
+    <div class="bv">
+      <div class="bv-head">
+        <div>
+          <div class="bv-kicker">Better for the business</div>
+          <div class="bv-name">Scenario ${win}
+            <span class="bv-sub">${fmt(w.perPay)} every ${w.S.inputs.freq} days · ${w.dates} payment dates · ${w.weeks} weeks</span></div>
+        </div>
+        <div class="bv-delta">
+          <div class="bv-delta-val">${fmt(V.profitGap)}</div>
+          <div class="bv-delta-lab">more profit than ${lose}</div>
+        </div>
+      </div>
+      ${bothWays ? `<div class="bv-both">It wins both ways: <b>more profit</b> and <b>less out of the bank each payment</b>. The cheaper-looking fee on ${lose} doesn't make up for it.</div>` : ''}
+      <div class="bv-cols">
+        <div class="bv-col">
+          <div class="bv-col-h good">Why ${win}</div>
+          <ul>${V.pros.map(p => `<li>${p}</li>`).join('') || '<li>Edges it on profit once the cycle is counted</li>'}</ul>
+        </div>
+        <div class="bv-col">
+          <div class="bv-col-h warn">What it costs you</div>
+          <ul>${V.cons.map(c => `<li>${c}</li>`).join('') || `<li>Nothing — ${win} leads on every measure that matters here</li>`}</ul>
+        </div>
+      </div>
+      <div class="bv-table">
+        <span></span><span class="bv-th ${win==='A'?'w':''}">Scenario A</span><span class="bv-th ${win==='B'?'w':''}">Scenario B</span>
+        <span>Profit you'd keep <small>(realised)</small></span><b class="${V.F.ma.realisedNet>=V.F.mb.realisedNet?'w':''}">${fmt(V.F.ma.realisedNet)}</b><b class="${V.F.mb.realisedNet>V.F.ma.realisedNet?'w':''}">${fmt(V.F.mb.realisedNet)}</b>
+        <span>Out every payment</span><b class="${SA.inputs.payment<=SB.inputs.payment?'w':''}">${fmt(SA.inputs.payment)}</b><b class="${SB.inputs.payment<SA.inputs.payment?'w':''}">${fmt(SB.inputs.payment)}</b>
+        <span>Roughly per month</span><b>${fmt(SA.inputs.payment*(365/SA.inputs.freq)/12)}</b><b>${fmt(SB.inputs.payment*(365/SB.inputs.freq)/12)}</b>
+        <span>Weeks with the money</span><b class="${weeksOf(SA)>=weeksOf(SB)?'w':''}">${weeksOf(SA)}</b><b class="${weeksOf(SB)>weeksOf(SA)?'w':''}">${weeksOf(SB)}</b>
+        <span>Stock cycles of time</span><b>${SA.P.totalCyclesInLoan.toFixed(2)}</b><b>${SB.P.totalCyclesInLoan.toFixed(2)}</b>
+        <span>Fee</span><b class="${V.F.ma.cost<=V.F.mb.cost?'w':''}">${fmt(V.F.ma.cost)}</b><b class="${V.F.mb.cost<V.F.ma.cost?'w':''}">${fmt(V.F.mb.cost)}</b>
+        <span>Pressure (this loan alone)</span><b class="${V.F.ma.soloPressurePct<=V.F.mb.soloPressurePct?'w':''}">${V.F.ma.soloPressurePct.toFixed(0)}%</b><b class="${V.F.mb.soloPressurePct<V.F.ma.soloPressurePct?'w':''}">${V.F.mb.soloPressurePct.toFixed(0)}%</b>
+      </div>
+      <div class="bv-foot">Judged on <strong>realised profit</strong> — what you keep once the part-sold cycle is counted — then on what
+        leaves the bank each payment. A longer term usually wins both: more of the cycle completes before the final payment, and the
+        payment itself is smaller.</div>
+    </div>`;
 }
 
 // HERO — the answer, at the very top: recommended scenario, why, trade-offs,
@@ -3729,7 +4322,7 @@ function renderComparisonHero(SA, SB) {
       <div class="cp-row"><span class="cp-h">Worst case <small>(completed cycles only)</small></span><span class="cp-vals">${consWin?`<em>${consWin} wins by ${fmt(consGap)}</em>`:`level at ${fmt(F.a.netProfit)}`} <small style="color:var(--text3);font-weight:600;">A ${fmt(F.a.netProfit)} · B ${fmt(F.b.netProfit)}</small></span></div>
       <div class="cp-row"><span class="cp-h">Realised partial <small>(profit earned steadily)</small></span><span class="cp-vals">${potWin?`<em class="pot">${potWin} wins by ${fmt(potGap)}</em>`:`level at ${fmt(aPot)}`} <small style="color:var(--text3);font-weight:600;">A ${fmt(aPot)} · B ${fmt(bPot)}</small></span></div>
       <div class="cp-row"><span class="cp-h">Main trade-off</span><span class="cp-vals" style="font-weight:600;color:var(--text2);">${tradeoffTxt}</span></div>
-      <div class="cp-row"><span class="cp-h">Real schedule <small>(not the month label)</small></span><span class="cp-vals" style="font-weight:600;color:var(--text2);">A ${SA.SF.n} dates → ${fmtDate(SA.SF.finalDate)} · B ${SB.SF.n} dates → ${fmtDate(SB.SF.finalDate)}</span></div>
+      <div class="cp-row"><span class="cp-h">Real schedule <small>(payment dates &amp; weeks)</small></span><span class="cp-vals" style="font-weight:600;color:var(--text2);">A ${SA.SF.n} dates · ${weeksOf(SA)}w → ${fmtDate(SA.SF.finalDate)} · B ${SB.SF.n} dates · ${weeksOf(SB)}w → ${fmtDate(SB.SF.finalDate)}</span></div>
       ${sameLabelNote}
       ${flip?`<div class="cp-note">⚠️ ${consWin} wins on worst-case profit, but ${potWin} wins once the part-sold cycle is counted (realised partial).</div>`:''}
     </div>`;
@@ -3912,6 +4505,9 @@ const OFFER_SEED = {
   feeOverride: '',
   roiPct: 15,
   cycleDays: 124,
+  minDeploy: 500,      // cash swings under this are too small to buy stock with
+  cashBuffer: '',      // what you could cover from elsewhere before stock lands
+  maxFeePct: '',       // highest fee % you're willing to pay
   points: [
     { r:5516,  fee:7614.92, term:'8 months' },
     { r:6272,  fee:6665.48, term:'7 months' },
@@ -4024,10 +4620,24 @@ function capCashCost(mA, mB, cfg) {
   const A = cum(mA), B = cum(mB);
   const lastDay = Math.max(A.length?A[A.length-1].day:0, B.length?B[B.length-1].day:0);
   const at = (arr, day) => { let c = 0; for(const x of arr) { if(x.day <= day) c = x.cum; else break; } return c; };
-  let poundDays = 0;
-  for(let d = 1; d <= lastDay; d++) poundDays += at(B, d) - at(A, d);
+  // Small sums don't buy stock. A few pounds a fortnight just pads the bank
+  // account, so pricing it at a full stock return overstates the cost badly —
+  // £13 a payment and £473 a payment are not the same thing per pound.
+  // The first `minDeploy` of any cash swing is treated as idle; only what's
+  // above it is money that could actually have gone into inventory.
+  const minDeploy = Math.max(0, parseFloat(cfg.minDeploy) || 0);
+  const working = v => v > 0 ? Math.max(0, v - minDeploy) : Math.min(0, v + minDeploy);
+  let poundDays = 0, rawPoundDays = 0, peak = 0;
+  for(let d = 1; d <= lastDay; d++) {
+    const diff = at(B, d) - at(A, d);
+    rawPoundDays += diff;
+    poundDays += working(diff);
+    if(Math.abs(diff) > Math.abs(peak)) peak = diff;
+  }
   const dailyReturn = (cfg.roiPct/100) / Math.max(1, cfg.cycleDays);   // your ROI per £ per day
-  return { poundDays, cost: poundDays * dailyReturn, dailyReturn };
+  return { poundDays, rawPoundDays, peak, minDeploy,
+           idle: Math.abs(peak) <= minDeploy,
+           cost: poundDays * dailyReturn, dailyReturn };
 }
 
 // The analytical labels from the spec — descriptive, never "this one is best".
@@ -4049,6 +4659,82 @@ function capTags(m, cfg, ladder) {
   if(nextCliff && m.lenderTerm && nextCliff.model.lenderTerm && m.lenderTerm === nextCliff.model.lenderTerm)
     tags.push({ cls:'sameterm', txt:`Same "${m.lenderTerm}" label, different schedule` });
   return tags;
+}
+
+// ── WHAT YOU'VE PAID BEFORE ────────────────────────────
+// A fee % on its own says nothing — a longer advance costs more because it
+// buys more weeks. The honest unit is fee % per payment date, and once you've
+// taken a few advances you have your own benchmark. Both of Jack's previous
+// ones priced at exactly 0.500% per date, which makes anything dearer than
+// that a worse deal than he's already had.
+function priorDeals() {
+  return (typeof LOANS === 'undefined' ? [] : LOANS).map(l => {
+    const fee = r2(l.remittanceTotal - l.cashAdvanced);
+    const dates = (l.payments || []).length;
+    if(!(l.cashAdvanced > 0) || !(dates > 0) || !(fee > 0)) return null;
+    const feePct = (fee / l.cashAdvanced) * 100;
+    return { name: l.name, advanced: l.cashAdvanced, fee, feePct, dates,
+             perDate: feePct / dates, weeks: dates * Math.round((l.paymentFreqDays || 14) / 7) };
+  }).filter(Boolean).sort((a, b) => a.perDate - b.perDate);
+}
+
+function renderBenchmark(m) {
+  const prior = priorDeals();
+  if(!prior.length) return '';
+  const best = prior[0];
+  const mine = m.facts.n > 0 ? m.feePct / m.facts.n : 0;
+  if(!(mine > 0)) return '';
+  const diff = mine - best.perDate;
+  const pctWorse = best.perDate > 0 ? (diff / best.perDate) * 100 : 0;
+  const dearer = diff > 0.0005;
+  // what this offer would cost at the rate he's paid before
+  const atBest = r2(best.perDate * m.facts.n);
+  const feeAtBest = r2(CAP.principal * atBest / 100);
+  const overpay = r2(m.fee - feeAtBest);
+
+  return `
+    <div class="bench ${dearer ? 'dear' : 'good'}">
+      <div class="bench-head">
+        <div class="bench-kicker">Against what you've borrowed before</div>
+        <div class="bench-title">${dearer
+          ? `This is priced <b>${pctWorse.toFixed(1)}% dearer</b> per payment date than your best previous advance`
+          : `This is priced <b>as well or better</b> than anything you've taken before`}</div>
+      </div>
+      <div class="bench-rows">
+        ${prior.map(p => `<div class="bench-row">
+          <span class="bench-name">${p.name}</span>
+          <span class="bench-meta">${fmt(p.advanced)} · ${p.dates} dates · ${p.feePct.toFixed(2)}%</span>
+          <b>${p.perDate.toFixed(3)}%<small>per date</small></b>
+        </div>`).join('')}
+        <div class="bench-row now">
+          <span class="bench-name">This offer</span>
+          <span class="bench-meta">${fmt(CAP.principal)} · ${m.facts.n} dates · ${m.feePct.toFixed(2)}%</span>
+          <b>${mine.toFixed(3)}%<small>per date</small></b>
+        </div>
+      </div>
+      ${(() => {
+        const pts = capPoints().map(pt => { const mm = capModel(pt.r); return { r: pt.r, per: mm.facts.n ? mm.feePct/mm.facts.n : 0, n: mm.facts.n }; })
+                      .filter(x => x.per > 0).sort((a,b) => a.per - b.per);
+        if(pts.length < 3) return '';
+        const rank = pts.findIndex(x => Math.abs(x.r - m.repayment) < 0.5);
+        const bestPt = pts[0], worstPt = pts[pts.length-1];
+        return `<div class="bench-rank">
+          Across the ${pts.length} points your lender actually quotes, value per date swings from
+          <b>${bestPt.per.toFixed(3)}%</b> (${fmt(bestPt.r)}, ${bestPt.n} dates) to
+          <b>${worstPt.per.toFixed(3)}%</b> (${fmt(worstPt.r)}, ${worstPt.n} dates)${rank >= 0
+            ? ` — yours ranks <b>${rank+1} of ${pts.length}</b>.`
+            : `.`}
+          The cheap ones sit just <em>below</em> a boundary, where you get the most weeks for the fee; the dear ones sit just
+          <em>above</em> one, having paid for a date you no longer get.</div>`;
+      })()}
+      <div class="bench-note">${dearer
+        ? `At the <b>${best.perDate.toFixed(3)}%</b> per date you got on ${best.name}, ${m.facts.n} dates would cost
+           <b>${fmt(feeAtBest)}</b> instead of ${fmt(m.fee)} — you're paying <b>${fmt(overpay)} more</b> for the same length of advance.
+           Worth a conversation before you sign.`
+        : `${m.facts.n} dates at ${mine.toFixed(3)}% each is the best rate per date you've been offered.`}
+        <span class="bench-why">Fee % on its own can't be compared — a longer advance costs more because it buys more weeks.
+        Fee per payment date is the like-for-like number.</span></div>
+    </div>`;
 }
 
 // ── PASTE THE OFFER ────────────────────────────────────
@@ -4240,10 +4926,71 @@ function capRecommend(ladder, m) {
            isHere: onYourNumbers.N === m.facts.n, vsNow };
 }
 
+// Everything at once, in the order the money actually moves:
+//   1. a longer term means more of the stock cycle flips, so more profit —
+//      take the longest you can get,
+//   2. but only as long as you can actually fund the cash trough before the
+//      first stock sells, because a deal you can't survive isn't a deal,
+//   3. then slide to the cheap end of that band, which is free whenever the
+//      extra per payment is too small to have been stock anyway.
+// Three panels were each arguing a piece of this. This is the whole thing.
+function capBestOverall(ladder) {
+  const rows = ladder.map(x => {
+    const S = computeScenario({ advanced: CAP.principal, total: x.model.total, payment: x.repayment,
+      freq: CAP.freq, start: CAP.deploy, roiPct: CAP.roiPct, cycleDays: CAP.cycleDays,
+      firstGap: parseInt(CAP.firstGap) || null });
+    if(!S) return null;
+    const M = scenarioMetrics(S);
+    const C = cashProfile(S);
+    return { x, S, M, C, realised: M.realisedNet, trough: C ? C.fundedFromElsewhere : 0,
+             free: C && C.reinvestable.length ? C.reinvestable[0].amount : 0 };
+  }).filter(Boolean).sort((a, b) => b.x.N - a.x.N);   // longest term first
+  if(!rows.length) return null;
+
+  const buffer = parseFloat(CAP.cashBuffer);
+  const capped = isFinite(buffer) && buffer > 0;
+  const feeCap = parseFloat(CAP.maxFeePct);
+  const feeCapped = isFinite(feeCap) && feeCap > 0;
+
+  // Two ceilings, and it matters which one is doing the blocking.
+  const underFee = feeCapped ? rows.filter(r => r.x.model.feePct <= feeCap + 0.0001) : rows;
+  const affordable = capped ? underFee.filter(r => r.trough <= buffer) : underFee;
+  const pick = affordable.length ? affordable[0] : rows.slice().sort((a,b) => a.trough - b.trough)[0];
+  const blocked = !affordable.length;
+  const best = rows[0];
+  const limitedBy = affordable.length && best.x.N !== pick.x.N ? best : null;
+  const limitReason = !limitedBy ? null
+    : (feeCapped && best.x.model.feePct > feeCap + 0.0001) ? 'fee'
+    : (capped && best.trough > buffer) ? 'cash' : 'both';
+
+  // The exchange rate along this curve: what does a slice of fee actually buy?
+  const asc = rows.slice().sort((a,b) => a.x.N - b.x.N);
+  const steps = [];
+  for(let i = 1; i < asc.length; i++) {
+    const dFee = asc[i].x.model.feePct - asc[i-1].x.model.feePct;
+    const dProfit = asc[i].realised - asc[i-1].realised;
+    if(dFee > 0.001 && dProfit > 0) steps.push({ dFee, dProfit, perHalf: dProfit / (dFee / 0.5) });
+  }
+  const perHalfPct = steps.length ? steps.reduce((a,b) => a + b.perHalf, 0) / steps.length : 0;
+  const feePerHalf = CAP.principal * 0.005;
+
+  // then the free slide to the cheap end of that band
+  const band = capBand(ladder, pick.x.model);
+  let slide = null;
+  if(band) {
+    const cash = capCashCost(pick.x.model, band.mHi);
+    slide = { to: band.hi, feeSaved: band.feeSaved, cost: cash.cost, idle: cash.idle,
+              net: band.feeSaved - cash.cost, peak: Math.abs(r2(cash.peak)) };
+  }
+  return { rows, pick, band, slide, buffer, capped, blocked, limitedBy, limitReason,
+           feeCap, feeCapped, perHalfPct, feePerHalf };
+}
+
 function renderRecommend(ladder, m) {
   const R = capRecommend(ladder, m);
   if(!R) return '';
-  const goal = CAP.goal || 'numbers';
+  const goal = CAP.goal || 'all';
+  if(goal === 'all') return renderAllTogether(ladder, m, R);
   const pick = goal === 'fee' ? R.cheapest : goal === 'term' ? R.longest : R.onYourNumbers;
   const d = R.vsNow(pick);
   const atIt = pick.N === m.facts.n;
@@ -4268,6 +5015,7 @@ function renderRecommend(ladder, m) {
           <div class="rec-title">${pick.N} payment dates · ${fmt(pick.repayment)} each time</div>
         </div>
         <div class="rec-tabs">
+          ${tab('all','All together','Longest term you can fund, then the free slide to the cheap end of it')}
           ${tab('numbers','Best on my numbers','Keeps stepping while each move still pays for itself at your stock return')}
           ${tab('term','Longest term','The most time with the money, whatever the fee')}
           ${tab('fee','Lowest fee','The cheapest finance cost, whatever the repayment')}
@@ -4281,11 +5029,193 @@ function renderRecommend(ladder, m) {
       </div>
       ${atIt ? '' : `<div class="rec-actions">
         <button class="btn-sm primary" onclick="capJump(${pick.repayment})">Move the slider there</button>
-        <button class="btn-sm" onclick="capPin('a',${m.repayment});capPin('b',${pick.repayment});">Compare it with where I am</button>
+        <button class="btn-sm" onclick="capPin('a',${m.repayment});capPin('b',${pick.repayment});capPin('c',${(goal==='fee'?R.longest:R.cheapest).repayment});">Pin all three and compare</button>
       </div>`}
     </div>`;
 }
+function renderAllTogether(ladder, m, R) {
+  const O = capBestOverall(ladder);
+  if(!O) return '';
+  const { pick, slide, buffer, capped, blocked, limitedBy, limitReason,
+          feeCap, feeCapped, perHalfPct, feePerHalf } = O;
+  const wk = pick.x.N * Math.round(CAP.freq / 7);
+  const finalRep = (slide && (slide.idle || slide.net > 0)) ? slide.to : pick.x.repayment;
+  const here = Math.abs(finalRep - m.repayment) < 1;
+
+  const tab = (key, label, hint) =>
+    `<button class="rec-tab ${(CAP.goal||'all')===key?'on':''}" onclick="capSetGoal('${key}')" title="${hint}">${label}</button>`;
+
+  const steps = [];
+  // The cash trough is NOT monotonic in term length — it bottoms out in the
+  // middle of the range — so when nothing fits, the fallback is the lightest
+  // option, which is rarely the shortest or the longest.
+  const why = !limitedBy ? '' :
+    limitReason === 'fee'  ? `${limitedBy.x.N} dates would earn <b>${fmt(limitedBy.realised - pick.realised)}</b> more, but its fee is ${limitedBy.x.model.feePct.toFixed(2)}% — over your ${feeCap}% line.`
+  : limitReason === 'cash' ? `${limitedBy.x.N} dates would earn <b>${fmt(limitedBy.realised - pick.realised)}</b> more, but needs ${fmt(limitedBy.trough)} up front, past your ${fmt(buffer)}.`
+  :                          `${limitedBy.x.N} dates would earn <b>${fmt(limitedBy.realised - pick.realised)}</b> more, but breaks both your ${feeCap}% fee line and your ${fmt(buffer)} of cash.`;
+  steps.push(`<li><b>${pick.x.N} payment dates · ${wk} weeks</b> at <b>${pick.x.model.feePct.toFixed(2)}%</b> — ${
+    blocked ? `nothing on this curve clears your limits, so this is simply the <b>least demanding</b> option there is.`
+    : limitedBy ? `the longest that stays inside your limits. ${why}`
+    : (feeCapped || capped) ? `the longest on offer, and it's inside your limits.`
+    : `the longest on offer — more of the stock cycle flips before the last payment, which is where the profit is.`}</li>`);
+  steps.push(`<li><b>${fmt(pick.trough)}</b> is the deepest you go before the first stock sells${capped
+      ? (blocked ? ` — still <b>${fmt(r2(pick.trough - buffer))} more</b> than the ${fmt(buffer)} you can cover. Either find that, take a smaller advance, or wait until your current advances clear.`
+                 : `, inside the ${fmt(buffer)} you can cover.`)
+      : `. Tell it what you can cover (under your stock assumptions) and it will only suggest terms you can survive.`}</li>`);
+  if(slide && slide.idle) steps.push(`<li>Then slide to <b>${fmt(slide.to)}</b> — <b>${fmt(slide.feeSaved)}</b> off the fee for nothing, because you're never more than ${fmt(slide.peak)} out and that was never going to be stock.</li>`);
+  else if(slide && slide.net > 0) steps.push(`<li>Then slide to <b>${fmt(slide.to)}</b> — ${fmt(slide.feeSaved)} off the fee, worth ${fmt(slide.net)} net.</li>`);
+  else if(slide) steps.push(`<li>Stay at the bottom of that band — sliding up saves ${fmt(slide.feeSaved)} in fee but costs ${fmt(slide.cost)} of stock profit.</li>`);
+  steps.push(`<li>Leaves <b>${fmt(pick.free)}</b> free to restock when the first cycle lands, and <b>${fmt(pick.realised)}</b> profit once it's all run.</li>`);
+
+  return `
+    <div class="rec-panel ${blocked ? 'blocked' : ''}">
+      <div class="rec-head">
+        <div>
+          <div class="rec-kicker">${blocked ? 'Nothing clears your limits' : 'What to take'}</div>
+          <div class="rec-title">${fmt(finalRep)} <span class="rec-title-sub">every ${CAP.freq} days · ${pick.x.N} dates · ${wk} weeks</span></div>
+        </div>
+        <div class="rec-tabs">
+          ${tab('all','All together','Longest term you can fund, then the free slide to the cheap end of it')}
+          ${tab('numbers','Best on my numbers','Keeps stepping while each move still pays for itself')}
+          ${tab('term','Longest term','The most time with the money, whatever the fee')}
+          ${tab('fee','Lowest fee','The cheapest finance cost, whatever the repayment')}
+        </div>
+      </div>
+      <ol class="rec-steps">${steps.join('')}</ol>
+      ${perHalfPct > 0 ? `<div class="rec-rate">
+        <div class="rr-main">Along this curve, every extra <b>0.5%</b> of fee buys about <b>${fmt(perHalfPct)}</b> of profit</div>
+        <div class="rr-sub">That's roughly <b>${fmt(feePerHalf)}</b> of fee for <b>${fmt(perHalfPct)}</b> back —
+          about <b>${(perHalfPct / Math.max(1, feePerHalf)).toFixed(1)}×</b>. A higher fee % on a longer term isn't the loan
+          getting worse; it's you buying more weeks of cycle. The real ceiling is the cash, not the percentage.</div>
+      </div>` : ''}
+      <div class="rec-stat"><span>Term, cash and fee decided together, in that order —
+        the term sets how much of the cycle flips, your cash sets how long a term you can survive,
+        and the fee is only worth chasing once those two are settled.</span></div>
+      ${blocked ? `<div class="rec-actions"><span class="rec-onit" style="color:#ff9a9a;">Shown for reference — none of these clear your limits</span>
+             <button class="btn-sm" onclick="capJump(${finalRep})">Look at it anyway</button></div>`
+        : here ? '<div class="rec-actions"><span class="rec-onit">✓ This is where the slider is</span></div>'
+             : `<div class="rec-actions">
+                  <button class="btn-sm primary" onclick="capJump(${finalRep})">Move the slider there</button>
+                  <button class="btn-sm" onclick="capPin('a',${m.repayment});capPin('b',${finalRep});">Compare with where I am</button>
+                </div>`}
+    </div>`;
+}
+
 function capSetGoal(g) { CAP.goal = g; saveCapital(CAP); renderCapitalResults(); }
+
+// ── SAME TERM, CHEAPER FEE ─────────────────────────────
+// Every payment-date count is a BAND of repayments, not a single point.
+// Anywhere inside it you get the same number of dates and the same final
+// date — but the fee keeps falling as you move up. Sitting at the bottom of
+// your band means paying the highest fee available for the term you've
+// already accepted, which is the one genuinely free saving on this page.
+function capBand(ladder, m) {
+  const floorRow = ladder.find(x => x.N === m.facts.n);
+  const nextRow  = ladder.find(x => x.N === m.facts.n - 1);
+  if(!floorRow) return null;
+  const lo = floorRow.repayment;
+  const hi = nextRow ? r2(nextRow.repayment - 0.01) : null;
+  if(!hi || hi <= lo) return null;
+  const mLo = capModel(lo), mHi = capModel(hi);
+  const pos = clamp((m.repayment - lo) / (hi - lo), 0, 1);
+  return {
+    lo, hi, mLo, mHi, pos,
+    toTop: r2(hi - m.repayment),
+    feeSaved: r2(m.fee - mHi.fee),
+    totalSaved: r2(m.total - mHi.total),
+    finalNow: m.facts.finalAmt,
+    finalTop: mHi.facts.finalAmt,
+    wholeBandFee: r2(mLo.fee - mHi.fee),
+    wholeBandPay: r2(hi - lo),
+    atTop: pos > 0.985,
+  };
+}
+
+function renderBand(ladder, m) {
+  const B = capBand(ladder, m);
+  if(!B) return '';
+  const weeks = m.facts.n * Math.round(CAP.freq / 7);
+
+  // Moving up the band saves fee — but the extra leaves the bank earlier, and
+  // that money would otherwise be sat in stock. Price both sides before
+  // calling it a saving.
+  const mTop = B.mHi;
+  const cash = capCashCost(m, mTop);          // £-days handed over early
+  const net = B.feeSaved - cash.cost;
+  const worthIt = net > 0;
+  const trivial = Math.abs(net) < 25;
+  const idle = cash.idle;                     // the swing never gets big enough to buy stock with
+  const peakSwing = Math.abs(r2(cash.peak));
+
+  if(B.atTop) {
+    return `<div class="band-panel done">
+      <div class="band-head"><div class="band-title">You're at the top of this term's band</div></div>
+      <div class="band-body">The fee is as low as it goes for ${m.facts.n} payment dates. Worth knowing the other way:
+        dropping toward <b>${fmt(B.lo)}</b> costs more fee but keeps more cash in stock for the same ${weeks} weeks.</div>
+    </div>`;
+  }
+
+  return `
+    <div class="band-panel ${(worthIt || idle) ? '' : 'caution'}">
+      <div class="band-head">
+        <div>
+          <div class="band-kicker">Same ${m.facts.n} dates · same ${weeks} weeks · same final date</div>
+          <div class="band-title">${idle
+            ? `${fmt(B.toTop)} more each time cuts the fee by <b>${fmt(B.feeSaved)}</b> — and that's yours to keep`
+            : `${fmt(B.toTop)} more each time cuts the fee by <b>${fmt(B.feeSaved)}</b> — but costs <b class="warn">${fmt(cash.cost)}</b> in stock profit`}</div>
+        </div>
+        <button class="btn-sm ${(worthIt || idle) ? 'primary' : ''}" onclick="capJump(${B.hi})">${(worthIt || idle) ? 'Take it' : 'Try it anyway'}</button>
+      </div>
+
+      <div class="band-track">
+        <div class="band-fill" style="width:${(B.pos*100).toFixed(1)}%"></div>
+        <div class="band-dot" style="left:${(B.pos*100).toFixed(1)}%"></div>
+        <span class="band-end left"><b>${fmt(B.lo)}</b>most fee · most cash kept</span>
+        <span class="band-end right"><b>${fmt(B.hi)}</b>least fee · least cash kept</span>
+      </div>
+
+      <div class="band-grid">
+        <div class="band-cell">
+          <div class="band-lab">Fee saved</div>
+          <div class="band-val"><b>${fmt(B.feeSaved)}</b></div>
+          <div class="band-sub">${fmt(m.total)} → ${fmt(mTop.total)} to repay</div>
+        </div>
+        <div class="band-cell">
+          <div class="band-lab">Stock profit given up</div>
+          <div class="band-val"><b class="${idle?'':'warn'}">${idle ? 'None' : fmt(cash.cost)}</b></div>
+          <div class="band-sub">${idle
+            ? `you're never more than ${fmt(peakSwing)} out — too small to buy stock with`
+            : `${Math.round(cash.poundDays).toLocaleString('en-GB')} £-days out early at ${CAP.roiPct}% / ${CAP.cycleDays}d`}</div>
+        </div>
+        <div class="band-cell ${(worthIt || idle) ? 'win' : 'lose'}">
+          <div class="band-lab">Net</div>
+          <div class="band-val"><b style="color:${net >= 0 ? 'var(--mint)' : 'var(--red)'};">${net >= 0 ? '+' : '−'}${fmt(Math.abs(net))}</b></div>
+          <div class="band-sub">${idle ? 'free — the swing is too small to invest' : worthIt ? 'worth doing' : trivial ? 'near enough a wash' : 'costs more than it saves'}</div>
+        </div>
+        <div class="band-cell">
+          <div class="band-lab">Schedule</div>
+          <div class="band-val"><b>No change</b></div>
+          <div class="band-sub">${m.facts.n} dates, clears ${fmtShort(m.facts.finalDate)} either way</div>
+        </div>
+      </div>
+
+      <div class="band-note">
+        ${idle
+          ? `At this size you are never more than <b>${fmt(peakSwing)}</b> out of pocket at any point — not enough to buy stock with,
+             so it isn't costing you inventory. The schedule doesn't move either. <b>Take it: the ${fmt(B.feeSaved)} is simply yours.</b>
+             It only becomes a real trade-off when the extra per payment gets big enough to be stock —
+             you can set where that line sits under your stock assumptions.`
+          : worthIt
+          ? `Here the fee saving beats what the cash would have earned, and the schedule doesn't move — so it's worth taking.`
+          : `<b>A lower fee is not the same as more money.</b> Paying ${fmt(B.toTop)} extra on each of ${m.facts.n - 1} payments takes
+             ${fmt(r2(B.toTop * (m.facts.n - 1)))} out of stock earlier to save ${fmt(B.feeSaved)} in fee.
+             ${trivial ? `At this size it barely matters either way — call it a wash.` :
+               `On your own numbers that's <b>${fmt(Math.abs(net))} worse off</b>.`}
+             The same rule applies here as between terms: <b>the lowest repayment you can live with usually wins</b>, because
+             your stock earns more than the fee costs.`}
+      </div>
+    </div>`;
+}
 
 // ── PIN TWO LEVELS AND COMPARE THEM ────────────────────
 function capPin(slot, repayment) {
@@ -4296,48 +5226,121 @@ function capPin(slot, repayment) {
 function capUnpin(slot) { delete CAP['pin' + slot.toUpperCase()]; saveCapital(CAP); renderCapitalResults(); }
 
 function renderPinCompare(m) {
-  const a = CAP.pinA, b = CAP.pinB;
-  const slot = (key, val) => {
-    if(!val) return `<button class="pin-empty" onclick="capPin('${key}')">＋ Pin ${key.toUpperCase()} at ${fmt(m.repayment)}</button>`;
-    const mm = capModel(val);
-    return `<div class="pin-card">
-      <div class="pin-head"><span class="pin-tag ${key}">${key.toUpperCase()}</span>
-        <button class="pin-x" onclick="capUnpin('${key}')" title="Unpin">✕</button></div>
-      <div class="pin-rep">${fmt(mm.repayment)}</div>
+  const SLOTS = ['a','b','c'];
+  const pinned = SLOTS.map(k => ({ k, val: CAP['pin' + k.toUpperCase()] }))
+                      .filter(x => x.val > 0)
+                      .map(x => ({ ...x, model: capModel(x.val) }));
+  const wk = mm => mm.facts.n * Math.round(CAP.freq / 7);
+
+  // ── the answer first: rank them on your own numbers ──
+  let summary = '';
+  if(pinned.length >= 2) {
+    // score each against the shortest one, so they're all on the same baseline
+    const base = pinned.reduce((a, b) => a.model.facts.n <= b.model.facts.n ? a : b);
+    const scored = pinned.map(p => {
+      if(p.val === base.val) return { ...p, extraFee: 0, cashWorth: 0, net: 0 };
+      const extraFee = r2(p.model.fee - base.model.fee);
+      const cash = capCashCost(p.model, base.model);   // cash kept by being longer
+      return { ...p, extraFee, cashWorth: cash.cost, net: cash.cost - extraFee };
+    }).sort((x, y) => y.net - x.net);
+    const best = scored[0], worst = scored[scored.length - 1];
+    const spread = r2(best.net - worst.net);
+    summary = `
+      <div class="pin-summary">
+        <div class="ps-kicker">Best of the ${pinned.length}</div>
+        <div class="ps-main">
+          <span class="ps-tag ${best.k}">${best.k.toUpperCase()}</span>
+          <span class="ps-rep">${fmt(best.model.repayment)}</span>
+          <span class="ps-meta">${best.model.facts.n} dates · ${wk(best.model)} weeks · clears ${fmtShort(best.model.facts.finalDate)}</span>
+        </div>
+        <div class="ps-body">
+          ${spread > 0
+            ? `Ahead of the worst of them by <strong>${fmt(spread)}</strong> once the fee is set against the working capital each option keeps in stock.
+               ${best.model.facts.n >= worst.model.facts.n
+                 ? `The longer option wins: the extra fee costs less than the cash it leaves you holding.`
+                 : `The shorter option wins here — the fee saved beats what the cash would have earned.`}`
+            : `All ${pinned.length} land within a pound of each other on your numbers — pick on cash flow, not cost.`}
+        </div>
+        <div class="ps-rank">
+          ${scored.map((p, i) => `<span class="ps-rank-row"><b>${i+1}</b>
+            <span class="ps-tag sm ${p.k}">${p.k.toUpperCase()}</span> ${fmt(p.model.repayment)}
+            <em>${p.net >= 0 ? '+' : '−'}${fmt(Math.abs(p.net))}</em></span>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  // ── the three cards ──
+  const factsFor = mm => {
+    const S = computeScenario({ advanced: CAP.principal, total: mm.total, payment: mm.repayment,
+      freq: CAP.freq, start: CAP.deploy, roiPct: CAP.roiPct, cycleDays: CAP.cycleDays,
+      firstGap: parseInt(CAP.firstGap) || null });
+    if(!S) return null;
+    const M = scenarioMetrics(S), C = cashProfile(S);
+    return { S, M, C, realised: M.realisedNet, worst: S.P.netProfit,
+             cycles: S.P.totalCyclesInLoan, whole: S.P.cycles, press: M.soloPressurePct,
+             free: C && C.reinvestable.length ? C.reinvestable[0].amount : 0,
+             trough: C ? C.fundedFromElsewhere : 0 };
+  };
+  const rowsFor = mm => {
+    const best = pinned.length > 1;
+    const all = pinned.map(p => factsFor(p.model)).filter(Boolean);
+    const feeMin = best ? Math.min(...pinned.map(p => p.model.fee)) : null;
+    const nMax   = best ? Math.max(...pinned.map(p => p.model.facts.n)) : null;
+    const profMax = all.length ? Math.max(...all.map(f => f.realised)) : null;
+    const pressMin = all.length ? Math.min(...all.map(f => f.press)) : null;
+    const f = factsFor(mm);
+    return `
       <div class="pin-rows">
-        <span>Dates</span><b>${mm.facts.n}</b>
-        <span>Fee</span><b style="color:var(--amber);">${fmt(mm.fee)}</b>
-        <span>Total</span><b>${fmt(mm.total)}</b>
-        <span>Finishes</span><b>${fmtShort(mm.facts.finalDate)}</b>
+        <span>Payment dates</span><b class="${nMax && mm.facts.n === nMax ? 'win' : ''}">${mm.facts.n}</b>
+        <span>Weeks</span><b>${wk(mm)}</b>
+        <span>Stock cycles</span><b>${f ? f.cycles.toFixed(2) : '—'}</b>
+        <span>Profit expected</span><b class="${f && profMax && Math.abs(f.realised-profMax)<1 ? 'win' : ''}">${f ? fmt(f.realised) : '—'}</b>
+        <span>Profit worst case</span><b>${f ? fmt(f.worst) : '—'}</b>
+        <span>Fee</span><b class="${feeMin && Math.abs(mm.fee - feeMin) < 0.01 ? 'win' : ''}" style="color:var(--amber);">${fmt(mm.fee)}</b>
+        <span>Pressure</span><b class="${f && pressMin && Math.abs(f.press-pressMin)<0.5 ? 'win' : ''}">${f ? f.press.toFixed(0)+'%' : '—'}</b>
+        <span>Free to restock</span><b>${f ? fmt(f.free) : '—'}</b>
+        <span>Clears</span><b>${fmtShort(mm.facts.finalDate)}</b>
+      </div>`;
+  };
+  const slot = key => {
+    const val = CAP['pin' + key.toUpperCase()];
+    if(!val) return `<button class="pin-empty" onclick="capPin('${key}')">＋ Pin ${key.toUpperCase()}<small>at ${fmt(m.repayment)}</small></button>`;
+    const mm = capModel(val);
+    const isHere = Math.abs(val - m.repayment) < 0.5;
+    return `<div class="pin-card ${isHere ? 'here' : ''}">
+      <div class="pin-head">
+        <span class="pin-tag ${key}">${key.toUpperCase()}</span>
+        ${isHere ? '<span class="pin-now">on the slider</span>' : `<button class="pin-goto" onclick="capJump(${val})">go</button>`}
+        <button class="pin-x" onclick="capUnpin('${key}')" title="Unpin">✕</button>
       </div>
+      <div class="pin-rep">${fmt(mm.repayment)}</div>
+      ${rowsFor(mm)}
     </div>`;
   };
-  let verdict = '';
-  if(a && b) {
-    const ma = capModel(a), mb = capModel(b);
-    const longer = ma.facts.n >= mb.facts.n ? ma : mb;
-    const shorter = longer === ma ? mb : ma;
-    const extraFee = r2(longer.fee - shorter.fee);
-    const cash = capCashCost(longer, shorter);
-    const net = cash.cost - extraFee;
-    const dd = daysFrom(shorter.facts.finalDate, longer.facts.finalDate);
-    verdict = `<div class="pin-verdict">
-      <b>${fmt(longer.repayment)}</b> runs ${longer.facts.n - shorter.facts.n} payment date${longer.facts.n-shorter.facts.n===1?'':'s'}
-      longer than <b>${fmt(shorter.repayment)}</b> (${dd} days), costs <b>${fmt(extraFee)}</b> more in fee, and keeps
-      <b>${fmt(cash.cost)}</b> of working capital earning — <b style="color:${net>=0?'var(--green)':'var(--red)'};">
-      ${net>=0 ? fmt(net)+' ahead' : fmt(Math.abs(net))+' behind'}</b> on your own numbers.
-      <button class="btn-sm" style="margin-left:8px;" onclick="capSendPair()">Open both in the full Calculator →</button>
-    </div>`;
+
+  // The Calculator compares two at a time, so offer each pairing rather than
+  // silently picking one — with three pinned there are three ways to look.
+  const pairs = [];
+  if(pinned.length >= 2) {
+    for(let i = 0; i < pinned.length; i++) for(let j = i+1; j < pinned.length; j++)
+      pairs.push(`<button class="btn-sm" onclick="capSendPair('${pinned[i].k}','${pinned[j].k}')">
+        ${fmt(pinned[i].model.repayment)} vs ${fmt(pinned[j].model.repayment)}
+        <small>full profit &amp; cycle breakdown →</small></button>`);
   }
+
   return `<div class="pin-wrap">
-    <div class="pin-title">Compare two repayment levels</div>
-    <div class="pin-grid">${slot('a', a)}${slot('b', b)}</div>
-    ${verdict}
+    <div class="pin-title">Compare up to three repayment levels
+      <small>move the slider, then pin each one you want to weigh up</small></div>
+    ${summary}
+    <div class="pin-grid">${SLOTS.map(slot).join('')}</div>
+    ${pairs.length ? `<div class="pin-actions">${pairs.join('')}</div>` : ''}
   </div>`;
 }
 
-function capSendPair() {
-  if(!CAP.pinA || !CAP.pinB) return;
+function capSendPair(k1, k2) {
+  const v1 = CAP['pin' + String(k1 || 'a').toUpperCase()];
+  const v2 = CAP['pin' + String(k2 || 'b').toUpperCase()];
+  if(!v1 || !v2) return;
   const load = (prefix, rep) => {
     const mm = capModel(rep);
     const set = (suffix, val) => { const el = document.getElementById(prefix + suffix); if(el) el.value = val; };
@@ -4354,8 +5357,8 @@ function capSendPair() {
   };
   showPage('calculator');
   setCalcMode('compare');
-  load('cmpa', CAP.pinA);
-  load('cmpb', CAP.pinB);
+  load('cmpa', v1);
+  load('cmpb', v2);
   renderCalculatorCompare();
 }
 
@@ -4389,17 +5392,23 @@ function capForm() {
       </div>
 
       <div class="cap-slider-wrap">
-        <div class="cap-slider-head">
-          <span class="cap-slider-cap">Repayment each time</span>
-          <span class="cap-slider-val" id="cap-r-label">${fmt(r)}</span>
+        <div class="cap-readout">
+          <div class="cap-readout-main">
+            <span class="cap-slider-cap">Repayment every ${CAP.freq} days</span>
+            <span class="cap-slider-val" id="cap-r-label">${fmt(r)}</span>
+          </div>
+          <div class="cap-readout-side" id="cap-readout-side"></div>
         </div>
         <div class="cap-track-wrap">
           <div class="cap-ticks" id="cap-ticks"></div>
           <input class="cap-range" type="range" id="cap-range" min="${lo}" max="${hi}" step="1" value="${Math.round(r)}"
                  aria-label="Repayment amount" oninput="capSlide(this.value)">
         </div>
-        <div class="cap-range-ends"><span>${fmt(lo)}</span><span>${fmt(hi)}</span></div>
-        <div class="fm-group" style="margin-top:8px;"><label class="fm-label">Or type the exact figure</label>
+        <div class="cap-range-ends">
+          <span><b>${fmt(lo)}</b><br>lowest — longest term</span>
+          <span style="text-align:right;"><b>${fmt(hi)}</b><br>highest — shortest term</span>
+        </div>
+        <div class="fm-group" style="margin-top:12px;"><label class="fm-label">Or type the exact figure</label>
           <input class="fm-input" type="text" inputmode="decimal" id="cap-repayment" value="${moneyFmt(r)}" ${moneyAttrs} oninput="capInput('repayment')"></div>
         <div class="cap-step-btns" id="cap-step-btns"></div>
       </div>
@@ -4415,6 +5424,15 @@ function capForm() {
           <div class="fm-group"><label class="fm-label">Stock cycle (days)</label>
             <input class="fm-input" type="number" id="cap-cycle" value="${CAP.cycleDays}" min="30" max="365" oninput="capInput('cycleDays')"></div>
         </div>
+        <div class="fm-group" style="margin-top:10px;"><label class="fm-label">Most fee you'd accept (%)
+          <span class="fm-hint">blank for no limit — longer terms always cost a higher %</span></label>
+          <input class="fm-input" type="number" id="cap-maxfee" value="${CAP.maxFeePct ?? ''}" placeholder="e.g. 8" min="0" max="100" step="0.1" oninput="capInput('maxFeePct')"></div>
+        <div class="fm-group" style="margin-top:10px;"><label class="fm-label">Cash you could cover from elsewhere (£)
+          <span class="fm-hint">the most you can be down before the first stock sells — leave blank for no limit</span></label>
+          <input class="fm-input" type="text" inputmode="decimal" id="cap-buffer" value="${CAP.cashBuffer ? moneyFmt(CAP.cashBuffer) : ''}" placeholder="e.g. 40,000" ${moneyAttrs} oninput="capInput('cashBuffer')"></div>
+        <div class="fm-group" style="margin-top:10px;"><label class="fm-label">Smallest sum worth putting into stock (£)
+          <span class="fm-hint">cash swings under this are treated as idle, not lost profit</span></label>
+          <input class="fm-input" type="number" id="cap-mindeploy" value="${CAP.minDeploy ?? 500}" min="0" max="50000" step="50" oninput="capInput('minDeploy')"></div>
       </details>
     </div>`;
 }
@@ -4539,6 +5557,9 @@ function capInput(field) {
   else if(field==='feeOverride') CAP.feeOverride = g('feeoverride').value.trim()==='' ? '' : moneyToNum(g('feeoverride').value);
   else if(field==='roiPct')    CAP.roiPct = parseFloat(g('roi').value)||15;
   else if(field==='cycleDays') CAP.cycleDays = parseInt(g('cycle').value)||124;
+  else if(field==='minDeploy') CAP.minDeploy = Math.max(0, parseFloat(g('mindeploy').value)||0);
+  else if(field==='cashBuffer') CAP.cashBuffer = g('buffer').value.trim()==='' ? '' : moneyToNum(g('buffer').value);
+  else if(field==='maxFeePct') CAP.maxFeePct = g('maxfee').value.trim()==='' ? '' : Math.max(0, parseFloat(g('maxfee').value)||0);
   capQueueSave();
   if(field==='repayment') {
     const rng = g('range'); if(rng) rng.value = Math.round(CAP.repayment);
@@ -4600,7 +5621,8 @@ function capTicks(ladder, lo, hi, m, up) {
     // is room for it — the tick itself is always there to aim at.
     const room = pct - lastLabelled > 5.5 || cls;
     if(room) lastLabelled = pct;
-    return `<span class="cap-tick ${cls}" style="left:${pct.toFixed(2)}%;" title="${x.N} payment dates from ${fmt(x.repayment)}">${room?`<b>${x.N}</b>`:'<b>&nbsp;</b>'}<i></i></span>`;
+    const wk = x.N * Math.round(CAP.freq / 7);
+    return `<span class="cap-tick ${cls}" style="left:${pct.toFixed(2)}%;" title="${fmt(x.repayment)} → ${x.N} payment dates, ${wk} weeks">${room?`<b>${x.N}</b><em>${wk}w</em>`:'<b>&nbsp;</b>'}<i></i></span>`;
   }).join('');
 }
 
@@ -4722,6 +5744,11 @@ function renderCapitalResults() {
       + `<button class="cap-step-btn" onclick="capJump(${ladder[ladder.length-1].repayment})">Cheapest fee · ${fmt(ladder[ladder.length-1].repayment)}</button>`;
   }
   capTicks(ladder, lo, hi, m, up);
+  const side = document.getElementById('cap-readout-side');
+  if(side) side.innerHTML = `
+    <span class="cro-big">${m.facts.n}<small>dates</small></span>
+    <span class="cro-big">${m.facts.n * Math.round(CAP.freq/7)}<small>weeks</small></span>
+    <span class="cro-fin">clears ${fmtShort(m.facts.finalDate)}</span>`;
 
   const sticky = `
     <div class="cap-sticky">
@@ -4822,22 +5849,45 @@ function renderCapitalResults() {
   }
 
   // ── boundary ladder ──
-  const ladderRows = ladder.map(x => {
+  // Each boundary scored on the three things that actually decide it: what the
+  // finance costs, what you keep once the stock cycle runs, and how hard the
+  // repayments squeeze before any of it comes back.
+  const scored = ladder.map(x => {
+    const S = computeScenario({ advanced: CAP.principal, total: x.model.total, payment: x.repayment,
+      freq: CAP.freq, start: CAP.deploy, roiPct: CAP.roiPct, cycleDays: CAP.cycleDays,
+      firstGap: parseInt(CAP.firstGap) || null });
+    if(!S) return { x, realised: null, press: null, free: null };
+    const M = scenarioMetrics(S);
+    const C = cashProfile(S);
+    return { x, realised: M.realisedNet, worst: S.P.netProfit,
+             cycles: S.P.totalCyclesInLoan, whole: S.P.cycles,
+             press: M.soloPressurePct,
+             free: C && C.reinvestable.length ? C.reinvestable[0].amount : 0 };
+  });
+  const bestProfit = scored.reduce((a,b) => (b.realised != null && (a.realised == null || b.realised > a.realised)) ? b : a, scored[0]);
+  const lowestFee  = ladder.reduce((a,b) => b.model.fee < a.model.fee ? b : a);
+  const easiest    = scored.reduce((a,b) => (b.press != null && (a.press == null || b.press < a.press)) ? b : a, scored[0]);
+
+  const ladderRows = scored.map(sc => {
+    const x = sc.x;
     const isCur = x.N === m.facts.n;
     const isNext = up && x.N === up.N;
     const dR = r2(x.repayment - m.repayment);
-    const dFee = r2(x.model.fee - m.fee);
+    const wins = [];
+    if(x.N === bestProfit.x.N) wins.push('<span class="lw profit">most profit</span>');
+    if(x.N === lowestFee.N)    wins.push('<span class="lw fee">lowest fee</span>');
+    if(x.N === easiest.x.N)    wins.push('<span class="lw press">least pressure</span>');
     return `<tr class="${isCur?'is-current':isNext?'is-next':''}">
-      <td><b>${x.N}</b> dates</td>
-      <td>${fmt(x.repayment)}</td>
-      <td>${dR===0?'—':(dR>0?'+':'−')+fmt(Math.abs(dR))}</td>
-      <td>${fmt(x.model.fee)}</td>
-      <td>${x.model.feePct.toFixed(2)}%</td>
-      <td style="color:${dFee<0?'var(--green)':dFee>0?'var(--red)':'var(--text3)'};">${dFee===0?'—':(dFee>0?'+':'−')+fmt(Math.abs(dFee))}</td>
-      <td>${fmt(x.model.total)}</td>
+      <td><b>${x.N}</b> dates<small class="lw-wk">${x.N * Math.round(CAP.freq/7)} wks</small></td>
+      <td>${fmt(x.repayment)}<small class="lw-wk">${dR===0?'where you are':(dR>0?'+':'−')+fmt(Math.abs(dR))}</small></td>
+      <td style="color:var(--amber);">${fmt(x.model.fee)}<small class="lw-wk">${x.model.feePct.toFixed(2)}% · ${(x.model.feePct/x.N).toFixed(3)}%/date</small></td>
+      <td>${sc.cycles != null ? sc.cycles.toFixed(2) : '—'}<small class="lw-wk">${sc.whole} full</small></td>
+      <td style="color:${sc.realised >= 0 ? 'var(--green)' : 'var(--red)'};font-weight:700;">${sc.realised != null ? fmt(sc.realised) : '—'}<small class="lw-wk">worst ${sc.worst != null ? fmt(sc.worst) : '—'}</small></td>
+      <td>${sc.press != null ? sc.press.toFixed(0)+'%' : '—'}</td>
+      <td>${sc.free != null ? fmt(sc.free) : '—'}</td>
       <td>${fmtDate(x.model.facts.finalDate)}</td>
-      <td>${x.model.lenderTerm || '—'}</td>
-      <td>${isCur ? `<span class="cap-here">You’re here<br><small style="font-weight:600;text-transform:none;letter-spacing:0;color:var(--text2);">paying ${fmt(m.repayment)}</small></span>` : `<button class="cap-go" onclick="capJump(${x.repayment})">Go</button>`}</td>
+      <td class="lw-cell">${wins.join('')}</td>
+      <td>${isCur ? '<span class="cap-here">You’re here</span>' : `<button class="cap-go" onclick="capJump(${x.repayment})">Go</button>`}</td>
     </tr>`;
   }).join('');
 
@@ -4858,11 +5908,13 @@ function renderCapitalResults() {
         <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px;">
           The smallest repayment that clears ${fmt(CAP.principal)} in each number of payment dates. Solved with the fee moving —
           not <code>total ÷ N</code>, which would be wrong, because raising the repayment lowers the lender's fee at the same time.
+          <b>Fee, profit and pressure pull in opposite directions</b> — the cheapest fee is the shortest, highest-pressure option, and
+          the most profitable is the longest and easiest. Profit follows the pressure, not the fee.
           You are paying <b>${fmt(m.repayment)}</b>, which lands you on the <b>${m.facts.n}-date</b> row: ${r2(m.repayment - (ladder.find(x=>x.N===m.facts.n)||{repayment:m.repayment}).repayment) > 0 ? `${fmt(r2(m.repayment - ladder.find(x=>x.N===m.facts.n).repayment))} above that row's floor` : 'right on that row\u2019s floor'}${up ? `, and ${fmt(r2(up.repayment - m.repayment))} below the ${up.N}-date boundary` : ''}.
         </div>
         <div class="cap-scroll">
         <table class="cap-ladder">
-          <thead><tr><th>Payment dates</th><th>Repayment needed</th><th>vs now</th><th>Fee</th><th>Fee %</th><th>Fee vs now</th><th>Total to remit</th><th>Finishes</th><th>Their label</th><th></th></tr></thead>
+          <thead><tr><th>Length</th><th>Repayment</th><th>Fee</th><th>Stock cycles</th><th>Profit · expected / worst</th><th>Pressure</th><th>Free to restock</th><th>Finishes</th><th></th><th></th></tr></thead>
           <tbody>${ladderRows}</tbody>
         </table></div>
         ${sameTermNote}
@@ -4929,8 +5981,13 @@ function renderCapitalResults() {
     }
   }
 
-  box.innerHTML = sticky + renderRecommend(ladder, m) + headline + renderPinCompare(m) + stackBlock
-    + capChart(ladder, m, lo, hi) + cliffBlock + downBlock + ladderBlock + schedBlock;
+  box.innerHTML = sticky + renderRecommend(ladder, m) + headline + tabset('cap-tabs', [
+    { key:'move',  label:'What to do',   note:up ? `+${fmt(r2(up.repayment - m.repayment))} to drop a date` : 'shortest in range',
+      html: renderBenchmark(m) + renderBand(ladder, m) + capChart(ladder, m, lo, hi) + cliffBlock + downBlock + stackBlock },
+    { key:'all',   label:'Every option', note:`${ladder.length} boundaries`, html: ladderBlock },
+    { key:'pin',   label:'Compare',      note:[CAP.pinA,CAP.pinB,CAP.pinC].filter(Boolean).length ? `${[CAP.pinA,CAP.pinB,CAP.pinC].filter(Boolean).length} pinned` : 'pin up to 3', html: renderPinCompare(m) },
+    { key:'sched', label:'Schedule',     note:`${m.facts.n} dates`, html: schedBlock },
+  ]);
 }
 
 // Push the current repayment level into the Loan Calculator's compare mode so
@@ -5245,6 +6302,8 @@ function toast(msg) {
 // ═══════════════════════════════════════════════════════
 // CLOCK
 // ═══════════════════════════════════════════════════════
+function showVersion() { document.getElementById('ver-pop').classList.add('open'); }
+
 function updateClock() {
   const now = new Date();
   document.getElementById('live-date').textContent =
