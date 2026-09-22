@@ -1798,6 +1798,65 @@ body { overflow-x: hidden; }
 .calc-range { background: var(--surface3); box-shadow: inset 0 0 0 1px var(--border2); }
 .calc-pick { margin-top: 10px; padding-top: 9px; border-top: 1px dashed var(--border2); gap: 4px; }
 .calc-pick-btn { min-width: 33px; padding: 4px 6px; }
+
+/* ── v33.3: the verdict card was 1fr + auto columns, so the labels ate all the
+   width and the figures hid against the right edge of a 1,450px card. Give the
+   value columns equal shares, rule every row, and take the padding down. ── */
+.bv { padding: 15px 17px; }
+.bv-name { font-size: 21px; }
+.bv-sub { font-size: 11.5px; margin-top: 3px; }
+.bv-delta-val { font-size: 23px; }
+.bv-table { gap: 0 10px; margin-top: 13px; padding-top: 10px; align-items: center; font-size: 12px; }
+.bv-table > span, .bv-table > b { border-bottom: 1px solid var(--border); }
+.bv-table > span:first-child, .bv-table > .bv-th { border-bottom: 1px solid var(--border2); }
+.bv-table span { padding: 5px 0; }
+.bv-table b { padding: 5px 0; min-width: 0; }
+.bv-th { display: flex; justify-content: flex-end; align-items: center; padding-bottom: 6px !important; }
+.bv-th .rv-chip { font-size: 9px; padding: 2px 7px; }
+.bv-foot { font-size: 11px; margin-top: 9px; padding-top: 0; border-top: none; }
+
+.rv-rank { gap: 7px; margin-top: 12px; padding-top: 11px; }
+.rv-row { gap: 5px; font-size: 11.5px; border: 1px solid var(--border); border-radius: 999px;
+  padding: 4px 11px 4px 6px; background: var(--surface); }
+.rv-row.top { border-color: var(--mint); background: var(--mint-bg); }
+.rv-row.bad { border-color: rgba(182,47,47,0.35); background: var(--red-bg); }
+.rv-row > b { font-size: 9.5px; }
+.rv-tag.off { background: var(--red-bg); color: var(--red); }
+
+.bv-warn { margin-top: 12px; background: var(--red-bg); border: 1px solid rgba(182,47,47,0.28);
+  border-radius: var(--radius2); padding: 9px 12px; font-size: 12px; line-height: 1.6; color: #7d1f1f; }
+.bv-warn b { color: #611717; }
+.bv-warn em { font-style: normal; font-weight: 700; }
+
+/* ── the per-column tick: does this column's fee follow its repayment? ── */
+.calc-follow { display: flex; align-items: flex-start; gap: 8px; margin-top: 9px; padding: 8px 10px;
+  border: 1px solid var(--border); border-radius: var(--radius2); background: var(--surface);
+  font-size: 11.5px; font-weight: 700; color: var(--text2); line-height: 1.35; cursor: pointer; }
+.calc-follow input { flex: none; width: 14px; height: 14px; margin: 1px 0 0; accent-color: var(--navy); cursor: pointer; }
+.calc-follow small { display: block; font-size: 10.5px; font-weight: 600; color: var(--text3); margin-top: 2px; }
+.calc-follow.on { border-color: var(--navy); background: var(--blue-bg); color: var(--navy); }
+.calc-follow.on small { color: var(--blue); }
+.calc-follow.off { cursor: default; opacity: 0.72; }
+.calc-follow.off input { cursor: not-allowed; }
+
+/* ── v33.3: on a phone the third scenario's column ran off the card and
+   body{overflow-x:hidden} swallowed it — column A's figures were simply not
+   there. Let the figures scroll and pin the labels beside them. ── */
+.bv-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch;
+  margin: 13px -4px 0; padding: 10px 4px 0; border-top: 1px solid var(--border); }
+.bv-scroll .bv-table { min-width: max-content; margin-top: 0; padding-top: 0; border-top: none; }
+.bv-table > span:not(.bv-th) { position: sticky; left: 0; z-index: 1;
+  background: var(--white); padding-right: 10px; }
+@media (max-width: 760px) {
+  /* the frozen labels need an edge, or a half-scrolled figure behind them
+     just looks like broken text rather than a column tucked underneath */
+  .bv-table > span:not(.bv-th) { box-shadow: 7px 0 7px -7px rgba(20,24,40,0.22); }
+}
+@media (max-width: 620px) {
+  .bv-table { font-size: 11.5px; }
+  .bv-head { gap: 8px; }
+  .bv-delta { text-align: left; }
+}
 </style>
 </head>
 <body>
@@ -1806,7 +1865,7 @@ body { overflow-x: hidden; }
 <nav class="nav">
   <div class="nav-brand">
     <div class="nav-logo">£</div>
-    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v32.9</span></div>
+    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v33.3</span></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
@@ -1821,12 +1880,22 @@ body { overflow-x: hidden; }
      glance whether the page you're looking at is the one you just uploaded. -->
 <div class="ver-pop" id="ver-pop" onclick="this.classList.remove('open')">
   <div class="ver-card" onclick="event.stopPropagation()">
-    <div class="ver-head">Loan Tracker <b>v32.9</b> <span>built 22 Sep 2026</span>
+    <div class="ver-head">Loan Tracker <b>v33.3</b> <span>built 22 Sep 2026</span>
       <button class="pin-x" onclick="document.getElementById('ver-pop').classList.remove('open')">✕</button></div>
     <div class="ver-body">
-      <p>If the page you're looking at doesn't say <b>v32.9</b> in the top-left, it's an older
+      <p>If the page you're looking at doesn't say <b>v33.3</b> in the top-left, it's an older
          upload — hard-refresh with <b>Cmd+Shift+R</b>, and check the file you pushed.</p>
       <div class="ver-list">
+        <span><b>Fixed on phones: the third scenario's figures were being cut off the verdict table entirely</b></span>
+        <span><b>Fixed: it was recommending £5,507.48, which your lender's slider can't be set to</b> — the longest option is £5,516</span>
+        <span>Every boundary is now clamped to what the lender will actually accept</span>
+        <span><b>A tick on every column</b> — untick it to hold a fixed quote from another lender while the others move</span>
+        <span>A repayment your lender never quoted is now called out, not crowned the winner</span>
+        <span>Verdict table squeezed: even columns, ruled rows, figures beside their labels instead of miles right</span>
+        <span><b>The fee now moves with the slider on the Calculator</b>, the way it does on your lender's page</span>
+        <span>Calculator sliders are bounded by the offer's real range — no more £1,649 repayments over 56 dates</span>
+        <span>Typing a repayment re-prices the fee and total too, when the column is your saved offer</span>
+        <span>Two fresh quoted points added to the curve (£7,434 and £9,044)</span>
         <span><b>Send to Calculator</b> sits above the tabs on the Offer Slider — park a level in A, B or C and open them</span>
         <span>The same three buttons ride along in the sticky bar, so they follow you down the page</span>
         <span>Calculator says <b>Compare 3 Scenarios</b>, because three is what it does</span>
@@ -3329,6 +3398,10 @@ function calcFormHTML(prefix, onChange, d) {
         aria-label="Nudge the repayment" oninput="calcNudge('${prefix}', this.value)"
         onchange="calcNudgeEnd('${prefix}')" title="Drag to try repayments either side — release to re-centre">
       <div class="calc-range-hint" id="${prefix}-nudge-hint">drag to try repayments either side</div>
+      <label class="calc-follow" id="${prefix}-follow-wrap">
+        <input type="checkbox" id="${prefix}-follow" onchange="calcSetFollow('${prefix}', this.checked)">
+        <span>Fee moves with the repayment<small id="${prefix}-follow-note"></small></span>
+      </label>
       <div class="calc-pick" id="${prefix}-pick"></div>
     </div>
 
@@ -3436,26 +3509,160 @@ function calcPick(prefix, rep) {
 // can feel out the boundaries without retyping figures. Releasing re-centres,
 // so the next drag starts from wherever you landed.
 const CALC_NUDGE = {};
-function calcNudge(prefix, v) {
-  const el = document.getElementById(prefix + '-remit');
-  if(!el) return;
-  if(CALC_NUDGE[prefix] == null) CALC_NUDGE[prefix] = moneyToNum(el.value) || 0;
-  const base = CALC_NUDGE[prefix];
-  if(!(base > 0)) return;
-  const span = base * 0.35;                       // ±35% is plenty to cross several boundaries
-  const val = Math.round((base + ((v - 50) / 50) * span) * 100) / 100;
-  el.value = moneyFmt(Math.max(1, val));
-  const hint = document.getElementById(prefix + '-nudge-hint');
-  if(hint) hint.textContent = val === base ? 'drag to try repayments either side'
-    : `${val > base ? '+' : '−'}${fmt(Math.abs(val - base))} from ${fmt(base)}`;
+
+// Is there a curve for this column to move along at all? Only when it IS the
+// saved offer — a different lender's pricing is not on this curve, and reading
+// their repayment off it would invent a fee nobody quoted.
+function calcCanFollow(prefix) {
+  if(!CAP || !(CAP.principal > 0) || !Array.isArray(CAP.points) || CAP.points.length < 2) return false;
+  const el = document.getElementById(prefix + '-advanced');
+  if(!el) return false;
+  const adv = moneyToNum(el.value);
+  return adv > 0 && Math.abs(adv - CAP.principal) < 1;
+}
+
+// …and does he want it to? Ticked by default when it can, because that's the
+// common case; untick it to hold a fixed quote from somewhere else still while
+// the other columns move. Session state — a tick is a comparison, not a setting.
+const CALC_FOLLOW = {};
+function calcLinked(prefix) { return calcCanFollow(prefix) && CALC_FOLLOW[prefix] !== false; }
+
+function calcSetFollow(prefix, on) {
+  CALC_FOLLOW[prefix] = !!on;
+  if(on) {
+    // Turning it back on re-prices what's typed, so the column can't sit there
+    // showing a fee that belongs to a different repayment.
+    const rp = moneyToNum((document.getElementById(prefix + '-remit') || {}).value);
+    if(rp > 0 && calcCanFollow(prefix)) {
+      const mm = capModel(rp);
+      const set = (suffix, v) => { const e = document.getElementById(prefix + suffix); if(e) e.value = v; };
+      set('-total', moneyFmt(mm.total));
+      set('-feepct', mm.feePct.toFixed(2));
+    }
+  }
   (prefix === 'calc' ? renderCalculator : renderCalculatorCompare)();
 }
-function calcNudgeEnd(prefix) {
-  CALC_NUDGE[prefix] = null;                      // re-centre on where you stopped
+
+// A repayment outside the quoted range is extrapolated off the ends of the
+// curve — not an offer anyone has made. It must never win the comparison
+// quietly: £1,649 a fortnight "scored 9.0/10" precisely because nothing said so.
+function scenarioOutside(S) {
+  const p = S && S.col ? S.col.prefix : (S && S.tabId === 'calc' ? 'calc' : null);
+  if(!p || !calcLinked(p)) return null;
+  const { lo, hi } = calcSliderBounds();
+  const r = S.inputs.payment;
+  if(!(r > 0) || (r >= lo - 0.5 && r <= hi + 0.5)) return null;
+  return { lo, hi, r };
+}
+
+// The lender's own slider bounds when the paste gave them, else the span of
+// the quoted points. Nothing outside this was ever actually offered.
+function calcSliderBounds() {
+  const pts = capPoints();
+  return {
+    lo: Math.floor(CAP.repayMin > 0 ? CAP.repayMin : pts[0].r),
+    hi: Math.ceil(CAP.repayMax > 0 ? CAP.repayMax : pts[pts.length - 1].r),
+  };
+}
+
+// The slider owns its own hint, so a drag, a typed figure and a picked length
+// all end up saying the same thing — no ordering games between render passes.
+function renderCalcSlider(prefix) {
   const r = document.getElementById(prefix + '-remit-range');
-  if(r) r.value = 50;
+  const box = document.getElementById(prefix + '-remit');
   const hint = document.getElementById(prefix + '-nudge-hint');
-  if(hint) hint.textContent = 'drag to try repayments either side';
+  if(!r || !box) return;
+  const can = calcCanFollow(prefix);
+  const linked = can && CALC_FOLLOW[prefix] !== false;
+  const tick = document.getElementById(prefix + '-follow');
+  const wrap = document.getElementById(prefix + '-follow-wrap');
+  const note = document.getElementById(prefix + '-follow-note');
+  if(tick) { tick.checked = linked; tick.disabled = !can; }
+  if(wrap) wrap.className = 'calc-follow' + (linked ? ' on' : '') + (can ? '' : ' off');
+  if(note) note.textContent = !can
+    ? (CAP && CAP.principal > 0 && Array.isArray(CAP.points) && CAP.points.length >= 2
+        ? `only for your saved offer — set the advance to ${fmt(CAP.principal)} to use its curve`
+        : 'no saved offer curve yet — read an offer on the Offer Slider first')
+    : linked ? "priced off your saved offer's curve, like the lender's own slider"
+             : 'off — the fee and total stay exactly as you typed them';
+  r.dataset.mode = linked ? 'offer' : 'free';
+  if(linked) {
+    const { lo, hi } = calcSliderBounds();
+    const typed = moneyToNum(box.value);
+    const cur = clamp(typed || lo, lo, hi);
+    r.min = String(lo); r.max = String(hi); r.step = '1';
+    r.value = String(Math.round(cur));
+    r.title = `Drag between ${fmt(lo)} and ${fmt(hi)} — the fee re-prices as you go, exactly as it does on your lender's own slider`;
+    if(hint && !(typed > 0)) {
+      hint.innerHTML = `<b>${fmt(lo)} – ${fmt(hi)}</b> · drag or pick a length — the fee moves with it, like your lender's slider`;
+    } else if(hint && (typed < lo - 0.5 || typed > hi + 0.5)) {
+      // The thumb has to clamp, but the hint must not: pricing the clamp would
+      // show the fee for £5,516 next to a box reading £1,649.
+      hint.innerHTML = `<b style="color:var(--red);">${fmt(typed)} is outside ${fmt(lo)} – ${fmt(hi)}</b>`
+        + ` — your lender never quoted this, so the fee and term below are extrapolated`;
+    } else if(hint) {
+      const mm = capModel(cur);
+      hint.innerHTML = `<b>${fmt(lo)} – ${fmt(hi)}</b> · fee <b style="color:var(--amber);">${fmt(mm.fee)}</b> (${mm.feePct.toFixed(2)}%)`
+        + ` · total ${fmt(mm.total)} · <b>${mm.facts.n} dates · ${mm.facts.n * Math.round(CAP.freq / 7)}w</b>`;
+    }
+  } else {
+    r.min = '0'; r.max = '100'; r.step = '1';
+    const base = CALC_NUDGE[prefix];
+    if(base == null) r.value = '50';
+    r.title = 'Drag to try repayments either side — release to re-centre';
+    if(hint) {
+      const val = moneyToNum(box.value);
+      hint.textContent = (base > 0 && val > 0 && Math.abs(val - base) > 0.005)
+        ? `${val > base ? '+' : '−'}${fmt(Math.abs(val - base))} from ${fmt(base)} — the fee stays as typed`
+        : 'drag to try repayments either side — the fee stays as typed';
+    }
+  }
+}
+
+// Dragging re-runs the whole compare, so coalesce to one render a frame.
+let calcNudgeRaf = null;
+function calcRenderSoon(prefix) {
+  if(calcNudgeRaf) return;
+  calcNudgeRaf = requestAnimationFrame(() => {
+    calcNudgeRaf = null;
+    (prefix === 'calc' ? renderCalculator : renderCalculatorCompare)();
+  });
+}
+
+function calcNudge(prefix, v) {
+  const el = document.getElementById(prefix + '-remit');
+  const r = document.getElementById(prefix + '-remit-range');
+  if(!el || !r) return;
+  if(r.dataset.mode === 'offer') {
+    // The fee is not a constant you drag past. It moves with the repayment,
+    // so re-price the whole offer at every step — otherwise you get a £1,649
+    // repayment still carrying the fee quoted for £7,056, which stretched the
+    // schedule to 56 payment dates at a fee nobody would ever have offered.
+    const val = Math.round(parseFloat(v) || 0);
+    if(!(val > 0)) return;
+    const mm = capModel(val);
+    el.value = moneyFmt(mm.repayment);
+    const set = (suffix, x) => { const e = document.getElementById(prefix + suffix); if(e) e.value = x; };
+    set('-total', moneyFmt(mm.total));
+    set('-feepct', mm.feePct.toFixed(2));
+    set('-npay', '');
+  } else {
+    if(CALC_NUDGE[prefix] == null) CALC_NUDGE[prefix] = moneyToNum(el.value) || 0;
+    const base = CALC_NUDGE[prefix];
+    if(!(base > 0)) return;
+    const span = base * 0.35;                     // ±35% is plenty to cross several boundaries
+    const val = Math.round((base + ((v - 50) / 50) * span) * 100) / 100;
+    el.value = moneyFmt(Math.max(1, val));
+  }
+  calcRenderSoon(prefix);
+}
+
+function calcNudgeEnd(prefix) {
+  const r = document.getElementById(prefix + '-remit-range');
+  if(r && r.dataset.mode === 'offer') return;     // absolute slider — nothing to re-centre
+  CALC_NUDGE[prefix] = null;                      // re-centre on where you stopped
+  if(r) r.value = 50;
+  renderCalcSlider(prefix);
 }
 
 function calcApplyPaste(prefix) {
@@ -3498,6 +3705,17 @@ function calcInput(prefix, field) {
     if(adv > 0) {
       const feeEl = g('-feepct');
       if(document.activeElement !== feeEl) feeEl.value = Math.round((tot/adv - 1) * 10000) / 100;
+    }
+  } else if(field === 'remit' && calcLinked(prefix)) {
+    // On the lender's page the repayment is the only thing you set and the fee
+    // follows it. Keep that true here, or a repayment typed in this box sits
+    // against a fee that belongs to a different repayment entirely.
+    const rp = moneyToNum(g('-remit').value);
+    if(rp > 0) {
+      const mm = capModel(rp);
+      const totEl = g('-total'), feeEl = g('-feepct');
+      if(document.activeElement !== totEl) totEl.value = moneyFmt(mm.total);
+      if(document.activeElement !== feeEl) feeEl.value = mm.feePct.toFixed(2);
     }
   }
   (prefix === 'calc' ? renderCalculator : renderCalculatorCompare)();
@@ -4219,8 +4437,9 @@ function renderCalculator() {
   const S = computeScenario(inputs);
   if(S) S.tabId = 'calc';
   const results = document.getElementById('calc-results');
-  if(!S) { showDerivedNote('calc', null); results.innerHTML = '<div class="empty-state">Enter the loan amount, the fee % (or total to repay), and a loan length to see your numbers.</div>'; return; }
   renderCalcPicks('calc');
+  renderCalcSlider('calc');
+  if(!S) { showDerivedNote('calc', null); results.innerHTML = '<div class="empty-state">Enter the loan amount, the fee % (or total to repay), and a loan length to see your numbers.</div>'; return; }
   showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`);
   results.innerHTML = renderScenarioResults(S);
 }
@@ -4246,6 +4465,7 @@ function renderCalculatorCompare() {
     const S = computeScenario(inputs);
     if(S) { S.tabId = c.k; S.col = c; }
     renderCalcPicks(c.prefix);
+    renderCalcSlider(c.prefix);
     showDerivedNote(c.prefix, S
       ? `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`
       : null);
@@ -4284,30 +4504,36 @@ function renderRankedVerdict(list) {
              weeks: weeksOf(S), dates: S.SF.n, fee: M.cost, feePct: (M.cost / S.inputs.advanced) * 100,
              press: M.soloPressurePct, cycles: S.P.totalCyclesInLoan,
              free: C && C.reinvestable.length ? C.reinvestable[0].amount : 0,
-             score: M.scoreR };
-  }).sort((a, b) => b.realised - a.realised);
+             score: M.scoreR, outside: scenarioOutside(S) };
+  }).sort((a, b) => (a.outside ? 1 : 0) - (b.outside ? 1 : 0) || b.realised - a.realised);
 
-  const best = rows[0], worst = rows[rows.length - 1];
+  // Badges and the headline are decided among the options that actually exist.
+  const real = rows.filter(r => !r.outside);
+  const pool = real.length ? real : rows;
+  const best = pool[0], worst = pool[pool.length - 1];
   const gap = r2(best.realised - worst.realised);
-  const cheapest = rows.reduce((a, b) => b.fee < a.fee ? b : a);
-  const easiest  = rows.reduce((a, b) => b.press < a.press ? b : a);
+  const cheapest = pool.reduce((a, b) => b.fee < a.fee ? b : a);
+  const easiest  = pool.reduce((a, b) => b.press < a.press ? b : a);
   const tag = r => [
+    r.outside ? '<span class="rv-tag off">not quoted</span>' : '',
     r === best ? '<span class="rv-tag best">most profit</span>' : '',
     r === cheapest ? '<span class="rv-tag fee">lowest fee</span>' : '',
     r === easiest ? '<span class="rv-tag press">least pressure</span>' : '',
   ].join('');
 
-  const cell = (r, get, win) => `<b class="${win(r) ? 'w' : ''}">${get(r)}</b>`;
-  const maxR = Math.max(...rows.map(r => r.realised));
-  const minF = Math.min(...rows.map(r => r.fee));
-  const minP = Math.min(...rows.map(r => r.press));
-  const maxW = Math.max(...rows.map(r => r.weeks));
+
+  const flagged = rows.filter(r => r.outside);
+  const cell = (r, get, win) => `<b class="${!r.outside && win(r) ? 'w' : ''}">${get(r)}</b>`;
+  const maxR = Math.max(...pool.map(r => r.realised));
+  const minF = Math.min(...pool.map(r => r.fee));
+  const minP = Math.min(...pool.map(r => r.press));
+  const maxW = Math.max(...pool.map(r => r.weeks));
 
   return `
     <div class="bv">
       <div class="bv-head">
         <div>
-          <div class="bv-kicker">Better for the business${rows.length > 2 ? ` — best of ${rows.length}` : ''}</div>
+          <div class="bv-kicker">Better for the business${pool.length > 2 ? ` — best of ${pool.length}` : ''}${flagged.length ? ` · ${flagged.length} set aside` : ''}</div>
           <div class="bv-name">Scenario ${best.label}
             <span class="bv-sub">${fmt(best.pay)} every ${best.S.inputs.freq} days · ${best.dates} dates · ${best.weeks} weeks · fee ${best.feePct.toFixed(2)}%</span></div>
         </div>
@@ -4317,14 +4543,22 @@ function renderRankedVerdict(list) {
         </div>
       </div>
 
+      ${flagged.length ? `<div class="bv-warn"><b>${flagged.map(r => 'Scenario ' + r.label).join(' and ')}
+        ${flagged.length > 1 ? 'sit' : 'sits'} outside what your lender quotes</b>
+        (${fmt(flagged[0].outside.lo)} – ${fmt(flagged[0].outside.hi)} per payment).
+        ${flagged.length > 1 ? 'Those figures are' : `${fmt(flagged[0].pay)} is`} read off the ends of the fee curve, so the fee,
+        the term and the profit are all guesses at an offer nobody has made. Bring
+        ${flagged.length > 1 ? 'them' : 'it'} inside the range, or untick <em>Fee moves with the repayment</em>
+        and type the real quote.</div>` : ''}
+
       <div class="rv-rank">
-        ${rows.map((r, i) => `<span class="rv-row">
+        ${rows.map((r, i) => `<span class="rv-row ${i === 0 && !r.outside ? 'top' : ''} ${r.outside ? 'bad' : ''}">
           <b>${i+1}</b><span class="rv-chip" style="background:${r.accent};">${r.label}</span>
           ${fmt(r.pay)} <em>${fmt(r.realised)}</em>${tag(r)}</span>`).join('')}
       </div>
 
-      <div class="bv-table" style="grid-template-columns:1fr repeat(${rows.length}, auto);">
-        <span></span>${rows.map(r => `<span class="bv-th ${r===best?'w':''}">${r.label}</span>`).join('')}
+      <div class="bv-scroll"><div class="bv-table" style="grid-template-columns:minmax(132px,1.5fr) repeat(${rows.length}, minmax(84px,1fr));">
+        <span></span>${rows.map(r => `<span class="bv-th ${r===best?'w':''}"><i class="rv-chip" style="background:${r.accent};">${r.label}</i></span>`).join('')}
         <span>Profit you'd keep <small>(expected)</small></span>${rows.map(r => cell(r, x=>fmt(x.realised), x=>Math.abs(x.realised-maxR)<1)).join('')}
         <span>Floor <small>(whole cycles only)</small></span>${rows.map(r => `<b>${fmt(r.floor)}</b>`).join('')}
         <span>Out every payment</span>${rows.map(r => `<b>${fmt(r.pay)}</b>`).join('')}
@@ -4334,7 +4568,7 @@ function renderRankedVerdict(list) {
         <span>Pressure</span>${rows.map(r => cell(r, x=>x.press.toFixed(0)+'%', x=>Math.abs(x.press-minP)<0.5)).join('')}
         <span>Free to restock</span>${rows.map(r => `<b>${fmt(r.free)}</b>`).join('')}
         <span>Score</span>${rows.map(r => `<b>${r.score.text}/10</b>`).join('')}
-      </div>
+      </div></div>
       <div class="bv-foot">Ranked on <strong>profit you'd keep</strong> once the stock cycle has run, then on what leaves the bank
         each payment. A longer term usually wins both — more of the cycle completes, and the payment itself is smaller.</div>
     </div>`;
@@ -4455,11 +4689,13 @@ const OFFER_SEED = {
     { r:7000,  fee:5957.57, term:'7 months' },
     { r:7056,  fee:5906.67, term:'7 months' },
     { r:7112,  fee:5861.49, term:'6 months' },
+    { r:7434,  fee:5611.45, term:'6 months' },
     { r:7602,  fee:5480.99, term:'6 months' },
     { r:7644,  fee:5451.04, term:'6 months' },
     { r:7854,  fee:5313.50, term:'6 months' },
     { r:8162,  fee:5111.78, term:'6 months' },
     { r:8960,  fee:4665.01, term:'5 months' },
+    { r:9044,  fee:4619.32, term:'5 months' },
     { r:9926,  fee:4226.30, term:'5 months' },
     { r:12376, fee:3442.96, term:'4 months' },
   ],
@@ -4531,14 +4767,24 @@ function capCliff(N, cfg) {
 function capLadder(cfg) {
   cfg = cfg || CAP;
   const pts = capPoints();
-  const nAtMin = capModel(pts[0].r, cfg).facts.n;
-  const nAtMax = capModel(pts[pts.length-1].r, cfg).facts.n;
+  // What the lender will actually let you set. A cliff outside this range is a
+  // number the maths produces but their offer page will not accept, so it must
+  // never be recommended: the 17-date cliff lands at £5,507.48 while their
+  // slider stops at £5,516. Clamp to the lowest they DO allow — which still
+  // clears in 17 dates, and at their exact quoted fee rather than one
+  // extrapolated off the end of the curve.
+  const lo = cfg.repayMin > 0 ? cfg.repayMin : pts[0].r;
+  const hi = cfg.repayMax > 0 ? cfg.repayMax : pts[pts.length-1].r;
+  const nAtMin = capModel(lo, cfg).facts.n;
+  const nAtMax = capModel(hi, cfg).facts.n;
   const rows = [];
   for(let N = Math.max(nAtMin, nAtMax); N >= Math.min(nAtMin, nAtMax); N--) {
-    const r = capCliff(N, cfg);
+    const cliff = capCliff(N, cfg);
+    if(!(cliff > 0)) continue;
+    const r = clamp(cliff, lo, hi);
     const m = capModel(r, cfg);
-    if(m.facts.n !== N) continue;    // guard against curve kinks
-    rows.push({ N, repayment: r, model: m });
+    if(m.facts.n !== N) continue;    // guard against curve kinks and the clamp
+    rows.push({ N, repayment: r, model: m, cliff, clamped: Math.abs(r - cliff) > 0.005 });
   }
   return rows;
 }
@@ -5760,7 +6006,8 @@ function capJump(v) {
 // does not move a single boundary.
 let capLadderCache = { key:'', rows:null };
 function capLadderCached() {
-  const key = [CAP.principal, CAP.freq, CAP.firstGap, CAP.deploy, CAP.points.map(p=>p.r+':'+p.fee).join('|')].join('~');
+  const key = [CAP.principal, CAP.freq, CAP.firstGap, CAP.deploy, CAP.repayMin, CAP.repayMax,
+               CAP.points.map(p=>p.r+':'+p.fee).join('|')].join('~');
   if(capLadderCache.key !== key) capLadderCache = { key, rows: capLadder() };
   return capLadderCache.rows;
 }
@@ -6087,6 +6334,11 @@ function renderCapitalResults() {
           <thead><tr><th>Length</th><th>Repayment</th><th>Fee</th><th>Stock cycles</th><th>Profit · expected / worst</th><th>Pressure</th><th>Free to restock</th><th>Finishes</th><th></th><th></th></tr></thead>
           <tbody>${ladderRows}</tbody>
         </table></div>
+        ${ladder.some(x => x.clamped) ? `<div style="font-size:11.5px;color:var(--text2);line-height:1.6;margin-top:9px;">
+          ${ladder.filter(x => x.clamped).map(x => `The <b>${x.N}-date</b> row shows <b>${fmt(x.repayment)}</b>, not its true cliff of ${fmt(x.cliff)} —
+          your lender's slider stops at ${fmt(x.repayment)}, so anything below it isn't an offer you can take.
+          The figures here are their exact quote at that point rather than one extrapolated off the end of the curve.`).join(' ')}
+        </div>` : ''}
         ${sameTermNote}
       </div>
     </div>`;
