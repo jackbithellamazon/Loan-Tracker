@@ -1698,6 +1698,106 @@ body { overflow-x: hidden; }
 .calc-pick-btn:hover { border-color: var(--navy); color: var(--navy); background: var(--blue-bg); }
 .calc-pick-btn.on { background: var(--navy); border-color: var(--navy); color: #fff; }
 .calc-pick-btn.on small { color: rgba(255,255,255,0.7); }
+
+/* ── Panel shell ───────────────────────────────────────────────────────
+   .manage-card / -head / -body / .mc-title are used on ten panels across the
+   app but had no rules at all, so every "card" rendered as a transparent div
+   with nothing but an inline shadow. That is why the pages read flat and ran
+   together. This is the shared shell they were always meant to have. */
+.manage-card { background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; }
+.manage-card-head { display: flex; align-items: center; gap: 9px; padding: 10px 15px;
+  background: var(--surface); border-bottom: 1px solid var(--border); }
+.mc-title { font-size: 12.5px; font-weight: 800; letter-spacing: -0.1px; color: var(--text);
+  display: flex; align-items: center; gap: 7px; min-width: 0; }
+.mc-title small { font-size: 10px; font-weight: 600; color: var(--text3); }
+.mc-note { margin-left: auto; font-size: 10.5px; font-weight: 700; color: var(--text3);
+  font-variant-numeric: tabular-nums; white-space: nowrap; }
+.manage-card-body { padding: 14px 15px; }
+
+/* ── Compare columns: three scenarios, each with its own identity ────── */
+.compare-col > .manage-card { border-top: 3px solid var(--border2); }
+.compare-col.col-a > .manage-card { border-top-color: var(--navy); }
+.compare-col.col-b > .manage-card { border-top-color: var(--purple); }
+.compare-col.col-c > .manage-card { border-top-color: var(--teal); }
+.compare-col.col-a > .manage-card > .manage-card-head { background: var(--blue-bg); }
+.compare-col.col-b > .manage-card > .manage-card-head { background: var(--purple-bg); }
+.compare-col.col-c > .manage-card > .manage-card-head { background: var(--teal-bg); }
+.cmp-letter { flex: none; width: 21px; height: 21px; border-radius: 6px; color: #fff;
+  font-size: 11px; font-weight: 900; display: inline-flex; align-items: center; justify-content: center; }
+.cmp-letter.a { background: var(--navy); }
+.cmp-letter.b { background: var(--purple); }
+.cmp-letter.c { background: var(--teal); }
+
+/* ── Empty states inside a column: compact and actionable, not 40px of grey ── */
+.empty-mini { border: 1px dashed var(--border2); border-radius: var(--radius2);
+  background: var(--surface); padding: 15px 14px; text-align: center;
+  font-size: 12px; line-height: 1.6; color: var(--text2); }
+.empty-mini b { color: var(--text); display: block; margin-bottom: 3px; font-size: 12.5px; }
+.empty-mini .btn-sm { margin-top: 10px; }
+
+/* ── Send to Calculator: the bridge from the slider to the full model ── */
+.send-bar { background: var(--white); border: 1px solid var(--border2); border-radius: var(--radius);
+  padding: 13px 15px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.send-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+  flex-wrap: wrap; margin-bottom: 11px; }
+.send-lab { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.7px;
+  color: var(--text3); margin-bottom: 3px; }
+.send-now { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; color: var(--text);
+  font-variant-numeric: tabular-nums; }
+.send-now small { font-size: 11.5px; font-weight: 600; color: var(--text2); margin-left: 7px;
+  letter-spacing: 0; }
+.send-go { font-size: 12px; font-weight: 800; padding: 9px 15px; border-radius: 8px; cursor: pointer;
+  background: var(--navy); border: 1px solid var(--navy); color: #fff; white-space: nowrap;
+  display: flex; flex-direction: column; align-items: center; line-height: 1.25; }
+.send-go small { font-size: 9.5px; font-weight: 600; color: rgba(255,255,255,0.72); }
+.send-go:hover { background: var(--navy2); }
+.send-go[disabled] { background: var(--surface2); border-color: var(--border2); color: var(--text3);
+  cursor: default; }
+.send-go[disabled] small { color: var(--text3); }
+.send-slots { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; }
+@media (max-width: 720px) { .send-slots { grid-template-columns: 1fr; } }
+.send-slot { display: flex; align-items: center; gap: 9px; padding: 9px 11px; min-width: 0;
+  border: 1px solid var(--border); border-radius: var(--radius2); background: var(--surface2);
+  text-align: left; font-family: inherit; }
+.send-slot.empty { border-style: dashed; border-color: var(--border2); background: var(--surface);
+  cursor: pointer; width: 100%; }
+.send-slot.empty:hover { border-color: var(--navy); background: var(--blue-bg); }
+.send-slot.here { border-color: var(--navy); box-shadow: 0 0 0 2px rgba(29,41,66,0.09); }
+.send-tag { flex: none; width: 21px; height: 21px; border-radius: 6px; color: #fff;
+  font-size: 11px; font-weight: 900; display: inline-flex; align-items: center; justify-content: center; }
+.send-tag.a { background: var(--navy); }
+.send-tag.b { background: var(--purple); }
+.send-tag.c { background: var(--teal); }
+.send-slot.empty .send-tag { background: var(--surface3); color: var(--text3); }
+.send-txt { min-width: 0; font-size: 12.5px; font-weight: 800; color: var(--text);
+  font-variant-numeric: tabular-nums; line-height: 1.3; }
+.send-txt small { display: block; font-size: 10px; font-weight: 600; color: var(--text3);
+  letter-spacing: 0; }
+.send-slot.empty .send-txt { font-weight: 700; color: var(--text2); font-size: 12px; }
+.send-side { margin-left: auto; display: flex; align-items: center; gap: 4px; flex: none; }
+.send-here { font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px;
+  background: var(--navy); color: #fff; padding: 3px 6px; border-radius: 999px; }
+.send-swap, .send-x { font-size: 9.5px; font-weight: 700; padding: 3px 6px; border-radius: 5px;
+  border: 1px solid var(--border2); background: var(--white); color: var(--text3); cursor: pointer; }
+.send-swap:hover, .send-x:hover { border-color: var(--navy); color: var(--navy); }
+
+/* compact copy of the same control, pinned in the sticky bar */
+.cap-sticky .cap-send-mini { margin-left: auto; gap: 4px !important; align-items: center !important; }
+.csm { font-size: 10px; font-weight: 900; width: 21px; height: 21px; border-radius: 5px; padding: 0;
+  border: 1px solid var(--border2); background: var(--white); color: var(--text3); cursor: pointer; }
+.csm:hover { border-color: var(--navy); color: var(--navy); }
+.csm.on.a { background: var(--navy); border-color: var(--navy); color: #fff; }
+.csm.on.b { background: var(--purple); border-color: var(--purple); color: #fff; }
+.csm.on.c { background: var(--teal); border-color: var(--teal); color: #fff; }
+.csm.go { width: auto; padding: 0 8px; font-size: 10px; font-weight: 800; }
+.csm.go:not([disabled]) { background: var(--navy); border-color: var(--navy); color: #fff; }
+.csm.go[disabled] { cursor: default; opacity: 0.5; }
+
+/* ── Nudge slider: the track was near-invisible on a white card ───────── */
+.calc-range { background: var(--surface3); box-shadow: inset 0 0 0 1px var(--border2); }
+.calc-pick { margin-top: 10px; padding-top: 9px; border-top: 1px dashed var(--border2); gap: 4px; }
+.calc-pick-btn { min-width: 33px; padding: 4px 6px; }
 </style>
 </head>
 <body>
@@ -1706,7 +1806,7 @@ body { overflow-x: hidden; }
 <nav class="nav">
   <div class="nav-brand">
     <div class="nav-logo">£</div>
-    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v32.8</span></div>
+    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v32.9</span></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
@@ -1721,12 +1821,18 @@ body { overflow-x: hidden; }
      glance whether the page you're looking at is the one you just uploaded. -->
 <div class="ver-pop" id="ver-pop" onclick="this.classList.remove('open')">
   <div class="ver-card" onclick="event.stopPropagation()">
-    <div class="ver-head">Loan Tracker <b>v32.8</b> <span>built 22 Sep 2026</span>
+    <div class="ver-head">Loan Tracker <b>v32.9</b> <span>built 22 Sep 2026</span>
       <button class="pin-x" onclick="document.getElementById('ver-pop').classList.remove('open')">✕</button></div>
     <div class="ver-body">
-      <p>If the page you're looking at doesn't say <b>v32.8</b> in the top-left, it's an older
+      <p>If the page you're looking at doesn't say <b>v32.9</b> in the top-left, it's an older
          upload — hard-refresh with <b>Cmd+Shift+R</b>, and check the file you pushed.</p>
       <div class="ver-list">
+        <span><b>Send to Calculator</b> sits above the tabs on the Offer Slider — park a level in A, B or C and open them</span>
+        <span>The same three buttons ride along in the sticky bar, so they follow you down the page</span>
+        <span>Calculator says <b>Compare 3 Scenarios</b>, because three is what it does</span>
+        <span>Every panel in the app now has a real card shell — the <code>.manage-card</code> styles were never written</span>
+        <span>Scenario columns get their own colour, a letter chip and their headline in the header</span>
+        <span>Empty columns say what's missing and offer a way to fill them, instead of 40px of grey</span>
         <span>Pick all three on the Offer Slider, then open them together in the Calculator</span>
         <span>Each Calculator column can pick a length straight from your offer's boundaries</span>
         <span><b>Out fastest</b>: the quickest exit that still earns, for when you just want the debt gone</span>
@@ -1827,13 +1933,16 @@ body { overflow-x: hidden; }
 <div class="page" id="page-calculator">
   <div class="sec-hdr">
     <div class="sec-label">Loan Calculator</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <button class="btn-sm" onclick="calcPullFromSlider()" title="Bring the levels you picked on the Offer Slider into these columns">↔ From the Offer Slider</button>
     <div class="calc-mode-toggle">
       <button class="calc-mode-btn active" id="calc-mode-single" onclick="setCalcMode('single')">Single Scenario</button>
-      <button class="calc-mode-btn" id="calc-mode-compare" onclick="setCalcMode('compare')">Compare 2 Scenarios</button>
+      <button class="calc-mode-btn" id="calc-mode-compare" onclick="setCalcMode('compare')">Compare 3 Scenarios</button>
+    </div>
     </div>
   </div>
   <div class="info-box"><strong>For deciding your next advance.</strong> Paste or type an offer and see what it would actually leave you —
-    or put two side by side and get one answer on which suits the business better. Type the <strong>repayment from your offer</strong>;
+    or put up to three side by side and get one answer on which suits the business better. Type the <strong>repayment from your offer</strong>;
     the payment dates, exact payoff date and duration in weeks are worked out for you. Nothing here is saved to your loans.</div>
 
   <!-- SINGLE SCENARIO -->
@@ -1850,23 +1959,23 @@ body { overflow-x: hidden; }
   <!-- COMPARE MODE -->
   <div class="calc-layout-compare" id="calc-compare-layout" style="display:none;">
     <div class="compare-hero-slot" id="calc-compare-hero" style="grid-column:1/-1;"></div>
-    <div class="compare-col">
+    <div class="compare-col col-a">
       <div class="manage-card" style="box-shadow:var(--shadow);">
-        <div class="manage-card-head"><div class="mc-title" style="color:var(--navy);">Scenario A</div></div>
+        <div class="manage-card-head"><div class="mc-title"><span class="cmp-letter a">A</span>Scenario A</div><span class="mc-note" id="cmp-note-a"></span></div>
         <div class="manage-card-body" id="calc-form-a-cmp"></div>
       </div>
       <div class="calc-results" id="calc-results-a"></div>
     </div>
-    <div class="compare-col">
+    <div class="compare-col col-b">
       <div class="manage-card" style="box-shadow:var(--shadow);">
-        <div class="manage-card-head"><div class="mc-title" style="color:var(--purple);">Scenario B</div></div>
+        <div class="manage-card-head"><div class="mc-title"><span class="cmp-letter b">B</span>Scenario B</div><span class="mc-note" id="cmp-note-b"></span></div>
         <div class="manage-card-body" id="calc-form-b-cmp"></div>
       </div>
       <div class="calc-results" id="calc-results-b"></div>
     </div>
-    <div class="compare-col">
+    <div class="compare-col col-c">
       <div class="manage-card" style="box-shadow:var(--shadow);">
-        <div class="manage-card-head"><div class="mc-title" style="color:var(--teal);">Scenario C <small style="font-weight:500;color:var(--text3);">optional</small></div></div>
+        <div class="manage-card-head"><div class="mc-title"><span class="cmp-letter c">C</span>Scenario C <small>optional</small></div><span class="mc-note" id="cmp-note-c"></span></div>
         <div class="manage-card-body" id="calc-form-c-cmp"></div>
       </div>
       <div class="calc-results" id="calc-results-c"></div>
@@ -4140,9 +4249,17 @@ function renderCalculatorCompare() {
     showDerivedNote(c.prefix, S
       ? `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`
       : null);
+    const note = document.getElementById('cmp-note-' + c.k);
+    if(note) note.textContent = S ? `${S.SF.n} dates · ${weeksOf(S)}w` : '';
     const res = document.getElementById(c.res);
     if(res) res.innerHTML = S ? renderScenarioCompact(S, c.label, c.accent)
-      : `<div class="empty-state">${c.k==='c' ? 'Scenario C is optional — add a third to compare.' : `Enter valid terms for Scenario ${c.label}.`}</div>`;
+      : `<div class="empty-mini">
+          <b>${c.k === 'c' ? 'Scenario C is optional' : 'Scenario ' + c.label + ' needs its terms'}</b>
+          ${c.k === 'c' ? 'Add a third level if you want it weighed against A and B.'
+                        : 'The advance, the fee % (or the total to repay), and the repayment each time.'}
+          <div style="margin-top:6px;">Tap a length above to fill it from your offer, or bring one across from the Offer Slider.</div>
+          <button class="btn-sm" onclick="calcPullFromSlider()">Go to the Offer Slider →</button>
+        </div>`;
     if(S) live.push(S);
   });
 
@@ -5134,6 +5251,55 @@ function renderBand(ladder, m) {
     </div>`;
 }
 
+
+// ── SEND THIS ONE TO THE CALCULATOR ────────────────────
+// The slider picks a repayment; the Calculator prices what that repayment does
+// to the business. This strip is the bridge between the two, and it sits above
+// the tabs so it is reachable from every view rather than buried in one of them.
+// Park the level you are looking at in A, B or C, then open all of them at once.
+function capSendBar(m) {
+  const SLOTS = ['a', 'b', 'c'];
+  const wkOf = mm => mm.facts.n * Math.round(CAP.freq / 7);
+  const filled = SLOTS.filter(k => CAP['pin' + k.toUpperCase()] > 0);
+  const slot = k => {
+    const v = CAP['pin' + k.toUpperCase()];
+    if(!(v > 0)) return `<button class="send-slot empty" onclick="capPin('${k}')"
+        title="Put the repayment on the slider now into slot ${k.toUpperCase()}">
+      <span class="send-tag">${k.toUpperCase()}</span>
+      <span class="send-txt">Put this one here<small>${fmt(m.repayment)} · ${m.facts.n} dates · ${wkOf(m)}w</small></span></button>`;
+    const mm = capModel(v);
+    const here = Math.abs(v - m.repayment) < 0.5;
+    return `<div class="send-slot ${here ? 'here' : ''}">
+      <span class="send-tag ${k}">${k.toUpperCase()}</span>
+      <span class="send-txt">${fmt(mm.repayment)}<small>${mm.facts.n} dates · ${wkOf(mm)}w · fee ${mm.feePct.toFixed(2)}%</small></span>
+      <span class="send-side">
+        ${here ? '<span class="send-here">on the slider</span>'
+               : `<button class="send-swap" onclick="capPin('${k}')" title="Replace slot ${k.toUpperCase()} with the repayment on the slider now">swap in</button>`}
+        <button class="send-x" onclick="capUnpin('${k}')" title="Empty slot ${k.toUpperCase()}">✕</button>
+      </span></div>`;
+  };
+  return `<div class="send-bar">
+    <div class="send-head">
+      <div>
+        <div class="send-lab">Send this to the Loan Calculator</div>
+        <div class="send-now">${fmt(m.repayment)}<small>${m.facts.n} payment dates · ${wkOf(m)} weeks · fee ${fmt(m.fee)} (${m.feePct.toFixed(2)}%)</small></div>
+      </div>
+      <button class="send-go" ${filled.length ? `onclick="capSendAll()"` : 'disabled'}>
+        ${filled.length ? `Open ${filled.length === 1 ? 'it' : 'all ' + filled.length} in the Calculator →` : 'Nothing picked yet'}
+        <small>${filled.length ? 'full profit, cycles and scores, ranked' : 'pick at least one below'}</small></button>
+    </div>
+    <div class="send-slots">${SLOTS.map(slot).join('')}</div>
+  </div>`;
+}
+
+// The Calculator's own way back: if levels are already picked, open them;
+// otherwise take you to the slider with the picking view showing.
+function calcPullFromSlider() {
+  if([CAP.pinA, CAP.pinB, CAP.pinC].some(v => v > 0)) { capSendAll(); return; }
+  showPage('capital');
+  setTab('cap-tabs', 'pin');
+}
+
 // ── PIN TWO LEVELS AND COMPARE THEM ────────────────────
 function capPin(slot, repayment) {
   CAP['pin' + slot.toUpperCase()] = repayment != null ? repayment : parseFloat(CAP.repayment) || 0;
@@ -5751,6 +5917,12 @@ function renderCapitalResults() {
       <div><dt>Total</dt><dd>${fmt(m.total)}</dd></div>
       <div><dt>Finishes</dt><dd>${fmtDate(m.facts.finalDate)}</dd></div>
       ${up ? `<div><dt>Next boundary</dt><dd style="color:var(--navy);">+${fmt(r2(up.repayment-m.repayment))}</dd></div>` : ''}
+      <div class="cap-send-mini"><dt>To calculator</dt>
+        ${['a','b','c'].map(k => `<button class="csm ${k} ${CAP['pin'+k.toUpperCase()] > 0 ? 'on' : ''}"
+            onclick="capPin('${k}')" title="Put ${fmt(m.repayment)} into slot ${k.toUpperCase()}">${k.toUpperCase()}</button>`).join('')}
+        <button class="csm go" ${[CAP.pinA,CAP.pinB,CAP.pinC].some(v=>v>0) ? 'onclick="capSendAll()"' : 'disabled'}
+          title="Open every picked level in the Calculator">open →</button>
+      </div>
     </div>`;
 
   const srcBadge = m.source==='exact' ? '<span class="cap-badge exact">Exact quoted figure</span>'
@@ -5946,12 +6118,13 @@ function renderCapitalResults() {
         </div>
         <div class="cap-send">
           <button class="btn-sm primary" onclick="capSendTo('A')">Load into Calculator — Scenario A</button>
-          <button class="btn-sm" onclick="capSendTo('B')">Load into Scenario B</button>
+          <button class="btn-sm" onclick="capSendTo('B')">Scenario B</button>
+          <button class="btn-sm" onclick="capSendTo('C')">Scenario C</button>
         </div>
       </div>
     </div>`;
 
-  box.innerHTML = sticky + renderRecommend(ladder, m) + headline + tabset('cap-tabs', [
+  box.innerHTML = sticky + renderRecommend(ladder, m) + headline + capSendBar(m) + tabset('cap-tabs', [
     { key:'move',  label:'What to do',   note:up ? `+${fmt(r2(up.repayment - m.repayment))} to drop a date` : 'shortest in range',
       html: renderBenchmark(m) + renderBand(ladder, m) + capChart(ladder, m, lo, hi) + cliffBlock + downBlock },
     { key:'all',   label:'Every option', note:`${ladder.length} boundaries`, html: ladderBlock },
@@ -5963,21 +6136,15 @@ function renderCapitalResults() {
 // Push the current repayment level into the Loan Calculator's compare mode so
 // the full profit / cycle / score model runs on it.
 function capSendTo(which) {
-  const m = capModel(parseFloat(CAP.repayment)||0);
-  if(!(m.repayment>0)) return;
+  const rep = parseFloat(CAP.repayment) || 0;
+  if(!(rep > 0)) return;
+  const k = String(which || 'A').toLowerCase();
+  const prefix = { a:'cmpa', b:'cmpb', c:'cmpc' }[k];
+  if(!prefix) return;
+  capPin(k, rep);                       // remember it, so the slider shows it too
   showPage('calculator');
   setCalcMode('compare');
-  const prefix = which === 'A' ? 'cmpa' : 'cmpb';
-  const set = (suffix, val) => { const el = document.getElementById(prefix+suffix); if(el) el.value = val; };
-  set('-advanced', moneyFmt(CAP.principal));
-  set('-feepct', (m.feePct).toFixed(2));
-  set('-total', moneyFmt(m.total));
-  set('-remit', moneyFmt(m.repayment));
-  set('-npay', '');
-  set('-freq', String(CAP.freq));
-  set('-start', CAP.deploy);
-  set('-roi', String(CAP.roiPct));
-  set('-cycle', String(CAP.cycleDays));
+  capLoadInto(prefix, rep);
   renderCalculatorCompare();
 }
 
