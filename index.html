@@ -1274,6 +1274,81 @@ body { overflow-x: hidden; }
   border-radius: var(--radius2); padding: 12px 15px; margin-bottom: 14px; font-size: 12.5px;
   line-height: 1.6; color: #7a1f1f; }
 .sched-warn strong { display: block; font-size: 13px; margin-bottom: 3px; color: var(--red); }
+
+/* ── recommendation ── */
+.rec-panel { background: linear-gradient(180deg, #1d2942 0%, #24324f 100%); color: #fff;
+  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px; box-shadow: var(--shadow2); }
+.rec-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 11px; }
+.rec-kicker { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: #c8a030; margin-bottom: 5px; }
+.rec-title { font-size: 21px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
+.rec-tabs { display: flex; gap: 4px; background: rgba(255,255,255,0.08); padding: 3px; border-radius: 7px; flex-wrap: wrap; }
+.rec-tab { font-family: inherit; font-size: 11px; font-weight: 600; padding: 6px 11px; border-radius: 5px;
+  border: none; cursor: pointer; background: transparent; color: rgba(255,255,255,0.6); white-space: nowrap; }
+.rec-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.rec-tab.on { background: #fff; color: var(--navy); }
+.rec-body { font-size: 13.5px; line-height: 1.65; color: rgba(255,255,255,0.88); }
+.rec-body strong { color: #fff; }
+.rec-stat { font-size: 12px; line-height: 1.6; color: rgba(255,255,255,0.65);
+  border-top: 1px solid rgba(255,255,255,0.14); margin-top: 12px; padding-top: 11px; }
+.rec-stat b { color: #c8a030; }
+.rec-actions { display: flex; gap: 8px; margin-top: 13px; flex-wrap: wrap; }
+.rec-actions .btn-sm { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); color: #fff; box-shadow: none; }
+.rec-actions .btn-sm:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); color: #fff; }
+.rec-actions .btn-sm.primary { background: #fff; border-color: #fff; color: var(--navy); }
+.rec-actions .btn-sm.primary:hover { background: #e9ecf3; color: var(--navy); }
+
+/* ── pin two levels ── */
+.pin-wrap { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 15px 18px; box-shadow: var(--shadow); margin-bottom: 14px; }
+.pin-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 11px; letter-spacing: -0.2px; }
+.pin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pin-empty { font-family: inherit; font-size: 12px; font-weight: 600; color: var(--text2); cursor: pointer;
+  border: 1px dashed var(--border2); background: var(--surface2); border-radius: var(--radius2); padding: 20px 12px; }
+.pin-empty:hover { border-color: var(--navy); color: var(--navy); background: var(--blue-bg); }
+.pin-card { border: 1px solid var(--border); border-radius: var(--radius2); padding: 11px 13px; background: var(--surface2); }
+.pin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.pin-tag { font-size: 9.5px; font-weight: 800; letter-spacing: 0.7px; padding: 2px 7px; border-radius: 999px; color: #fff; }
+.pin-tag.a { background: var(--navy); }
+.pin-tag.b { background: var(--purple); }
+.pin-x { border: none; background: transparent; color: var(--text3); cursor: pointer; font-size: 12px; padding: 2px 4px; line-height: 1; }
+.pin-x:hover { color: var(--red); }
+.pin-rep { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 7px; font-variant-numeric: tabular-nums; }
+.pin-rows { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; font-size: 11.5px; }
+.pin-rows span { color: var(--text3); }
+.pin-rows b { text-align: right; font-variant-numeric: tabular-nums; }
+.pin-verdict { font-size: 12.5px; line-height: 1.6; color: var(--text2); background: var(--surface2);
+  border-left: 3px solid var(--navy); border-radius: 0 var(--radius2) var(--radius2) 0; padding: 11px 14px; margin-top: 11px; }
+.pin-verdict b { color: var(--text); }
+@media (max-width: 620px) { .pin-grid { grid-template-columns: 1fr; } }
+
+/* ── less dead space on a wide screen ── */
+.page { max-width: 1560px; }
+
+/* ── cash position ── */
+.cash-panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; box-shadow: var(--shadow); margin-bottom: 14px; }
+.cash-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 13px; }
+.cash-title { font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: -0.2px; }
+.cash-sub { font-size: 11.5px; color: var(--text2); margin-top: 3px; max-width: 620px; line-height: 1.5; }
+.cash-stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 10px; margin-bottom: 12px; }
+.cash-stat { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius2); padding: 11px 13px; }
+.cash-stat.hot { background: var(--red-bg); border-color: rgba(176,48,48,0.16); }
+.cash-lab { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text3); margin-bottom: 4px; }
+.cash-val { font-size: 19px; font-weight: 700; letter-spacing: -0.4px; font-variant-numeric: tabular-nums; }
+.cash-sub2 { font-size: 10.5px; color: var(--text3); margin-top: 3px; line-height: 1.4; }
+.cash-chart { width: 100%; height: auto; display: block; }
+.cash-axis { font-size: 9px; fill: var(--text3); font-weight: 600; }
+.cash-note { font-size: 12.5px; line-height: 1.6; color: var(--text2); background: var(--surface2);
+  border-left: 3px solid var(--navy); border-radius: 0 var(--radius2) var(--radius2) 0; padding: 11px 14px; margin-top: 10px; }
+.cash-note strong { color: var(--text); }
+
+.fm-hint { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text3); font-size: 10.5px; }
+.fm-input.fm-primary { border-color: var(--navy); background: var(--white); font-weight: 600; }
+.paste-card .cap-curve-ta { min-height: 96px; font-size: 11.5px; }
+
+.cs-row.cs-weeks { background: var(--blue-bg); }
+.cs-row.cs-weeks .cs-a-sm strong { color: var(--blue); }
+.paste-drop > summary { color: var(--blue); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -1352,7 +1427,9 @@ body { overflow-x: hidden; }
       <button class="calc-mode-btn" id="calc-mode-compare" onclick="setCalcMode('compare')">Compare 2 Scenarios</button>
     </div>
   </div>
-  <div class="info-box">Try out a potential loan offer before accepting it — or compare two structures side by side (e.g. 6 vs 12 months, different ROI, faster vs slower stock cycle). Updates live, nothing is saved.</div>
+  <div class="info-box">Try out an offer before accepting it — or compare two side by side (a higher vs lower repayment, different ROI,
+    faster vs slower stock cycle). Type the <strong>repayment from your offer</strong> and the number of payment dates, the exact payoff
+    date and the duration in weeks are worked out for you. Updates live, nothing is saved.</div>
 
   <!-- SINGLE SCENARIO -->
   <div class="calc-layout" id="calc-single-layout">
@@ -1401,7 +1478,20 @@ body { overflow-x: hidden; }
 
   <div class="cap-layout">
     <div>
-      <div class="manage-card" style="box-shadow:var(--shadow);">
+      <div class="manage-card paste-card" style="box-shadow:var(--shadow);">
+        <div class="manage-card-head"><div class="mc-title">Paste your offer</div></div>
+        <div class="manage-card-body">
+          <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:9px;">
+            Select the whole offer panel on the lender's site and paste it here — advance, remittance, fee, total,
+            deployment date and their balance table if it's there. Everything below fills in and the schedule is
+            worked out for you. Their month label is noted for reference only; it never enters the maths.
+          </div>
+          <textarea class="cap-curve-ta" id="cap-paste-ta" rows="5" spellcheck="false" placeholder="You will receive&#10;£86,000&#10;&#10;Remittance (2 weeks)&#10;£8,162.00&#10;Term&#10;6 months&#10;Deployed&#10;24 Sep 2026&#10;+ Fixed fee (5.94%)&#10;£5,111.78&#10;Total to remit&#10;£91,111.78"></textarea>
+          <div id="cap-paste-msg" class="cap-curve-msg"></div>
+          <div class="cap-send"><button class="btn-sm primary" onclick="capApplyPaste()">Read the offer</button></div>
+        </div>
+      </div>
+      <div class="manage-card" style="box-shadow:var(--shadow);margin-top:14px;">
         <div class="manage-card-head"><div class="mc-title">The offer</div></div>
         <div class="manage-card-body" id="cap-form"></div>
       </div>
@@ -2640,31 +2730,33 @@ function calcFormHTML(prefix, onChange, d) {
   const freq = d.freq ?? 14;
   const roi = d.roi ?? 15;
   const cycleDays = d.cycleDays ?? 124;
-  const lengthNum = d.lengthNum;
-  const lengthUnit = d.lengthUnit ?? 'months';
   const start = d.start || isoDate(TODAY);
   const feePct = (advanced > 0 && total > 0) ? Math.round((total/advanced - 1) * 10000)/100 : '';
   const cin = f => `calcInput('${prefix}','${f}')`;
   const moneyAttrs = `onfocus="stripMoney(this)" onblur="fmtMoneyBlur(this)"`;
   const mv = v => (v != null && v !== '' && isFinite(v)) ? moneyFmt(v) : '';
   return `<div class="fm-grid" style="grid-template-columns:1fr;margin-bottom:0;">
+    <details class="calc-adv paste-drop">
+      <summary>Paste your offer instead of typing it</summary>
+      <div style="margin-top:9px;">
+        <div style="font-size:11.5px;color:var(--text2);line-height:1.55;margin-bottom:7px;">
+          Select the offer panel on the lender's site and paste it — advance, repayment, fee and deployment date
+          all fill in, and the payment dates and weeks are worked out from them.
+        </div>
+        <textarea class="cap-curve-ta" id="${prefix}-paste" rows="4" spellcheck="false" placeholder="You will receive&#10;£86,000&#10;Remittance (2 weeks)&#10;£8,162.00&#10;Deployed&#10;24 Sep 2026&#10;+ Fixed fee (5.94%)&#10;£5,111.78&#10;Total to remit&#10;£91,111.78" style="min-height:80px;font-size:11.5px;"></textarea>
+        <div id="${prefix}-paste-msg" class="cap-curve-msg"></div>
+        <div style="margin-top:8px;"><button class="btn-sm primary" onclick="calcApplyPaste('${prefix}')">Read the offer</button></div>
+      </div>
+    </details>
+
     <div class="calc-field-row">
       <div class="fm-group"><label class="fm-label">How much was the loan? (£)</label><input class="fm-input" type="text" inputmode="decimal" id="${prefix}-advanced" value="${mv(advanced)}" placeholder="60000" ${moneyAttrs} oninput="${cin('advanced')}"></div>
       <div class="fm-group"><label class="fm-label">Interest / fee %</label><input class="fm-input" type="number" id="${prefix}-feepct" value="${feePct}" placeholder="8.5" min="0" max="100" step="0.1" oninput="${cin('feepct')}"></div>
     </div>
     <div class="fm-group"><label class="fm-label">Total to repay (£) — fills in from the fee, or type it</label><input class="fm-input" type="text" inputmode="decimal" id="${prefix}-total" value="${mv(total)}" placeholder="64800" ${moneyAttrs} oninput="${cin('total')}"></div>
 
-    <div class="fm-group"><label class="fm-label">Remittance / repayment amount (£) — optional, type the exact figure from your offer</label><input class="fm-input" type="text" inputmode="decimal" id="${prefix}-remit" value="${mv(remit)}" placeholder="e.g. 4500 (leave blank to work it out from the term)" ${moneyAttrs} oninput="${cin('remit')}"></div>
+    <div class="fm-group"><label class="fm-label">Repayment each time (£) <span class="fm-hint">the figure on your offer — this drives everything</span></label><input class="fm-input fm-primary" type="text" inputmode="decimal" id="${prefix}-remit" value="${mv(remit)}" placeholder="e.g. 7,056" ${moneyAttrs} oninput="${cin('remit')}"></div>
 
-    <div class="calc-field-row">
-      <div class="fm-group"><label class="fm-label">Loan length${''}</label><input class="fm-input" type="number" id="${prefix}-lengthnum" value="${lengthNum ?? ''}" placeholder="8" min="1" max="120" step="1" oninput="${cin('lengthnum')}"></div>
-      <div class="fm-group"><label class="fm-label">&nbsp;</label>
-        <select class="fm-input" id="${prefix}-lengthunit" onchange="${cin('lengthunit')}">
-          <option value="months" ${lengthUnit==='months'?'selected':''}>Months</option>
-          <option value="weeks" ${lengthUnit==='weeks'?'selected':''}>Weeks</option>
-        </select>
-      </div>
-    </div>
     <div class="calc-field-row">
       <div class="fm-group"><label class="fm-label">Payments how often?</label>
         <select class="fm-input" id="${prefix}-freq" onchange="${cin('freq')}">
@@ -2676,7 +2768,10 @@ function calcFormHTML(prefix, onChange, d) {
       </div>
       <div class="fm-group"><label class="fm-label">Deployment / start date</label><input class="fm-input" type="date" id="${prefix}-start" value="${start}" oninput="${cin('start')}"></div>
     </div>
-    <div class="fm-group"><label class="fm-label">First payment after (days) — leave blank for one full period</label><input class="fm-input" type="number" id="${prefix}-firstgap" value="${d.firstGap ?? ''}" placeholder="${freq} (a full period)" min="1" max="120" step="1" oninput="${cin('firstgap')}"></div>
+    <div class="calc-field-row">
+      <div class="fm-group"><label class="fm-label">First payment after (days)</label><input class="fm-input" type="number" id="${prefix}-firstgap" value="${d.firstGap ?? ''}" placeholder="${freq} — one full period" min="1" max="120" step="1" oninput="${cin('firstgap')}"></div>
+      <div class="fm-group"><label class="fm-label">Or: how many payments? <span class="fm-hint">only if you don't know the amount</span></label><input class="fm-input" type="number" id="${prefix}-npay" value="${d.npay ?? ''}" placeholder="e.g. 14 payment dates" min="1" max="400" step="1" oninput="${cin('npay')}"></div>
+    </div>
 
     <div id="${prefix}-derived-note" class="info-box" style="display:none;margin:0;padding:8px 12px;font-size:12px;"></div>
 
@@ -2690,8 +2785,13 @@ function calcFormHTML(prefix, onChange, d) {
   </div>`;
 }
 
-// Number of payments that fit inside a span of `days` at this frequency (≥1).
-function paymentsInDays(days, freq) { return Math.max(1, Math.round(days / freq)); }
+// Deployment → final payment, in whole weeks. This is the duration the lender
+// now quotes, and the only one the app reports: months are not a unit any
+// repayment schedule actually uses.
+function weeksOf(S) {
+  if(!S || !S.SF || !S.SF.days) return 0;
+  return Math.round(S.SF.days / 7) + Math.round((S.inputs.firstGap || S.inputs.freq) / 7);
+}
 
 function readCalcInputs(prefix) {
   const g = id => document.getElementById(prefix+id);
@@ -2700,38 +2800,62 @@ function readCalcInputs(prefix) {
   const remit = moneyToNum(g('-remit').value);
   const freq = parseInt(g('-freq').value) || 14;
   const start = g('-start').value || isoDate(TODAY);
-  let lengthNum = parseFloat(g('-lengthnum').value) || 0;
-  const lengthUnit = g('-lengthunit').value || 'months';
-  const firstGap = parseInt(g('-firstgap').value) || null;   // null = one full period
+  const npayIn = parseInt(g('-npay').value) || 0;             // only used if no repayment given
+  const firstGap = parseInt(g('-firstgap').value) || null;    // null = one full period
 
+  // The lender quotes a repayment, not a term. The repayment is therefore the
+  // source of truth and the duration is whatever the schedule works out to —
+  // months never enter the calculation at all.
   let payment, nPay, termFromRemit = false;
   if(remit > 0 && total > 0) {
-    // Exact remittance from the offer drives everything: the number of
-    // payment dates is read off the real schedule, not ceil(total ÷ payment).
     payment = remit;
     nPay = buildSchedule(total, payment, freq, start, { firstGapDays: firstGap }).length;
     termFromRemit = true;
-    // Derive a display term from the schedule length if the user left it blank.
-    if(!lengthNum) {
-      const days = nPay * freq;
-      lengthNum = lengthUnit === 'months' ? Math.max(1, Math.round(days / 30.4375)) : Math.max(1, Math.round(days / 7));
-    }
-  } else {
-    // Loan length drives everything: term → number of payments → per-payment
+  } else if(npayIn > 0 && total > 0) {
+    // Fallback for when you know the number of payment dates but not the
     // amount. Rounded UP to the penny so the schedule lands exactly on nPay
-    // dates — rounding down leaves a few pence behind and invents an extra
-    // payment date that the lender would never actually take.
-    const days = lengthUnit === 'months' ? lengthNum * 30.4375 : lengthNum * 7;
-    nPay = paymentsInDays(days, freq);
-    payment = (total > 0 && nPay > 0) ? Math.ceil((total / nPay) * 100) / 100 : 0;
+    // dates — rounding down leaves pence behind and invents an extra date.
+    nPay = npayIn;
+    payment = Math.ceil((total / nPay) * 100) / 100;
+  } else {
+    // Nothing to go on. Better to show nothing than to invent a single
+    // payment of the whole balance, which is what an empty term used to do.
+    nPay = 0;
+    payment = 0;
   }
 
   return {
-    advanced, total, payment, freq, lengthNum, lengthUnit, nPay, termFromRemit, firstGap,
+    advanced, total, payment, freq, nPay, termFromRemit, firstGap, npayIn,
     roiPct: parseFloat(g('-roi').value) || 15,
     cycleDays: parseInt(g('-cycle').value) || 124,
     start,
   };
+}
+
+// Fill a calculator column straight from a pasted offer. Same parser the Offer
+// Slider uses, so the two always read a given offer identically.
+function calcApplyPaste(prefix) {
+  const ta = document.getElementById(prefix + '-paste');
+  const msg = document.getElementById(prefix + '-paste-msg');
+  const o = parseOfferText(ta.value);
+  if(!o) { msg.className = 'cap-curve-msg err'; msg.textContent = "Couldn't find an offer in that — paste the whole offer panel, labels and all."; return; }
+  const set = (suffix, val) => { const el = document.getElementById(prefix + suffix); if(el && val != null && val !== '') el.value = val; };
+  const got = [];
+  if(o.principal > 0) { set('-advanced', moneyFmt(o.principal)); got.push('advance ' + fmt(o.principal)); }
+  if(o.repayment > 0) { set('-remit', moneyFmt(o.repayment)); got.push('repayment ' + fmt(o.repayment)); }
+  if(o.deploy)        { set('-start', o.deploy); got.push('deployed ' + fmtShort(parseDate(o.deploy))); }
+  // Prefer the exact total: a rounded fee % is a few pounds out on a big advance.
+  let total = o.total > 0 ? o.total : (o.principal > 0 && o.fee > 0 ? r2(o.principal + o.fee) : null);
+  if(total) {
+    set('-total', moneyFmt(total));
+    if(o.principal > 0) set('-feepct', (((total / o.principal) - 1) * 100).toFixed(2));
+    got.push('total ' + fmt(total));
+  }
+  set('-npay', '');
+  msg.className = 'cap-curve-msg ok';
+  msg.textContent = `Read ${got.join(' · ')}${o.termLabel ? ` · they call it ${o.termLabel}` : ''}.`;
+  (prefix === 'calc' ? renderCalculator : renderCalculatorCompare)();
+  setTimeout(() => { const m = document.getElementById(prefix + '-paste-msg'); if(m) { m.className = msg.className; m.textContent = msg.textContent; } }, 0);
 }
 
 // Single input dispatcher: keeps Advance / Fee% / Total in sync, then recomputes.
@@ -3053,6 +3177,137 @@ function renderLoadPanel(S, M) {
   </div>`;
 }
 
+// ═══════════════════════════════════════════════════════
+// CASH POSITION
+// "Will this make a profit without leaving me unable to buy more stock?"
+// is two questions, and the pressure % only answers half of it. This walks
+// the money day by day: the advance goes into stock, repayments leave on
+// their real dates, stock comes back a cycle later and whatever is free gets
+// redeployed. The trough is what you must fund from elsewhere; the surplus at
+// each cycle end is what you can actually put back into stock.
+// ═══════════════════════════════════════════════════════
+function cashProfile(S) {
+  const { inputs, P, payments } = S;
+  const start = parseDate(inputs.start);
+  if(!start || !(inputs.advanced > 0)) return null;
+  const cycle = Math.max(1, P.cycleDays);
+  const lastDay = S.SF.finalDate ? daysFrom(start, S.SF.finalDate) : cycle;
+  const horizon = Math.max(lastDay, cycle) + 1;
+
+  // every pound leaving the bank on each day
+  const out = {};
+  const add = (d, amt) => { if(d >= 0 && d <= horizon) out[d] = (out[d] || 0) + amt; };
+  payments.forEach(p => add(daysFrom(start, parseDate(p.periodDate)), p.amount));
+  const withExisting = countExisting();
+  if(withExisting) liveCommitments(start).forEach(x => add(daysFrom(start, x.date), x.amount));
+
+  let bal = 0;                 // cash in the bank, beyond what's tied up in stock
+  let inStock = inputs.advanced;      // the advance goes straight into stock on day 0
+  const returns = { [cycle]: inputs.advanced * (1 + P.roi) };
+  let trough = 0, troughDay = 0, redeployed = 0, reinvestable = [];
+  const series = [];
+
+  for(let d = 0; d <= horizon; d++) {
+    if(returns[d]) {                       // stock converted back to cash
+      bal += returns[d];
+      inStock -= Math.min(inStock, returns[d] / (1 + P.roi));
+    }
+    if(out[d]) bal -= out[d];              // repayments leave
+    if(returns[d]) {
+      // redeploy whatever is left once this cycle's repayments are covered
+      const free = Math.max(0, bal);
+      reinvestable.push({ day: d, amount: free });
+      if(free > 0 && d + cycle <= horizon + cycle) {
+        returns[d + cycle] = (returns[d + cycle] || 0) + free * (1 + P.roi);
+        bal -= free; inStock += free; redeployed += free;
+      }
+    }
+    if(bal < trough) { trough = bal; troughDay = d; }
+    if(d % 7 === 0 || d === horizon) series.push({ day: d, bal: r2(bal), inStock: r2(inStock) });
+  }
+
+  return {
+    trough: r2(trough), troughDay, series, reinvestable, redeployed: r2(redeployed),
+    endBalance: r2(bal), withExisting,
+    troughDate: (() => { const x = new Date(start); x.setDate(x.getDate() + troughDay); return x; })(),
+    fundedFromElsewhere: r2(Math.abs(Math.min(0, trough))),
+  };
+}
+
+// The headroom panel: how deep the hole gets, and what's free to buy stock with.
+function renderCashPanel(S, M) {
+  const C = cashProfile(S);
+  if(!C) return '';
+  const { inputs, P } = S;
+  const firstFree = C.reinvestable.length ? C.reinvestable[0] : null;
+  const deep = C.fundedFromElsewhere;
+  const deepPct = inputs.advanced > 0 ? (deep / inputs.advanced) * 100 : 0;
+  const band = deepPct <= 25 ? { lab:'Comfortable', cls:'low' }
+             : deepPct <= 60 ? { lab:'Tight', cls:'med' }
+             : { lab:'Very tight', cls:'high' };
+
+  const lo = Math.min(...C.series.map(p => p.bal), 0);
+  const hi = Math.max(...C.series.map(p => p.bal), 0);
+  const span = (hi - lo) || 1;
+  const W = 760, H = 140, L = 8, R = 8, T = 10, B = 16;
+  const xf = d => L + (d / Math.max(1, C.series[C.series.length-1].day)) * (W - L - R);
+  const yf = v => T + (1 - (v - lo) / span) * (H - T - B);
+  const pts = C.series.map(p => `${xf(p.day).toFixed(1)},${yf(p.bal).toFixed(1)}`).join(' ');
+  const zeroY = yf(0).toFixed(1);
+  const area = `M${xf(0).toFixed(1)},${zeroY} L${pts.split(' ').join(' L')} L${xf(C.series[C.series.length-1].day).toFixed(1)},${zeroY} Z`;
+
+  return `
+    <div class="cash-panel">
+      <div class="cash-head">
+        <div>
+          <div class="cash-title">Cash position — can you still buy stock while repaying?</div>
+          <div class="cash-sub">The advance goes into stock on day one, repayments leave on their real dates${C.withExisting?' (including your live advances)':''},
+            and stock turns back into cash after ${P.cycleDays} days.</div>
+        </div>
+        <span class="pressure-pill ${band.cls}">${band.lab}</span>
+      </div>
+      <div class="cash-stats">
+        <div class="cash-stat ${deep > 0 ? 'hot' : ''}">
+          <div class="cash-lab">You must fund from elsewhere</div>
+          <div class="cash-val" style="color:${deep>0?'var(--red)':'var(--green)'};">${fmt(deep)}</div>
+          <div class="cash-sub2">${deep > 0 ? `deepest on ${fmtShort(C.troughDate)} · ${deepPct.toFixed(0)}% of the advance` : 'the advance covers its own repayments'}</div>
+        </div>
+        <div class="cash-stat">
+          <div class="cash-lab">Free to reinvest, first cycle</div>
+          <div class="cash-val" style="color:${firstFree && firstFree.amount>0?'var(--green)':'var(--red)'};">${firstFree ? fmt(firstFree.amount) : '—'}</div>
+          <div class="cash-sub2">when the first stock comes back, day ${firstFree?firstFree.day:'—'}</div>
+        </div>
+        <div class="cash-stat">
+          <div class="cash-lab">Put back into stock</div>
+          <div class="cash-val">${fmt(C.redeployed)}</div>
+          <div class="cash-sub2">over the life of the advance</div>
+        </div>
+        <div class="cash-stat">
+          <div class="cash-lab">Cash left at the end</div>
+          <div class="cash-val" style="color:${C.endBalance>=0?'var(--green)':'var(--red)'};">${fmt(C.endBalance)}</div>
+          <div class="cash-sub2">once the last payment clears</div>
+        </div>
+      </div>
+      <svg class="cash-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Cash balance over the life of the advance">
+        <path d="${area}" fill="${lo < 0 ? 'rgba(176,48,48,0.10)' : 'rgba(21,121,74,0.10)'}"/>
+        <line x1="${L}" y1="${zeroY}" x2="${W-R}" y2="${zeroY}" stroke="var(--border2)" stroke-width="1" stroke-dasharray="3 3"/>
+        <polyline points="${pts}" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linejoin="round"/>
+        ${deep > 0 ? `<circle cx="${xf(C.troughDay).toFixed(1)}" cy="${yf(C.trough).toFixed(1)}" r="4" fill="var(--red)" stroke="#fff" stroke-width="2"/>` : ''}
+        <text x="${L+2}" y="${zeroY - 4}" class="cash-axis">£0</text>
+      </svg>
+      <div class="cash-note">
+        ${deep > 0
+          ? `Before the first stock sells you are <strong>${fmt(deep)}</strong> down — that has to come from cash you already have.
+             Once it lands, <strong>${firstFree?fmt(firstFree.amount):'£0'}</strong> is free to buy more stock with.
+             ${firstFree && firstFree.amount < inputs.advanced * 0.25
+               ? `That is under a quarter of the advance, so this deal funds its own repayments more than it funds growth.`
+               : `That is enough to keep buying while you repay.`}`
+          : `Repayments never take the balance below zero — the advance carries itself, and
+             <strong>${fmt(C.redeployed)}</strong> goes back into stock over its life.`}
+      </div>
+    </div>`;
+}
+
 // Renders the full results panel for one scenario.
 function renderScenarioResults(S) {
   const { inputs, P, CP, payments, finalDate } = S;
@@ -3062,7 +3317,7 @@ function renderScenarioResults(S) {
   const breakEvenPct = Math.min(100, P.breakEvenPct).toFixed(0);
   const nPay = inputs.nPay || payments.length;
   const freqTxt = inputs.freq===14?'fortnightly':inputs.freq===7?'weekly':inputs.freq===30?'monthly':'every '+inputs.freq+' days';
-  const termTxt = `${inputs.lengthNum} ${inputs.lengthUnit}`;
+  const weeksTxt = `${weeksOf(S)} weeks`;   // deployment → final payment
 
   // ── All decision metrics from one shared source ──
   const M = scenarioMetrics(S);
@@ -3083,7 +3338,8 @@ function renderScenarioResults(S) {
       <div class="cs-row"><span class="cs-q">You pay back in total</span><span class="cs-a">${fmt(inputs.total)}</span></div>
       <div class="cs-row cs-cost"><span class="cs-q">Borrowing cost (what it costs you)</span><span class="cs-a">${fmt(cost)} <span class="cs-pct">(${costPct.toFixed(1)}%)</span></span></div>
       <div class="cs-row"><span class="cs-q">Paid as</span><span class="cs-a-sm">${scheduleLine(payments, inputs.payment)}</span></div>
-      <div class="cs-foot">${freqTxt} · first ${fmtDate(SF.firstDate)} · last ${fmtDate(SF.finalDate)} · ${Math.round(SF.days/7)} weeks of repayments${inputs.termFromRemit?'':' · you entered '+termTxt}</div>
+      <div class="cs-row cs-weeks"><span class="cs-q">How long it runs</span><span class="cs-a-sm"><strong>${SF.n} payment dates</strong> · <strong>${weeksTxt}</strong> from deployment to cleared</span></div>
+      <div class="cs-foot">${freqTxt} · first ${fmtDate(SF.firstDate)} · last ${fmtDate(SF.finalDate)} · <strong>${weeksTxt}</strong> from deployment to cleared</div>
     </div>`;
 
   // ── The real schedule, not the month label ──
@@ -3274,7 +3530,7 @@ function renderScenarioResults(S) {
     </details>
   `;
 
-  return summary + schedStrip + renderLoadPanel(S, M) + profitBlock + deep;
+  return summary + schedStrip + renderLoadPanel(S, M) + renderCashPanel(S, M) + profitBlock + deep;
 }
 
 // Compact scenario card for COMPARE mode — key numbers only, full report behind a toggle.
@@ -3336,7 +3592,7 @@ function renderCalculator() {
   const S = computeScenario(inputs);
   const results = document.getElementById('calc-results');
   if(!S) { showDerivedNote('calc', null); results.innerHTML = '<div class="empty-state">Enter the loan amount, the fee % (or total to repay), and a loan length to see your numbers.</div>'; return; }
-  showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`);
+  showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`);
   results.innerHTML = renderScenarioResults(S);
 }
 
@@ -3345,16 +3601,16 @@ function renderCalculatorCompare() {
   const formA = document.getElementById('calc-form-a-cmp');
   const formB = document.getElementById('calc-form-b-cmp');
   if(!formA.dataset.built) {
-    formA.innerHTML = calcFormHTML('cmpa', 'renderCalculatorCompare()', { freq:14, roi:15, cycleDays:124, lengthUnit:'months' });
-    formB.innerHTML = calcFormHTML('cmpb', 'renderCalculatorCompare()', { freq:14, roi:15, cycleDays:124, lengthUnit:'months' });
+    formA.innerHTML = calcFormHTML('cmpa', 'renderCalculatorCompare()', { freq:14, roi:15, cycleDays:124 });
+    formB.innerHTML = calcFormHTML('cmpb', 'renderCalculatorCompare()', { freq:14, roi:15, cycleDays:124 });
     formA.dataset.built = '1'; formB.dataset.built = '1';
   }
   const inputsA = readCalcInputs('cmpa');
   const inputsB = readCalcInputs('cmpb');
   const SA = computeScenario(inputsA);
   const SB = computeScenario(inputsB);
-  showDerivedNote('cmpa', SA ? `${scheduleLine(SA.payments, inputsA.payment)} · ${fmtDate(SA.SF.firstDate)} → ${fmtDate(SA.SF.finalDate)}` : null);
-  showDerivedNote('cmpb', SB ? `${scheduleLine(SB.payments, inputsB.payment)} · ${fmtDate(SB.SF.firstDate)} → ${fmtDate(SB.SF.finalDate)}` : null);
+  showDerivedNote('cmpa', SA ? `${scheduleLine(SA.payments, inputsA.payment)} · ${weeksOf(SA)} weeks · ${fmtDate(SA.SF.firstDate)} → ${fmtDate(SA.SF.finalDate)}` : null);
+  showDerivedNote('cmpb', SB ? `${scheduleLine(SB.payments, inputsB.payment)} · ${weeksOf(SB)} weeks · ${fmtDate(SB.SF.firstDate)} → ${fmtDate(SB.SF.finalDate)}` : null);
 
   const resA = document.getElementById('calc-results-a');
   const resB = document.getElementById('calc-results-b');
@@ -3461,11 +3717,11 @@ function renderComparisonHero(SA, SB) {
     ? `Cash-flow pressure is similar (${F.ma.pressurePct.toFixed(0)}% vs ${F.mb.pressurePct.toFixed(0)}%)`
     : `Scenario ${F.ma.pressurePct>F.mb.pressurePct?'A':'B'} has higher repayment pressure (${Math.max(F.ma.pressurePct,F.mb.pressurePct).toFixed(0)}% vs ${Math.min(F.ma.pressurePct,F.mb.pressurePct).toFixed(0)}%)`;
   // Two offers can carry the same month label and still be different loans.
-  const sameLabel = `${SA.inputs.lengthNum} ${SA.inputs.lengthUnit}` === `${SB.inputs.lengthNum} ${SB.inputs.lengthUnit}`;
+  const sameLabel = weeksOf(SA) === weeksOf(SB);
   const schedDiffers = SA.SF.n !== SB.SF.n || (SA.SF.finalDate && SB.SF.finalDate && SA.SF.finalDate.getTime() !== SB.SF.finalDate.getTime());
   const dayGap = (SA.SF.finalDate && SB.SF.finalDate) ? Math.abs(daysFrom(SA.SF.finalDate, SB.SF.finalDate)) : 0;
   const sameLabelNote = (sameLabel && schedDiffers)
-    ? `<div class="cp-note">📅 Both are labelled <strong>${SA.inputs.lengthNum} ${SA.inputs.lengthUnit}</strong>, but they are not the same loan: ${SA.SF.n !== SB.SF.n ? `Scenario ${SA.SF.n < SB.SF.n ? 'A' : 'B'} has ${Math.abs(SA.SF.n-SB.SF.n)} fewer payment date${Math.abs(SA.SF.n-SB.SF.n)===1?'':'s'}` : 'the payment dates fall differently'}${dayGap ? ` and finishes ${dayGap} days ${SA.SF.finalDate < SB.SF.finalDate ? '(A) earlier' : '(B) earlier'}` : ''}.</div>`
+    ? `<div class="cp-note">📅 Both run <strong>${weeksOf(SA)} weeks</strong>, but they are not the same loan: ${SA.SF.n !== SB.SF.n ? `Scenario ${SA.SF.n < SB.SF.n ? 'A' : 'B'} has ${Math.abs(SA.SF.n-SB.SF.n)} fewer payment date${Math.abs(SA.SF.n-SB.SF.n)===1?'':'s'}` : 'the payment dates fall differently'}${dayGap ? ` and finishes ${dayGap} days ${SA.SF.finalDate < SB.SF.finalDate ? '(A) earlier' : '(B) earlier'}` : ''}.</div>`
     : '';
 
   const cpStrip = `
@@ -3607,7 +3863,7 @@ function renderComparisonVerdict(SA, SB) {
     row('Full Payments + Final', `${SA.SF.full} × ${fmt(SA.inputs.payment)}${SA.SF.isPartialFinal?' + '+fmt(SA.SF.finalAmt):''}`, `${SB.SF.full} × ${fmt(SB.inputs.payment)}${SB.SF.isPartialFinal?' + '+fmt(SB.SF.finalAmt):''}`, null),
     row('First Payment Leaves', fmtDate(SA.SF.firstDate), fmtDate(SB.SF.firstDate), null),
     row('Exact Payoff Date', fmtDate(SA.SF.finalDate), fmtDate(SB.SF.finalDate), SA.SF.finalDate&&SB.SF.finalDate?(SA.SF.finalDate<SB.SF.finalDate?'a':SB.SF.finalDate<SA.SF.finalDate?'b':null):null),
-    row('Lender\'s Term Label', `${SA.inputs.lengthNum} ${SA.inputs.lengthUnit}`, `${SB.inputs.lengthNum} ${SB.inputs.lengthUnit}`, null),
+    row('Weeks to Clear', `${weeksOf(SA)} weeks`, `${weeksOf(SB)} weeks`, weeksOf(SA)===weeksOf(SB)?null:(weeksOf(SA)>weeksOf(SB)?'a':'b')),
     `<tr class="dt-divider"><td colspan="3">Mechanics</td></tr>`,
     row('Gross Profit by Loan End', fmt(a.grossProfit), fmt(b.grossProfit), a.grossProfit>b.grossProfit?'a':b.grossProfit>a.grossProfit?'b':null),
     row('Loan Duration', a.loanDays+'d ('+Math.round(a.loanDays/7)+'w)', b.loanDays+'d ('+Math.round(b.loanDays/7)+'w)', null),
@@ -3795,10 +4051,321 @@ function capTags(m, cfg, ladder) {
   return tags;
 }
 
+// ── PASTE THE OFFER ────────────────────────────────────
+// Capital shows the offer as a block of label/value lines and only ever gives
+// a month term. Rather than retyping six figures, paste the whole panel: this
+// pulls out everything the schedule needs and derives the rest. Their month
+// label is captured for reference only — it never enters the maths.
+function parseOfferText(text) {
+  if(!text || !text.trim()) return null;
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  const joined = lines.join('\n');
+  const num = str => {
+    if(!str) return null;
+    const m = String(str).replace(/,/g, '').match(/-?\d+(?:\.\d+)?/);
+    return m ? parseFloat(m[0]) : null;
+  };
+  // "Remittance (2 weeks)" and "Fixed fee (5.94%)" carry numbers that are part
+  // of the LABEL, not the value. Strip anything parenthesised and any
+  // percentage before looking, or the parser reads a £2 repayment.
+  const clean = str => String(str).replace(/\([^)]*\)/g, ' ').replace(/[\d.]+\s*%/g, ' ');
+  const after = (...labels) => {
+    for(const lab of labels) {
+      for(let i = 0; i < lines.length; i++) {
+        if(!new RegExp(lab, 'i').test(lines[i])) continue;
+        const sameLine = clean(lines[i].replace(new RegExp('.*?' + lab, 'i'), ''));
+        if(/\d/.test(sameLine)) { const v = num(sameLine); if(v > 0) return v; }
+        for(let j = i + 1; j < Math.min(i + 3, lines.length); j++) {
+          const nx = clean(lines[j]);
+          if(/\d/.test(nx)) { const v = num(nx); if(v > 0) return v; }
+        }
+      }
+    }
+    return null;
+  };
+
+  const MONTHS = { jan:0, feb:1, mar:2, apr:3, may:4, jun:5, jul:6, aug:7, sep:8, oct:9, nov:10, dec:11 };
+  const parseDeploy = () => {
+    for(let i = 0; i < lines.length; i++) {
+      if(!/deploy/i.test(lines[i])) continue;
+      for(let j = i; j < Math.min(i + 3, lines.length); j++) {
+        const m = lines[j].match(/(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})/);
+        if(m && MONTHS[m[2].slice(0,3).toLowerCase()] != null)
+          return isoDate(new Date(+m[3], MONTHS[m[2].slice(0,3).toLowerCase()], +m[1]));
+        const d = lines[j].match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+        if(d) return `${d[3]}-${d[2].padStart(2,'0')}-${d[1].padStart(2,'0')}`;
+      }
+    }
+    return null;
+  };
+
+  // The offer page shows each slider as value, min, max on consecutive lines:
+  //   Repayment amount (2 weeks) / £ / 8,162 / £5,516 / £12,376
+  // Those bounds are the real range this lender will quote, so they're worth
+  // far more than guessing the range from whatever fee points happen to exist.
+  const rangeAfter = (...labels) => {
+    for(const lab of labels) {
+      for(let i = 0; i < lines.length; i++) {
+        if(!new RegExp(lab, 'i').test(lines[i])) continue;
+        const vals = [];
+        for(let j = i; j < Math.min(i + 7, lines.length) && vals.length < 3; j++) {
+          const c = clean(j === i ? lines[j].replace(new RegExp('.*?' + lab, 'i'), '') : lines[j]);
+          if(/\d/.test(c)) { const v = num(c); if(v > 0) vals.push(v); }
+        }
+        if(vals.length >= 3) {
+          const lo = Math.min(...vals), hi = Math.max(...vals);
+          if(lo < hi) return { current: vals[0], min: lo, max: hi };
+        }
+      }
+    }
+    return null;
+  };
+  const repayRange = rangeAfter('repayment amount', 'remittance amount');
+  const fundsRange = rangeAfter('^funds', 'how much do you need');
+
+  const principal = after('you will receive', '^amount', 'advance amount', 'principal');
+  const repayment = after('remittance', 'repayment every', 'fortnightly');
+  const feePct    = (joined.match(/fixed fee\s*\(?\s*([\d.]+)\s*%/i) || [])[1];
+  const fee       = after('fixed fee', 'fee amount', '\\+ fixed fee');
+  const total     = after('total to remit', 'total deployed', 'total to repay');
+  const deploy    = parseDeploy();
+  const termLabel = (joined.match(/term\s*\n?\s*([\d]+\s*(?:months?|weeks?))/i) || [])[1] || null;
+
+  // the balance table, if they pasted it — real dates and amounts to check against
+  const rows = [];
+  lines.forEach(l => {
+    const m = l.match(/(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})\s*[\t ]+£?([\d,]+\.?\d*)\s*[\t ]+£?([\d,]+\.?\d*)/);
+    if(m && MONTHS[m[2].slice(0,3).toLowerCase()] != null) {
+      rows.push({ date: isoDate(new Date(+m[3], MONTHS[m[2].slice(0,3).toLowerCase()], +m[1])),
+                  balance: parseFloat(m[4].replace(/,/g,'')), amount: parseFloat(m[5].replace(/,/g,'')) });
+    }
+  });
+
+  if(!(principal > 0) && !(repayment > 0)) return null;
+  return { principal, repayment, fee, feePct: feePct ? parseFloat(feePct) : null, total, deploy, termLabel, rows,
+           repayMin: repayRange ? repayRange.min : null, repayMax: repayRange ? repayRange.max : null,
+           fundsMin: fundsRange ? fundsRange.min : null, fundsMax: fundsRange ? fundsRange.max : null };
+}
+
+function capApplyPaste() {
+  const ta = document.getElementById('cap-paste-ta');
+  const msg = document.getElementById('cap-paste-msg');
+  const o = parseOfferText(ta.value);
+  if(!o) { msg.className = 'cap-curve-msg err'; msg.textContent = "Couldn't find an offer in that — paste the whole offer panel, labels and all."; return; }
+
+  const got = [];
+  if(o.principal > 0) { CAP.principal = o.principal; got.push('advance ' + fmt(o.principal)); }
+  if(o.repayment > 0) { CAP.repayment = o.repayment; got.push('repayment ' + fmt(o.repayment)); }
+  if(o.deploy)        { CAP.deploy = o.deploy; got.push('deployed ' + fmtShort(parseDate(o.deploy))); }
+
+  // fee: prefer the exact £, else derive it from the % or the total
+  let fee = o.fee;
+  if(!(fee > 0) && o.total > 0 && CAP.principal > 0) fee = r2(o.total - CAP.principal);
+  if(!(fee > 0) && o.feePct && CAP.principal > 0) fee = r2(CAP.principal * o.feePct / 100);
+  if(fee > 0) {
+    CAP.feeOverride = fee;
+    got.push('fee ' + fmt(fee));
+    // pin it on the curve so the boundary maths uses the real quote, not an estimate
+    CAP.points = CAP.points.filter(pt => Math.abs(pt.r - CAP.repayment) >= 0.5)
+                           .concat([{ r: CAP.repayment, fee, term: o.termLabel || '' }])
+                           .sort((a,b) => a.r - b.r);
+  }
+  CAP.theirTerm = o.termLabel || '';
+  if(o.repayMin > 0 && o.repayMax > o.repayMin) {
+    CAP.repayMin = o.repayMin; CAP.repayMax = o.repayMax;
+    got.push(`slider ${fmt(o.repayMin)}–${fmt(o.repayMax)}`);
+  }
+  if(o.fundsMin > 0 && o.fundsMax > o.fundsMin) { CAP.fundsMin = o.fundsMin; CAP.fundsMax = o.fundsMax; }
+  capLadderCache = { key:'', rows:null };
+  saveCapital(CAP);
+
+  // cross-check against their own balance table if it came along
+  let check = '';
+  if(o.rows.length) {
+    const mine = capModel(CAP.repayment).payments;
+    const mismatch = o.rows.filter((r, i) => !mine[i]
+      || mine[i].periodDate !== r.date
+      || Math.abs(mine[i].balanceAfter - r.balance) > 0.02);
+    check = mismatch.length
+      ? ` · ⚠ ${mismatch.length} of ${o.rows.length} pasted rows don't match the schedule — check the figures`
+      : ` · all ${o.rows.length} rows of their balance table match exactly`;
+  }
+  msg.className = 'cap-curve-msg ok';
+  msg.textContent = `Read ${got.join(' · ')}${o.termLabel ? ` · they call it ${o.termLabel}` : ''}${check}.`;
+  renderCapital(true);
+  setTimeout(() => { const m2 = document.getElementById('cap-paste-msg'); if(m2) { m2.className = msg.className; m2.textContent = msg.textContent; } }, 0);
+}
+
+// ── RECOMMENDATION ─────────────────────────────────────
+// "I want as long a loan as possible for as little fee as possible" is two
+// goals pulling opposite ways, so the honest answer depends on which you mean.
+// This works out all three readings and shows what each actually costs.
+function capRecommend(ladder, m) {
+  if(!ladder.length) return null;
+  const asc = ladder.slice().sort((a,b) => a.N - b.N);      // fewest dates first
+
+  // What one extra period of term costs, step by step along the curve.
+  const steps = [];
+  for(let i = 1; i < asc.length; i++) {
+    const extraFee = r2(asc[i].model.fee - asc[i-1].model.fee);
+    const cash = capCashCost(asc[i].model, asc[i-1].model);  // cash kept by going longer
+    steps.push({ from: asc[i-1], to: asc[i], extraFee, cashWorth: cash.cost, net: cash.cost - extraFee });
+  }
+  const feePerStep = steps.map(s => s.extraFee);
+  const flatLo = Math.min(...feePerStep), flatHi = Math.max(...feePerStep);
+  const perDay = steps.length ? (feePerStep.reduce((a,b)=>a+b,0) / steps.length) / CAP.freq : 0;
+
+  // Best on your own numbers: walk out from where you are while each further
+  // step still pays for itself, in whichever direction that is.
+  const here = asc.findIndex(x => x.N === m.facts.n);
+  let best = here >= 0 ? here : 0;
+  if(here >= 0) {
+    while(best + 1 < asc.length && steps[best] && steps[best].net > 0) best++;       // longer still pays
+    while(best > 0 && steps[best-1] && steps[best-1].net < 0) best--;                // shorter pays instead
+  }
+
+  const cheapest = asc[0];                       // lowest fee = shortest schedule
+  const longest  = asc[asc.length - 1];          // most time with the money
+  const onYourNumbers = asc[best];
+
+  const vsNow = row => {
+    const feeDiff = r2(row.model.fee - m.fee);
+    const cash = feeDiff >= 0 ? capCashCost(row.model, m)   // longer: you keep cash
+                              : capCashCost(m, row.model);  // shorter: you give cash up
+    const net = feeDiff >= 0 ? cash.cost - feeDiff : feeDiff * -1 - cash.cost;
+    return { feeDiff, cashWorth: cash.cost, net, days: daysFrom(m.facts.finalDate, row.model.facts.finalDate) };
+  };
+
+  return { asc, steps, flatLo, flatHi, perDay, cheapest, longest, onYourNumbers,
+           isHere: onYourNumbers.N === m.facts.n, vsNow };
+}
+
+function renderRecommend(ladder, m) {
+  const R = capRecommend(ladder, m);
+  if(!R) return '';
+  const goal = CAP.goal || 'numbers';
+  const pick = goal === 'fee' ? R.cheapest : goal === 'term' ? R.longest : R.onYourNumbers;
+  const d = R.vsNow(pick);
+  const atIt = pick.N === m.facts.n;
+
+  const tab = (key, label, hint) =>
+    `<button class="rec-tab ${goal===key?'on':''}" onclick="capSetGoal('${key}')" title="${hint}">${label}</button>`;
+
+  const body = atIt
+    ? `<strong>You're already on it.</strong> ${fmt(m.repayment)} a payment over ${m.facts.n} dates is the best of the
+       ${R.asc.length} boundaries in your curve for this goal.`
+    : `Move to <strong>${fmt(pick.repayment)}</strong> a payment — <strong>${pick.N} payment dates</strong>,
+       finishing ${fmtDate(pick.model.facts.finalDate)} (${d.days > 0 ? `${d.days} days later` : `${Math.abs(d.days)} days sooner`}).
+       Fee goes ${d.feeDiff >= 0 ? 'up' : 'down'} by <strong>${fmt(Math.abs(d.feeDiff))}</strong>, and the cash that moves
+       is worth about <strong>${fmt(d.cashWorth)}</strong> at your worst-case ${CAP.roiPct}% / ${CAP.cycleDays}d return —
+       leaving you <strong style="color:${d.net>=0?'var(--green)':'var(--red)'};">${d.net>=0?fmt(d.net)+' ahead':fmt(Math.abs(d.net))+' behind'}</strong>.`;
+
+  return `
+    <div class="rec-panel">
+      <div class="rec-head">
+        <div>
+          <div class="rec-kicker">Recommended</div>
+          <div class="rec-title">${pick.N} payment dates · ${fmt(pick.repayment)} each time</div>
+        </div>
+        <div class="rec-tabs">
+          ${tab('numbers','Best on my numbers','Keeps stepping while each move still pays for itself at your stock return')}
+          ${tab('term','Longest term','The most time with the money, whatever the fee')}
+          ${tab('fee','Lowest fee','The cheapest finance cost, whatever the repayment')}
+        </div>
+      </div>
+      <div class="rec-body">${body}</div>
+      <div class="rec-stat">
+        <span><b>${fmt(R.flatLo)}–${fmt(R.flatHi)}</b> is what one extra ${CAP.freq} days of term costs, anywhere on this curve
+        — about <b>${fmt(R.perDay)} a day</b>. It barely moves, so there is no bargain stretch to hunt for:
+        the only real question is how much time you want to buy.</span>
+      </div>
+      ${atIt ? '' : `<div class="rec-actions">
+        <button class="btn-sm primary" onclick="capJump(${pick.repayment})">Move the slider there</button>
+        <button class="btn-sm" onclick="capPin('a',${m.repayment});capPin('b',${pick.repayment});">Compare it with where I am</button>
+      </div>`}
+    </div>`;
+}
+function capSetGoal(g) { CAP.goal = g; saveCapital(CAP); renderCapitalResults(); }
+
+// ── PIN TWO LEVELS AND COMPARE THEM ────────────────────
+function capPin(slot, repayment) {
+  CAP['pin' + slot.toUpperCase()] = repayment != null ? repayment : parseFloat(CAP.repayment) || 0;
+  saveCapital(CAP);
+  renderCapitalResults();
+}
+function capUnpin(slot) { delete CAP['pin' + slot.toUpperCase()]; saveCapital(CAP); renderCapitalResults(); }
+
+function renderPinCompare(m) {
+  const a = CAP.pinA, b = CAP.pinB;
+  const slot = (key, val) => {
+    if(!val) return `<button class="pin-empty" onclick="capPin('${key}')">＋ Pin ${key.toUpperCase()} at ${fmt(m.repayment)}</button>`;
+    const mm = capModel(val);
+    return `<div class="pin-card">
+      <div class="pin-head"><span class="pin-tag ${key}">${key.toUpperCase()}</span>
+        <button class="pin-x" onclick="capUnpin('${key}')" title="Unpin">✕</button></div>
+      <div class="pin-rep">${fmt(mm.repayment)}</div>
+      <div class="pin-rows">
+        <span>Dates</span><b>${mm.facts.n}</b>
+        <span>Fee</span><b style="color:var(--amber);">${fmt(mm.fee)}</b>
+        <span>Total</span><b>${fmt(mm.total)}</b>
+        <span>Finishes</span><b>${fmtShort(mm.facts.finalDate)}</b>
+      </div>
+    </div>`;
+  };
+  let verdict = '';
+  if(a && b) {
+    const ma = capModel(a), mb = capModel(b);
+    const longer = ma.facts.n >= mb.facts.n ? ma : mb;
+    const shorter = longer === ma ? mb : ma;
+    const extraFee = r2(longer.fee - shorter.fee);
+    const cash = capCashCost(longer, shorter);
+    const net = cash.cost - extraFee;
+    const dd = daysFrom(shorter.facts.finalDate, longer.facts.finalDate);
+    verdict = `<div class="pin-verdict">
+      <b>${fmt(longer.repayment)}</b> runs ${longer.facts.n - shorter.facts.n} payment date${longer.facts.n-shorter.facts.n===1?'':'s'}
+      longer than <b>${fmt(shorter.repayment)}</b> (${dd} days), costs <b>${fmt(extraFee)}</b> more in fee, and keeps
+      <b>${fmt(cash.cost)}</b> of working capital earning — <b style="color:${net>=0?'var(--green)':'var(--red)'};">
+      ${net>=0 ? fmt(net)+' ahead' : fmt(Math.abs(net))+' behind'}</b> on your own numbers.
+      <button class="btn-sm" style="margin-left:8px;" onclick="capSendPair()">Open both in the full Calculator →</button>
+    </div>`;
+  }
+  return `<div class="pin-wrap">
+    <div class="pin-title">Compare two repayment levels</div>
+    <div class="pin-grid">${slot('a', a)}${slot('b', b)}</div>
+    ${verdict}
+  </div>`;
+}
+
+function capSendPair() {
+  if(!CAP.pinA || !CAP.pinB) return;
+  const load = (prefix, rep) => {
+    const mm = capModel(rep);
+    const set = (suffix, val) => { const el = document.getElementById(prefix + suffix); if(el) el.value = val; };
+    set('-advanced', moneyFmt(CAP.principal));
+    set('-feepct', mm.feePct.toFixed(2));
+    set('-total', moneyFmt(mm.total));
+    set('-remit', moneyFmt(mm.repayment));
+    set('-npay', '');
+    set('-freq', String(CAP.freq));
+    set('-start', CAP.deploy);
+    set('-firstgap', CAP.firstGap || '');
+    set('-roi', String(CAP.roiPct));
+    set('-cycle', String(CAP.cycleDays));
+  };
+  showPage('calculator');
+  setCalcMode('compare');
+  load('cmpa', CAP.pinA);
+  load('cmpb', CAP.pinB);
+  renderCalculatorCompare();
+}
+
 // ── FORM ───────────────────────────────────────────────
 function capForm() {
   const pts = capPoints();
-  const lo = Math.floor(pts[0].r), hi = Math.ceil(pts[pts.length-1].r);
+  // Prefer the lender's own slider bounds if the pasted offer gave them;
+  // otherwise fall back to the span of whatever fee points we have.
+  const lo = Math.floor(CAP.repayMin > 0 ? CAP.repayMin : pts[0].r);
+  const hi = Math.ceil(CAP.repayMax > 0 ? CAP.repayMax : pts[pts.length-1].r);
   const r = clamp(parseFloat(CAP.repayment)||lo, lo, hi);
   const moneyAttrs = `onfocus="stripMoney(this)" onblur="fmtMoneyBlur(this)"`;
   return `
@@ -4142,7 +4709,8 @@ function renderCapitalResults() {
   const down = ladder.find(x => x.N === m.facts.n + 1);    // pay less, one more date
   const monthly = d => d * (365/CAP.freq) / 12;            // this frequency → per month
   const pts = capPoints();
-  const lo = Math.floor(pts[0].r), hi = Math.ceil(pts[pts.length-1].r);
+  const lo = Math.floor(CAP.repayMin > 0 ? CAP.repayMin : pts[0].r);
+  const hi = Math.ceil(CAP.repayMax > 0 ? CAP.repayMax : pts[pts.length-1].r);
 
   // quick jump buttons under the slider — only the boundaries either side of
   // where you are, rather than a wall of nine identical-looking buttons
@@ -4175,7 +4743,7 @@ function renderCapitalResults() {
       <div class="cap-hl-top">
         <div>
           <div class="cap-stat-lab">Real payment dates</div>
-          <div class="cap-hl-dates">${m.facts.n}<small>${m.lenderTerm ? 'labelled '+m.lenderTerm : 'no month label for this point'}</small></div>
+          <div class="cap-hl-dates">${m.facts.n}<small>payment dates · <b>${m.facts.n * Math.round(CAP.freq/7)} weeks</b>${CAP.theirTerm ? ` · they call it ${CAP.theirTerm}` : ''}</small></div>
           <div class="cap-hl-sub">${scheduleLine(m.payments, m.repayment)} · first ${fmtDate(m.facts.firstDate)} · last <b>${fmtDate(m.facts.finalDate)}</b></div>
         </div>
         <div style="text-align:right;">${srcBadge}
@@ -4361,7 +4929,8 @@ function renderCapitalResults() {
     }
   }
 
-  box.innerHTML = sticky + headline + stackBlock + capChart(ladder, m, lo, hi) + cliffBlock + downBlock + ladderBlock + schedBlock;
+  box.innerHTML = sticky + renderRecommend(ladder, m) + headline + renderPinCompare(m) + stackBlock
+    + capChart(ladder, m, lo, hi) + cliffBlock + downBlock + ladderBlock + schedBlock;
 }
 
 // Push the current repayment level into the Loan Calculator's compare mode so
@@ -4377,7 +4946,7 @@ function capSendTo(which) {
   set('-feepct', (m.feePct).toFixed(2));
   set('-total', moneyFmt(m.total));
   set('-remit', moneyFmt(m.repayment));
-  set('-lengthnum', '');
+  set('-npay', '');
   set('-freq', String(CAP.freq));
   set('-start', CAP.deploy);
   set('-roi', String(CAP.roiPct));

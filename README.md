@@ -31,6 +31,36 @@ a payment day — the first debit lands one full period later.
 | **Loan Calculator** | Model an offer against your stock ROI and cash-conversion cycle; compare two side by side |
 | **Offer Slider** | Move the repayment and watch the real schedule, the fee and the payment-date boundaries move with it |
 
+## Paste the offer, don't retype it
+
+Lenders show the offer as a block of label/value lines and only ever quote a
+month term. Select the whole page on their site — account manager, sliders,
+terms, the lot — and paste it. There's a paste box on the **Offer Slider** and
+one on each **Loan Calculator** column.
+
+It reads the advance, repayment, fee £, fee %, total, deployment date, their
+term label, the balance table if it's there, and the **slider's own min/max**,
+which then becomes the range the Offer Slider moves across. The noise is
+ignored: an email address, "Funds are deployed within 2 business days" (which
+contains "deployed" and a number but no date), and the numbers hidden inside
+labels like "Remittance **(2 weeks)**" and "Fixed fee **(5.94%)**".
+
+Where the offer gives both, the **exact total to remit wins over the fee %** —
+a percentage rounded to 2dp is a few pounds out on a large advance, which is
+enough to change the final payment.
+
+If the balance table came along, each row is checked against the schedule the
+app builds, and it says so either way. Their month label is recorded for
+reference and never enters the maths.
+
+## Duration is weeks and payment dates, never months
+
+A month is not a unit any fortnightly schedule uses. "6 months" turned out to be
+12 payment dates — 24 weeks, about 5.5 months. So there is no term input: you
+give the repayment, and the number of payment dates, the exact payoff date and
+the duration in weeks all fall out of the schedule. If the lender's own label
+disagrees, both are shown.
+
 ## Payment-date boundaries
 
 A **boundary** is the repayment at which a whole future payment date disappears.
@@ -123,9 +153,20 @@ That backup file is the only place your real figures exist outside the browser.
 Treat it like a bank statement, and keep it out of this repo — if you ever put
 one alongside the app, add a `.gitignore` with `loan-tracker-data-*.json`.
 
+## Can you still buy stock while repaying?
+
+Profit alone isn't the question — an advance that pays for itself but leaves
+nothing to restock with is a bad deal. The **Cash position** panel walks the
+money day by day: the advance goes into stock, repayments leave on their real
+dates (including your live advances), stock turns back into cash after your
+cycle, and whatever is free gets redeployed.
+
+It reports the trough — what you'd have to fund from cash you already have —
+and how much is genuinely free to buy stock with at each cycle end.
+
 ## Tests
 
-The repayment engine is covered by 129 headless checks — the full balance table
+The repayment engine is covered by 238 headless checks — the full balance table
 of a real offer letter, the payment-date boundary solver, the paste parser, the
 schedule edge cases, and a guard that this file still ships with no real data
 in it. If a backup file is present they also reconcile it against the lender's
