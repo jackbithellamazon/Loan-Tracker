@@ -1799,7 +1799,7 @@ body { overflow-x: hidden; }
 .calc-pick { margin-top: 10px; padding-top: 9px; border-top: 1px dashed var(--border2); gap: 4px; }
 .calc-pick-btn { min-width: 33px; padding: 4px 6px; }
 
-/* ── v33.7: the verdict card was 1fr + auto columns, so the labels ate all the
+/* ── v34.1: the verdict card was 1fr + auto columns, so the labels ate all the
    width and the figures hid against the right edge of a 1,450px card. Give the
    value columns equal shares, rule every row, and take the padding down. ── */
 .bv { padding: 15px 17px; }
@@ -1839,7 +1839,7 @@ body { overflow-x: hidden; }
 .calc-follow.off { cursor: default; opacity: 0.72; }
 .calc-follow.off input { cursor: not-allowed; }
 
-/* ── v33.7: on a phone the third scenario's column ran off the card and
+/* ── v34.1: on a phone the third scenario's column ran off the card and
    body{overflow-x:hidden} swallowed it — column A's figures were simply not
    there. Let the figures scroll and pin the labels beside them. ── */
 .bv-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch;
@@ -1857,6 +1857,27 @@ body { overflow-x: hidden; }
   .bv-head { gap: 8px; }
   .bv-delta { text-align: left; }
 }
+
+.bv-level { margin-top: 11px; background: var(--blue-bg); border: 1px solid rgba(26,74,138,0.2);
+  border-radius: var(--radius2); padding: 9px 12px; font-size: 12px; line-height: 1.6; color: #183f73; }
+.bv-level b { color: #102c52; }
+
+/* ── v34.1: laptop layout (he's on a laptop ~90% of the time) ── */
+.dash-cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; margin-top: 4px; }
+.dash-side .loans-grid { grid-template-columns: 1fr; }
+@media (max-width: 1180px) {
+  .dash-cols { grid-template-columns: 1fr; gap: 0; }
+  .dash-side { margin-top: 28px; }
+  .dash-side .loans-grid { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+}
+.loans-manage-grid { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+.add-loan-tile { display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100%; padding: 20px; }
+
+/* the Offer Slider's controls get room to breathe on a laptop */
+@media (min-width: 1280px) {
+  .cap-layout, .calc-layout { grid-template-columns: 400px 1fr; }
+}
 </style>
 </head>
 <body>
@@ -1865,7 +1886,7 @@ body { overflow-x: hidden; }
 <nav class="nav">
   <div class="nav-brand">
     <div class="nav-logo">£</div>
-    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v33.7</span></div>
+    <div class="nav-title">Loan Tracker <span class="nav-ver" id="nav-ver" onclick="showVersion()" title="Click for what's in this build">v34.1</span></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
@@ -1880,12 +1901,26 @@ body { overflow-x: hidden; }
      glance whether the page you're looking at is the one you just uploaded. -->
 <div class="ver-pop" id="ver-pop" onclick="this.classList.remove('open')">
   <div class="ver-card" onclick="event.stopPropagation()">
-    <div class="ver-head">Loan Tracker <b>v33.7</b> <span>built 22 Sep 2026</span>
+    <div class="ver-head">Loan Tracker <b>v34.1</b> <span>built 22 Sep 2026</span>
       <button class="pin-x" onclick="document.getElementById('ver-pop').classList.remove('open')">✕</button></div>
     <div class="ver-body">
-      <p>If the page you're looking at doesn't say <b>v33.7</b> in the top-left, it's an older
+      <p>If the page you're looking at doesn't say <b>v34.1</b> in the top-left, it's an older
          upload — hard-refresh with <b>Cmd+Shift+R</b>, and check the file you pushed.</p>
       <div class="ver-list">
+        <span><b>Fixed: compare cards and the full table called the expected profit "worst case"</b>, and their "realised" figure counted the part-cycle twice (~£11,800 too high)</span>
+        <span>Full comparison table now shows all three scenarios under their real letters, not just the top two</span>
+        <span>Dashboard: payments and loans side by side on a laptop — no more 1,300px rows of nothing</span>
+        <span>Manage Loans: "Add a new loan" sits in the row as a card, so two loans fill the screen</span>
+        <span>Offer Slider: wider controls on a laptop, and the notch labels no longer run into each other</span>
+        <span><b>Fee £ and fee % on every loan card</b> in Manage Loans</span>
+        <span><b>Your three scenarios (£5,516 · £5,824 · £5,834) load in automatically</b> when the comparison is empty</span>
+        <span>Fixed: the Calculator always opened in Single mode, hiding the saved comparison</span>
+        <span><b>A tiny last payment no longer buys a whole extra fortnight of profit</b> — the final period counts by what's left in it</span>
+        <span>Weeks shown both ways where it matters: 34 contractual, ~32 effective</span>
+        <span><b>Scores measure profit per £1 borrowed</b>, not per £1 of fee — the fee was being counted three times</span>
+        <span>Options within 1% of each other are called level, not ranked by pennies</span>
+        <span>The Calculator remembers your scenarios across reloads</span>
+        <span>A pasted lender quote is pinned onto your fee curve, so it beats the estimate everywhere</span>
         <span><b>Fixed: a large "first payment after (days)" locked the page up completely</b></span>
         <span><b>Fixed: "how many payments" was using total ÷ N</b> — the one calculation this app exists to say is wrong</span>
         <span>Fixed: a payment count left the slider showing a different repayment from the one being scheduled</span>
@@ -1970,14 +2005,22 @@ body { overflow-x: hidden; }
     <div class="kpi"><div class="kpi-label">Net After Costs</div><div class="kpi-val kv-teal" id="kpi-net">—</div><div class="kpi-sub" id="kpi-net-sub">—</div></div>
   </div>
 
-  <div class="sec-hdr"><div class="sec-label">Upcoming Payments — Bank Debit Dates</div></div>
-  <div class="upcoming-list" id="upcoming-list"></div>
+  <!-- On a laptop the payments and the loans sit side by side: stacked full
+       width, every payment row was 1,300px of mostly nothing, and two loan
+       cards left a third of the screen empty. One column below ~1180px. -->
+  <div class="dash-cols">
+    <div class="dash-main">
+      <div class="sec-hdr"><div class="sec-label">Upcoming Payments — Bank Debit Dates</div></div>
+      <div class="upcoming-list" id="upcoming-list"></div>
 
-  <div class="sec-hdr" style="margin-top:26px;"><div class="sec-label">Repayment Runway — how long each advance still runs</div></div>
-  <div id="runway-strip"></div>
-
-  <div class="sec-hdr" style="margin-top:28px;"><div class="sec-label">Your Loans</div></div>
-  <div class="loans-grid" id="loans-grid"></div>
+      <div class="sec-hdr" style="margin-top:26px;"><div class="sec-label">Repayment Runway — how long each advance still runs</div></div>
+      <div id="runway-strip"></div>
+    </div>
+    <div class="dash-side">
+      <div class="sec-hdr"><div class="sec-label">Your Loans</div></div>
+      <div class="loans-grid" id="loans-grid"></div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════════ MANAGE LOANS PAGE ═══════════════════ -->
@@ -1997,7 +2040,7 @@ body { overflow-x: hidden; }
     That also means clearing site data, switching browser or moving machine loses everything, so use
     <strong>Save a backup</strong> to keep a copy as a file on your own disk.</div>
   <div class="loans-manage-grid" id="loans-manage-grid"></div>
-  <div style="margin-top:20px;">
+  <div style="margin-top:20px;" id="manage-add-static">
     <div class="add-loan-card" onclick="openAddLoan()">
       <div class="add-loan-icon">＋</div>
       <div class="add-loan-text">Add a New Loan</div>
@@ -2359,11 +2402,37 @@ function calcProfit(loan) {
   const daysTransfer = 5;   // payment available → bank (worst case)
   const cycleDays = daysToLive + daysToSell + daysDelivery + daysAmazonHold + daysTransfer;
 
-  // Loan duration
+  // Loan duration — contractual, and effective.
+  //
+  // The contractual end is the date of the last payment, whatever is in it.
+  // But a final payment of £14.36 on a £5,824 schedule means the advance was
+  // repaid, in every sense that matters, a whole period earlier: crediting that
+  // last fortnight as a full stretch of working capital handed one option two
+  // extra weeks of stock cycles — about £2,000 of profit — for a balancing
+  // payment. So the final period is weighted by how much is actually still
+  // outstanding in it: final ÷ normal payment. A full final payment counts in
+  // full; a £14 one counts for about half an hour.
+  //
+  // Done here because this is the one place every profit figure comes from —
+  // the Calculator, the Offer Slider and the Dashboard can't disagree.
   const loanStart = parseDate(loan.startDate);
-  const lastPay = loan.payments.length ? loan.payments[loan.payments.length-1] : null;
+  const n = loan.payments.length;
+  const lastPay = n ? loan.payments[n-1] : null;
   const loanEnd = lastPay ? parseDate(lastPay.periodDate) : null;
-  const loanDays = (loanEnd && loanStart) ? Math.max(1, daysFrom(loanStart, loanEnd)) : 200;
+  const nominalDays = (loanEnd && loanStart) ? Math.max(1, daysFrom(loanStart, loanEnd)) : 200;
+  const normalPay = loan.paymentAmount > 0 ? loan.paymentAmount : (n ? loan.payments[0].amount : 0);
+  let finalWeight = 1, finalGapDays = 0;
+  if(n >= 2 && normalPay > 0 && lastPay && loanEnd) {
+    const prevEnd = parseDate(loan.payments[n-2].periodDate);
+    finalGapDays = prevEnd ? Math.max(0, daysFrom(prevEnd, loanEnd)) : 0;
+    finalWeight = clamp((lastPay.amount || 0) / normalPay, 0, 1);
+  }
+  // Applied to offers being COMPARED (the Calculator and Offer Slider pass
+  // effectiveTail). Live loans on the Dashboard stay on the contractual span
+  // for now: moving the figures of advances already taken is a separate call,
+  // not a side effect of fixing the comparison.
+  const trimDays = loan.effectiveTail ? finalGapDays * (1 - finalWeight) : 0;
+  const loanDays = Math.max(1, nominalDays - trimDays);   // effective — what the model runs on
 
   // Profit is PRO-RATED across the actual cycle time, not counted in whole
   // cycles. Stock sells through a cycle rather than all on the last day, so
@@ -2427,7 +2496,7 @@ function calcProfit(loan) {
   const cyclesPartial = Math.max(0, totalCyclesInLoan - cyclesWhole);
   const partEarned = partProgress(partFraction);
 
-  return { roi, roiPct, principal, advanceCost, cycles, cyclesWhole, cyclesPartial, partEarned, effectiveCycles, totalCyclesInLoan, loanDays, cycleDays, grossProfit, netProfit, grossWhole, netWhole, breakEvenPct, isProfitable, netRoiPct, stillNeeded, grossToNetPct, breakEvenRoiPct, roiMarginMultiple, breakEvenCycleDays, cycleMarginDays, cycle };
+  return { roi, roiPct, principal, advanceCost, cycles, cyclesWhole, cyclesPartial, partEarned, effectiveCycles, totalCyclesInLoan, loanDays, nominalDays, finalWeight, trimDays, cycleDays, grossProfit, netProfit, grossWhole, netWhole, breakEvenPct, isProfitable, netRoiPct, stillNeeded, grossToNetPct, breakEvenRoiPct, roiMarginMultiple, breakEvenCycleDays, cycleMarginDays, cycle };
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2624,7 +2693,7 @@ function showPage(id) {
   const labelMap = { dashboard:'dashboard', loans:'manage', calculator:'calculator', capital:'slider' };
   document.querySelectorAll('.nav-tab').forEach(t=>{ if(t.textContent.toLowerCase().includes(labelMap[id])) t.classList.add('active'); });
   if(id==='loans') renderManagePage();
-  else if(id==='calculator') renderCalculator();
+  else if(id==='calculator') setCalcMode(calcStartMode());
   else if(id==='capital') renderCapital();
   else renderDashboard();
 }
@@ -3035,7 +3104,7 @@ function openLoanModal(loanId) {
       ${renderCycleBreakdownBars(CP, P)}
 
       <div style="background:var(--blue-bg);border:1px solid rgba(26,74,138,0.15);border-radius:6px;padding:12px 16px;font-size:12px;color:var(--blue);margin-top:6px;line-height:1.6;">
-        Your loan term is ${P.loanDays} days ÷ ${P.cycleDays}-day worst-case cycle = <strong>${CP.totalCyclesInLoan.toFixed(2)} cycles</strong> —
+        Your loan term is ${P.loanDays < P.nominalDays - 3.5 ? `${Math.round(P.loanDays)} effective days (${P.nominalDays} to the last payment, which is only ${Math.round(P.finalWeight*100)}% of a normal one)` : `${P.nominalDays} days`} ÷ ${P.cycleDays}-day worst-case cycle = <strong>${CP.totalCyclesInLoan.toFixed(2)} cycles</strong> —
         that's ${CP.fullCyclesInLoan} full cycle${CP.fullCyclesInLoan===1?'':'s'} plus ${Math.round(CP.partialCycleFraction*100)}% of an extra one.
         Profit only counts as "realised" once a cycle fully completes (cash back in the bank) —
         a partial cycle at the end of your loan term means that capital is still tied up in stock/transit/Amazon when your final payment is due.
@@ -3114,6 +3183,8 @@ function closeModal() {
 function renderManagePage() {
   const grid = document.getElementById('loans-manage-grid');
   grid.innerHTML = '';
+  const staticAdd = document.getElementById('manage-add-static');
+  if(staticAdd) staticAdd.style.display = LOANS.length ? 'none' : '';
   if(!LOANS.length) {
     grid.innerHTML = `<div class="first-run">
       <div class="fr-icon">↑</div>
@@ -3132,6 +3203,9 @@ function renderManagePage() {
     const badgeTxt = info.isComplete?'Complete':(daysLeft!==null&&daysLeft<60)?'Ending Soon':'Active';
     const badgeCls = info.isComplete?'badge-complete':(daysLeft!==null&&daysLeft<60)?'badge-ending':'badge-active';
     const totalDays = (startD&&finalD)?daysFrom(startD,finalD):null;
+    // What the advance costs: total to repay minus what landed in the bank.
+    const feeAmt = (loan.remittanceTotal > 0 && loan.cashAdvanced > 0) ? r2(loan.remittanceTotal - loan.cashAdvanced) : null;
+    const feePct = feeAmt != null && feeAmt >= 0 ? (feeAmt / loan.cashAdvanced) * 100 : null;
 
     const tile = document.createElement('div');
     tile.className = 'manage-tile';
@@ -3154,9 +3228,10 @@ function renderManagePage() {
           <span>${pctInt}% repaid · ${info.doneCount}/${info.totalCount} payments</span>
           <span>${totalDays?totalDays+'d loan':''} ${daysLeft!==null&&!info.isComplete?'· '+daysLeft+'d left':info.isComplete?'· ✓ Done':''}</span>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div><div class="mt-stat-label">Next Payment Out</div><div style="font-size:12px;font-weight:600;color:var(--navy);">${info.nextBankDate?fmtDate(info.nextBankDate):info.isComplete?'Complete':'—'}</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div><div class="mt-stat-label">Next Payment</div><div style="font-size:12px;font-weight:600;color:var(--navy);">${info.nextBankDate?fmtDate(info.nextBankDate):info.isComplete?'Complete':'—'}</div></div>
           <div><div class="mt-stat-label">Amount</div><div style="font-size:12px;font-weight:600;color:var(--text);">${info.nextPay?fmt(info.nextPay.amount):'—'}</div></div>
+          <div><div class="mt-stat-label">Fee</div><div style="font-size:12px;font-weight:600;color:var(--amber);">${feePct!=null?`${fmt(feeAmt)} <span style="font-size:11px;color:var(--text3);font-weight:600;">${feePct.toFixed(2)}%</span>`:'—'}</div></div>
         </div>
       </div>
       <div class="mt-footer">
@@ -3168,6 +3243,14 @@ function renderManagePage() {
     tile.addEventListener('click', ()=>openEditModal(loan.id));
     grid.appendChild(tile);
   });
+  // "Add a new loan" sits in the row as the next card rather than a full-width
+  // block underneath — on a laptop two loans plus this fill the row.
+  const add = document.createElement('div');
+  add.className = 'add-loan-card add-loan-tile';
+  add.onclick = openAddLoan;
+  add.innerHTML = `<div class="add-loan-icon">＋</div><div class="add-loan-text">Add a New Loan</div>
+    <div class="add-loan-sub">Revenue advance, business loan, credit line — any lender</div>`;
+  grid.appendChild(add);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -3465,6 +3548,24 @@ function monthsLong(weeks) {
 // Deployment → final payment, in whole weeks. This is the duration the lender
 // now quotes, and the only one the app reports: months are not a unit any
 // repayment schedule actually uses.
+// Weeks the loan actually works for, once the final period is weighted by what
+// is left in it. 34 contractual weeks with a £14.36 last payment works like 32.
+function effWeeksOf(S) {
+  if(!S || !S.P) return weeksOf(S);
+  return weeksOf(S) - (S.P.trimDays || 0) / 7;
+}
+// "34 weeks" — or "34 weeks (~32 effective)" when the tail makes a real difference.
+function weeksText(S) {
+  const w = weeksOf(S), e = effWeeksOf(S);
+  return Math.abs(w - e) >= 1 ? `${w} weeks (~${Math.round(e)} effective)` : `${w} weeks`;
+}
+// Said once, plainly, when the last payment is a rounding scrap.
+function tailNote(S) {
+  if(!S || !S.P || !S.SF || S.SF.n < 2 || !(S.P.finalWeight < 0.10)) return '';
+  const pct = (S.P.finalWeight * 100);
+  return `The last payment is only ${fmt(S.SF.finalAmt)} (${pct < 1 ? pct.toFixed(2) : pct.toFixed(1)}% of a normal one), so that date doesn't count as another fortnight of working capital — for stock cycles and profit this runs like ~${Math.round(effWeeksOf(S))} weeks.`;
+}
+
 function weeksOf(S) {
   if(!S || !S.SF || !S.SF.days) return 0;
   return Math.round(S.SF.days / 7) + Math.round((S.inputs.firstGap || S.inputs.freq) / 7);
@@ -3721,6 +3822,19 @@ function calcApplyPaste(prefix) {
     got.push('total ' + fmt(total));
   }
   set('-npay', '');
+  // The lender's own figure beats the curve's estimate — pin it onto the saved
+  // offer's curve, as a paste on the Offer Slider does, so re-pricing never
+  // walks it back. Only when this column IS that offer and follows its curve.
+  const qRep = o.repayment > 0 ? o.repayment : 0;
+  const qFee = total && o.principal > 0 ? r2(total - o.principal) : 0;
+  if(qRep > 0 && qFee > 0 && calcLinked(prefix) && Math.abs(o.principal - CAP.principal) < 1) {
+    CAP.points = CAP.points.filter(p => Math.abs(p.r - qRep) >= 0.5)
+                           .concat([{ r: qRep, fee: qFee, term: o.termLabel || '' }])
+                           .sort((a, b) => a.r - b.r);
+    capLadderCache = { key:'', rows:null };
+    saveCapital(CAP);
+    got.push('added to your fee curve as a quoted point');
+  }
   msg.className = 'cap-curve-msg ok';
   msg.textContent = `Read ${got.join(' · ')}${o.termLabel ? ` · they call it ${o.termLabel}` : ''}.`;
   (prefix === 'calc' ? renderCalculator : renderCalculatorCompare)();
@@ -3829,7 +3943,7 @@ function computeScenario(inputs) {
   const payments = buildSchedule(inputs.total, inputs.payment, inputs.freq, inputs.start, { firstGapDays: inputs.firstGap });
   if(!payments.length) return null;
   inputs.nPay = payments.length;   // the schedule is the truth, not the term
-  const loan = { startDate: inputs.start, cashAdvanced: inputs.advanced, remittanceTotal: inputs.total, paymentAmount: inputs.payment, paymentFreqDays: inputs.freq, roiPct: inputs.roiPct, cycleDaysOverride: inputs.cycleDays, payments };
+  const loan = { startDate: inputs.start, cashAdvanced: inputs.advanced, remittanceTotal: inputs.total, paymentAmount: inputs.payment, paymentFreqDays: inputs.freq, roiPct: inputs.roiPct, cycleDaysOverride: inputs.cycleDays, payments, effectiveTail: true };
   const P = calcProfit(loan);
   const CP = getCycleProgress(loan, P);
   const SF = scheduleFacts(payments, inputs.payment);
@@ -3980,7 +4094,11 @@ const SCORE_CONFIG = {
   PROFIT_WEIGHT: 0.50,     // conservative: profit is the objective — half the score
   BREAKEVEN_WEIGHT: 0.25,
   PRESSURE_WEIGHT: 0.25,
-  PROFIT_FULL_RATIO: 1.25, // net profit ÷ borrowing cost that earns full profit marks (1.0× → 8/10)
+  // Profit is scored as pence KEPT per £1 borrowed. It used to be profit ÷ fee,
+  // which put the fee in the denominator of the profit score — on top of being
+  // subtracted from the profit and scored again on its own below. Three hits
+  // for one cost: an option keeping £1,525 more scored only 0.2 higher.
+  PROFIT_FULL_PENCE: 11,   // floor profit per £1 for full marks — half the realised bar, as it counts whole cycles only
   BREAKEVEN_FULL_COVER: 2.5, // gross profit ÷ cost that earns full break-even marks (2.0× → 8/10)
   PRESSURE_ZERO_AT: 110,   // repayment-pressure % at which cash-flow score reaches 0
   PARTIAL_CREDIT: 0.5,     // credit for the in-progress (part-sold) cycle in the loss gate
@@ -3989,7 +4107,7 @@ const SCORE_CONFIG = {
   R_PROFIT_WEIGHT: 0.60,
   R_PRESSURE_WEIGHT: 0.25,
   R_COST_WEIGHT: 0.15,
-  R_PROFIT_FULL_RATIO: 2.5, // realised net ÷ cost for full marks (realised profit is bigger, so higher anchor)
+  R_PROFIT_FULL_PENCE: 22, // realised profit kept per £1 borrowed for full marks (19p ≈ 8.8/10)
   COST_ZERO_AT: 15,        // borrowing cost % at which the cost sub-score reaches 0
 };
 
@@ -4012,13 +4130,14 @@ function packScore(s, parts) {
 //   realised     — realised-partial profit (steady across the term): profit 60 / cash-flow 25 / cost 15
 function computeScores({ capital, roi, cost, costPct, netProfit, grossProfit, realisedNet, spans, pressurePct }) {
   const C = SCORE_CONFIG;
-  const profitSub   = (net, anchor) => cost > 0 ? clamp((net / cost) / anchor, 0, 1) * 10 : 10;
+  // pence kept per £1 borrowed, against the bar for full marks
+  const profitSub   = (net, fullPence) => capital > 0 ? clamp((net / capital * 100) / fullPence, 0, 1) * 10 : 0;
   const breakevenSub = cost > 0 ? clamp((grossProfit / cost) / C.BREAKEVEN_FULL_COVER, 0, 1) * 10 : 10;
   const pressureSub  = clamp(10 * (1 - pressurePct / C.PRESSURE_ZERO_AT), 0, 10);
   const costSub      = clamp(10 * (1 - costPct / C.COST_ZERO_AT), 0, 10);
 
   // Conservative
-  const cProfit = profitSub(netProfit, C.PROFIT_FULL_RATIO);
+  const cProfit = profitSub(netProfit, C.PROFIT_FULL_PENCE);
   let cs = cProfit * C.PROFIT_WEIGHT + breakevenSub * C.BREAKEVEN_WEIGHT + pressureSub * C.PRESSURE_WEIGHT;
   if(netProfit < 0) {
     // Below break-even the score is capped and scaled by how close the
@@ -4028,7 +4147,7 @@ function computeScores({ capital, roi, cost, costPct, netProfit, grossProfit, re
     cs = clamp(cost > 0 ? effGross / cost : 0, 0, 1) * C.LOSS_CAP;
   }
   // Realised
-  const rProfit = profitSub(realisedNet, C.R_PROFIT_FULL_RATIO);
+  const rProfit = profitSub(realisedNet, C.R_PROFIT_FULL_PENCE);
   let rs = rProfit * C.R_PROFIT_WEIGHT + pressureSub * C.R_PRESSURE_WEIGHT + costSub * C.R_COST_WEIGHT;
   if(realisedNet < 0) rs = Math.min(rs, C.LOSS_CAP);
 
@@ -4286,8 +4405,8 @@ function renderScenarioResults(S) {
           ${barRow('Cash-flow ease', sp.pressure, W.PRESSURE_WEIGHT)}
         </div>
         <div class="score-pills">
-          <span class="mini-pill"><strong style="color:${netColor};">${fmt(P.netProfit)}</strong> worst-case net</span>
-          <span class="mini-pill"><strong style="color:#1e4f8a;">${fmt(P.netProfit + inputs.advanced*P.roi*partial)}</strong> realised net</span>
+          <span class="mini-pill"><strong style="color:${netColor};">${fmt(P.netProfit)}</strong> profit you'd keep</span>
+          <span class="mini-pill"><strong style="color:${P.netWhole >= 0 ? 'var(--text)' : 'var(--red)'};">${fmt(P.netWhole)}</strong> floor</span>
           <span class="pressure-pill ${pressure.cls}">${pressure.dot} ${pressure.lab} pressure</span>
         </div>
       </div>
@@ -4311,7 +4430,7 @@ function renderScenarioResults(S) {
     </div>`;
 
   // ── 4. Written analysis (reworded per feedback) ──
-  const a_cycles = `<strong>Cycles.</strong> The loan runs for ${P.loanDays} days. At a conservative ${P.cycleDays}-day stock cycle, that gives <strong>${spans.toFixed(2)} cycles</strong> of time — but only <strong>${completed} cycle${completed===1?'':'s'}</strong> fully complete${completed===1?'s':''} before the final payment is due, so profit is counted on ${completed} only.${partial>0.01?` The remaining ${partial.toFixed(2)} of a cycle is still tied up in stock, transit, marketplace payment holds, or bank-transfer timing, so it is left out of the estimate.`:''}`;
+  const a_cycles = `<strong>Cycles.</strong> The loan runs for ${P.loanDays < P.nominalDays - 3.5 ? `${P.nominalDays} days to its last payment, but works for ~${Math.round(P.loanDays)} — that last payment is only ${Math.round(P.finalWeight*100)}% of a normal one` : `${P.nominalDays} days`}. At a conservative ${P.cycleDays}-day stock cycle, that gives <strong>${spans.toFixed(2)} cycles</strong> of time — but only <strong>${completed} cycle${completed===1?'':'s'}</strong> fully complete${completed===1?'s':''} before the final payment is due, so profit is counted on ${completed} only.${partial>0.01?` The remaining ${partial.toFixed(2)} of a cycle is still tied up in stock, transit, marketplace payment holds, or bank-transfer timing, so it is left out of the estimate.`:''}`;
 
   const a_cashflow = `<strong>Cash-flow timing.</strong> Repayments don't wait for stock to sell. By the time the first cycle has converted back into cash (around day ${P.cycleDays}), you'll already have made about <strong>${paysBeforeFirstCycle} repayments, totalling ~${fmt(cashBeforeFirstCycle)}</strong> — ${pressurePct.toFixed(0)}% of the original loan amount. The loan can look profitable on paper and still squeeze cash flow, so make sure you can cover this gap.`;
 
@@ -4339,27 +4458,27 @@ function renderScenarioResults(S) {
 
       <div class="two-output two-output-flip">
         <div class="to-card worst">
-          <div class="to-lab">Worst-case net profit ${tip('','Only fully completed stock cycles count (×'+completed+'). The floor — what you keep if nothing from the in-progress cycle has converted.')}</div>
-          <div class="to-val" style="color:${netColor};">${fmt(P.netProfit)}</div>
-          <div class="to-sub">${completed} completed cycle${completed===1?'':'s'} · gross ${fmt(P.grossProfit)} − cost ${fmt(cost)}</div>
+          <div class="to-lab">Floor — whole cycles only ${tip('','Only fully completed stock cycles count (×'+completed+'). What you keep if nothing from the part-finished cycle has come back as cash by the end.')}</div>
+          <div class="to-val" style="color:${P.netWhole >= 0 ? 'var(--text)' : 'var(--red)'};">${fmt(P.netWhole)}</div>
+          <div class="to-sub">${completed} completed cycle${completed===1?'':'s'} · gross ${fmt(P.grossWhole)} − cost ${fmt(cost)}</div>
         </div>
         <div class="to-card realised">
-          <div class="to-lab">Realised-partial net profit ${tip('','Assumes profit is earned steadily across the whole '+spans.toFixed(2)+' cycles of loan time, then subtracts the cost. Upside view — sales can lag, and cash lags sales.')}</div>
-          <div class="to-val" style="color:#1e4f8a;">${fmt(P.netProfit + inputs.advanced*P.roi*partial)}</div>
-          <div class="to-sub">${spans.toFixed(2)} cycles steady${partial>0.01?` · adds ${fmt(inputs.advanced*P.roi*partial)} from the part-sold cycle`:''}</div>
+          <div class="to-lab">Profit you'd keep ${tip('','Counts the part-finished cycle on the basis chosen above — cash that has actually landed, by default, which is the most cautious. Then subtracts the cost.')}</div>
+          <div class="to-val" style="color:${netColor};">${fmt(P.netProfit)}</div>
+          <div class="to-sub">${spans.toFixed(2)} cycles of time${P.netProfit - P.netWhole > 0.5 ? ` · ${fmt(P.netProfit - P.netWhole)} of it from the part-finished cycle` : ''}</div>
         </div>
       </div>
-      <div class="to-note"><strong>Realised partial</strong> is the one to plan on if you genuinely turn part of another cycle — it counts profit earned steadily through the ${spans.toFixed(2)} cycles of loan time. <strong>Worst case</strong> is the floor: what's left if only fully completed cycles count and the part-sold one lands nothing. Neither can predict stock that doesn't sell or sells under target.</div>
+      <div class="to-note"><strong>Profit you'd keep</strong> is the one to plan on — it counts the part-finished cycle, on the cash-landed basis unless you've changed it. <strong>The floor</strong> is what's left if only fully completed cycles count. Neither can predict stock that doesn't sell or sells under target.</div>
 
       <div class="ca-metrics ca-metrics-sec">
         <div class="ca-metric ca-metric-sm"><div class="ca-m-label">${tip('Borrowing Cost','What the finance costs you in total — the expense the profit has to beat.')}</div><div class="ca-m-val" style="color:var(--amber);">${fmt(cost)}</div><div class="ca-m-sub">${costPct.toFixed(1)}% of the loan</div></div>
-        <div class="ca-metric ca-metric-sm"><div class="ca-m-label">${tip('Profit per £1 Borrowed','Worst-case net profit ÷ amount borrowed.')}</div><div class="ca-m-val" style="color:${netColor};">${pencePerPound.toFixed(1)}p</div><div class="ca-m-sub">per £1 borrowed</div></div>
+        <div class="ca-metric ca-metric-sm"><div class="ca-m-label">${tip('Profit per £1 Borrowed','Profit you\'d keep ÷ amount borrowed.')}</div><div class="ca-m-val" style="color:${netColor};">${pencePerPound.toFixed(1)}p</div><div class="ca-m-sub">per £1 borrowed</div></div>
         <div class="ca-metric ca-metric-sm"><div class="ca-m-label">${tip('Completed Cycles','Full cycles before the final payment. Loan spans the decimal; only whole cycles count for worst case.')}</div><div class="ca-m-val">${completed} <small style="font-weight:500;color:var(--text3);">/ ${spans.toFixed(2)}</small></div><div class="ca-m-sub">completed / spans</div></div>
         <div class="ca-metric ca-metric-sm"><div class="ca-m-label">${tip('Cycles Needed to Break Even','How many full cycles are required just to cover the borrowing cost.')}</div><div class="ca-m-val">${cyclesNeededBE.toFixed(2)}</div><div class="ca-m-sub">to cover the cost</div></div>
         <div class="ca-metric ca-metric-sm"><div class="ca-m-label">${tip('Borrowing Cost Recovered','The point at which the borrowing cost is fully earned back.')}</div><div class="ca-m-val">${recovered?('Day '+recoverDay):'Not in term'}</div><div class="ca-m-sub">${recovered?('during Cycle '+Math.ceil(recoverCycle||1)):'not in term'}</div></div>
       </div>
 
-      <div class="wf-title">Worst-case profit by loan end</div>
+      <div class="wf-title">Profit you'd keep by loan end</div>
       <div class="waterfall">
         <span class="wf-item"><span class="wf-lab">Gross Profit</span><span class="wf-num">${fmt(P.grossProfit)}</span></span>
         <span class="wf-op">−</span>
@@ -4474,9 +4593,12 @@ function renderScenarioCompact(S, label, accent) {
   const { inputs, P } = S;
   const M = scenarioMetrics(S);
   const cost = M.cost;
-  const partial = Math.max(0, P.totalCyclesInLoan - P.cycles);
-  const potNet = P.grossProfit + inputs.advanced * P.roi * partial - cost;
-  const netColor = P.isProfitable ? 'var(--green)' : 'var(--red)';
+  // Since profit was pro-rated (v32.2) P.netProfit IS the expected figure and
+  // P.netWhole is the floor. This card still called the expected figure "worst
+  // case" and added the part-cycle a second time for "realised" — about £11,800
+  // too high on an £86k advance, contradicting the verdict right above it.
+  const netColor = P.netProfit >= 0 ? 'var(--green)' : 'var(--red)';
+  const floorColor = P.netWhole >= 0 ? 'var(--text)' : 'var(--red)';
   return `
     <div class="cmp-card">
       <div class="cmp-card-head">
@@ -4484,15 +4606,15 @@ function renderScenarioCompact(S, label, accent) {
         <span class="cmp-card-scores"><span class="cmp-card-score ${M.score.cls}">Cons ${M.score.text}</span><span class="cmp-card-score ${M.scoreR.cls}">Real ${M.scoreR.text}</span></span>
       </div>
       <div class="cmp-card-grid">
-        <div class="cc-stat"><div class="cc-lab">Worst-case Net</div><div class="cc-val" style="color:${netColor};">${fmt(P.netProfit)}</div></div>
-        <div class="cc-stat"><div class="cc-lab">Realised <small>(partial)</small></div><div class="cc-val" style="color:#1e4f8a;">${fmt(potNet)}</div></div>
+        <div class="cc-stat"><div class="cc-lab">Profit you'd keep</div><div class="cc-val" style="color:${netColor};">${fmt(P.netProfit)}</div></div>
+        <div class="cc-stat"><div class="cc-lab">Floor <small>(whole cycles)</small></div><div class="cc-val" style="color:${floorColor};">${fmt(P.netWhole)}</div></div>
         <div class="cc-stat"><div class="cc-lab">Borrowing Cost</div><div class="cc-val" style="color:var(--amber);">${fmt(cost)}</div></div>
         <div class="cc-stat"><div class="cc-lab">Profit / £1</div><div class="cc-val">${(M.profitPerPound*100).toFixed(1)}p</div></div>
         <div class="cc-stat"><div class="cc-lab">Pressure</div><div class="cc-val"><span class="pressure-pill ${M.pressure.cls}" style="font-size:11px;">${M.pressure.lab} ${M.pressurePct.toFixed(0)}%</span></div></div>
         <div class="cc-stat"><div class="cc-lab">Cycles</div><div class="cc-val">${P.cycles} <small style="font-weight:500;color:var(--text3);">/ ${P.totalCyclesInLoan.toFixed(2)}</small></div></div>
       </div>
       <div class="cc-eq">${fmt(P.grossProfit)} gross − ${fmt(cost)} cost = <strong style="color:${netColor};">${fmt(P.netProfit)} net</strong></div>
-      <div class="cc-eq" style="margin-top:6px;">${scheduleLine(S.payments, inputs.payment)} · finishes ${fmtDate(S.SF.finalDate)}</div>
+      <div class="cc-eq" style="margin-top:6px;">${scheduleLine(S.payments, inputs.payment)} · finishes ${fmtDate(S.SF.finalDate)}${tailNote(S) ? `<div style="margin-top:5px;color:var(--amber);font-weight:600;">${tailNote(S)}</div>` : ''}</div>
       <details class="cc-more">
         <summary>Full breakdown for Scenario ${label}</summary>
         <div class="cc-more-body">${renderScenarioResults(S)}</div>
@@ -4518,11 +4640,69 @@ function setCalcMode(mode) {
   }
 }
 
+// ── The Calculator remembers what you set up ──────────────────────────
+// Three scenarios take a minute to build, and every new version is a reload.
+// Kept in this browser only, like everything else; restored as typed, so an
+// exact pasted quote comes back exact rather than re-priced off the curve.
+const CALC_KEY = 'wf_calc_v1';
+const CALC_FIELDS = ['-advanced','-feepct','-total','-remit','-npay','-freq','-start','-firstgap','-roi','-cycle'];
+let calcSaveTimer = null;
+function calcSave() {
+  clearTimeout(calcSaveTimer);
+  calcSaveTimer = setTimeout(() => {
+    const out = { mode: (document.getElementById('calc-compare-layout') || {}).style?.display === 'none' ? 'single' : 'compare', cols: {} };
+    for(const p of ['calc', 'cmpa', 'cmpb', 'cmpc']) {
+      if(!document.getElementById(p + '-remit')) continue;
+      out.cols[p] = {};
+      CALC_FIELDS.forEach(f => { const e = document.getElementById(p + f); if(e) out.cols[p][f] = e.value; });
+      if(CALC_FOLLOW[p] === false) out.cols[p].follow = false;
+    }
+    try { localStorage.setItem(CALC_KEY, JSON.stringify(out)); } catch(e) {}
+  }, 250);
+}
+// The three levels he was weighing up on the £86,000 offer: the longest term,
+// the £8.43-tail case, and the 16-date option beside it. Loaded only when the
+// comparison is empty — never over anything typed — and only where the saved
+// offer's curve actually reaches them, so a different offer starts blank.
+const CALC_SEED = { cmpa: 5516, cmpb: 5824, cmpc: 5834 };
+function calcHasScenarios(saved) {
+  return !!(saved && saved.cols && ['cmpa','cmpb','cmpc'].some(p => saved.cols[p]
+    && (moneyToNum(saved.cols[p]['-remit']) > 0 || moneyToNum(saved.cols[p]['-advanced']) > 0)));
+}
+function calcRestore(prefix) {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(CALC_KEY) || 'null'); } catch(e) { saved = null; }
+  if(CALC_SEED[prefix] && !calcHasScenarios(saved) && CAP && CAP.principal > 0
+     && Array.isArray(CAP.points) && CAP.points.length >= 2) {
+    const { lo, hi } = calcSliderBounds();
+    const rep = CALC_SEED[prefix];
+    if(rep >= lo && rep <= hi) capLoadInto(prefix, rep);
+    return;
+  }
+  const col = saved && saved.cols && saved.cols[prefix];
+  if(!col) return;
+  CALC_FIELDS.forEach(f => { const e = document.getElementById(prefix + f); if(e && col[f] != null) e.value = col[f]; });
+  if(col.follow === false) CALC_FOLLOW[prefix] = false;
+}
+// Open where he left it — unless the comparison is about to be refilled, in
+// which case open on it. v33.8 saved "single" for everyone, because that's the
+// mode the page always started in, so a saved mode alone can't be trusted here.
+function calcStartMode() {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(CALC_KEY) || 'null'); } catch(e) { saved = null; }
+  if(!calcHasScenarios(saved)) return 'compare';
+  return saved.mode === 'single' ? 'single' : 'compare';
+}
+function calcSavedMode() {
+  try { const s = JSON.parse(localStorage.getItem(CALC_KEY) || 'null'); return s && s.mode; } catch(e) { return null; }
+}
+
 function renderCalculator() {
   const formA = document.getElementById('calc-form-a');
   if(!formA.dataset.built) {
     formA.innerHTML = calcFormHTML('calc', 'renderCalculator()');
     formA.dataset.built = '1';
+    calcRestore('calc');
   }
   const inputs = readCalcInputs('calc');
   const S = computeScenario(inputs);
@@ -4530,8 +4710,9 @@ function renderCalculator() {
   const results = document.getElementById('calc-results');
   renderCalcPicks('calc');
   renderCalcSlider('calc');
+  calcSave();
   if(!S) { showDerivedNote('calc', null); results.innerHTML = '<div class="empty-state">Enter the loan amount, the fee % (or total to repay), and a loan length to see your numbers.</div>'; return; }
-  showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtMonths(weeksOf(S))} ≈ ${monthsLong(weeksOf(S))} · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`);
+  showDerivedNote('calc', `${scheduleLine(S.payments, inputs.payment)} · ${weeksText(S)} · ${fmtMonths(weeksOf(S))} ≈ ${monthsLong(weeksOf(S))} · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}${tailNote(S) ? ' — ' + tailNote(S) : ''}`);
   results.innerHTML = renderScenarioResults(S);
 }
 
@@ -4547,6 +4728,7 @@ function renderCalculatorCompare() {
     if(el && !el.dataset.built) {
       el.innerHTML = calcFormHTML(c.prefix, 'renderCalculatorCompare()', { freq:14, roi:15, cycleDays:124 });
       el.dataset.built = '1';
+      calcRestore(c.prefix);
     }
   });
 
@@ -4558,10 +4740,10 @@ function renderCalculatorCompare() {
     renderCalcPicks(c.prefix);
     renderCalcSlider(c.prefix);
     showDerivedNote(c.prefix, S
-      ? `${scheduleLine(S.payments, inputs.payment)} · ${weeksOf(S)} weeks · ${fmtMonths(weeksOf(S))} ≈ ${monthsLong(weeksOf(S))} · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}`
+      ? `${scheduleLine(S.payments, inputs.payment)} · ${weeksText(S)} · ${fmtMonths(weeksOf(S))} ≈ ${monthsLong(weeksOf(S))} · ${fmtDate(S.SF.firstDate)} → ${fmtDate(S.SF.finalDate)}${tailNote(S) ? ' — ' + tailNote(S) : ''}`
       : null);
     const note = document.getElementById('cmp-note-' + c.k);
-    if(note) note.textContent = S ? `${S.SF.n} dates · ${weeksOf(S)}w · ${fmtMonths(weeksOf(S))}` : '';
+    if(note) note.textContent = S ? `${S.SF.n} dates · ${weeksOf(S)}w${Math.abs(weeksOf(S) - effWeeksOf(S)) >= 1 ? ` (~${Math.round(effWeeksOf(S))} eff.)` : ''} · ${fmtMonths(weeksOf(S))}` : '';
     const res = document.getElementById(c.res);
     if(res) res.innerHTML = S ? renderScenarioCompact(S, c.label, c.accent)
       : `<div class="empty-mini">
@@ -4574,14 +4756,13 @@ function renderCalculatorCompare() {
     if(S) live.push(S);
   });
 
+  calcSave();
   const hero = document.getElementById('calc-compare-hero');
   const verdict = document.getElementById('calc-compare-verdict');
   if(live.length < 2) { hero.innerHTML = ''; verdict.innerHTML = ''; return; }
 
   hero.innerHTML = renderRankedVerdict(live);
-  // The detailed table is a two-way read, so it shows the top two.
-  const ranked = live.slice().sort((x, y) => scenarioMetrics(y).realisedNet - scenarioMetrics(x).realisedNet);
-  verdict.innerHTML = renderComparisonVerdict(ranked[0], ranked[1]);
+  verdict.innerHTML = renderComparisonVerdict(live);   // every scenario, A-B-C order
 }
 
 // Ranks every scenario in play on what you'd keep once the cycle has run,
@@ -4592,7 +4773,7 @@ function renderRankedVerdict(list) {
     const C = cashProfile(S);
     return { S, M, label: S.col ? S.col.label : '?', accent: S.col ? S.col.accent : 'var(--navy)',
              realised: M.realisedNet, floor: S.P.netWhole, pay: S.inputs.payment,
-             weeks: weeksOf(S), dates: S.SF.n, fee: M.cost, feePct: (M.cost / S.inputs.advanced) * 100,
+             weeks: weeksOf(S), eff: effWeeksOf(S), dates: S.SF.n, fee: M.cost, feePct: (M.cost / S.inputs.advanced) * 100,
              press: M.soloPressurePct, cycles: S.P.totalCyclesInLoan,
              free: C && C.reinvestable.length ? C.reinvestable[0].amount : 0,
              score: M.scoreR, outside: scenarioOutside(S) };
@@ -4614,19 +4795,41 @@ function renderRankedVerdict(list) {
 
 
   const flagged = rows.filter(r => r.outside);
+  // Two options within 1% (or £100) of each other on profit are the same deal
+  // for any decision this model can support — the ROI assumption alone moves
+  // them by far more than that. Say so rather than crown one by pennies.
+  const isLevel = (a, b) => a && b && !a.outside && !b.outside
+    && Math.abs(a.realised - b.realised) <= Math.max(100, 0.01 * Math.abs(a.realised));
+  // Competition ranking: a row shares a place only with the row that opened
+  // its group, so a chain of small gaps can't drag first place down to third.
+  const rankLab = [];
+  let groupStart = 0;
+  rows.forEach((r, i) => {
+    if(i > 0 && isLevel(rows[groupStart], r)) rankLab.push(groupStart + 1);
+    else { groupStart = i; rankLab.push(i + 1); }
+  });
+  const levelPairs = [];
+  for(let i = 1; i < rows.length; i++) if(isLevel(rows[i-1], rows[i])) levelPairs.push([rows[i-1], rows[i]]);
+  const topLevel = isLevel(pool[0], pool[1]);
+  const levelLine = levelPairs.map(([a, b]) => {
+    const lo = a.pay < b.pay ? a : b, hi = lo === a ? b : a;
+    const cheap = a.fee < b.fee ? a : b;
+    return `<b>${a.label} and ${b.label} are level</b> — ${fmt(Math.abs(a.realised - b.realised))} apart on profit, both working ~${Math.round(a.eff)} weeks.
+      Treat them as the same deal: ${lo.label} is ${fmt(hi.pay - lo.pay)} a payment lighter, ${cheap.label}'s fee is ${fmt(Math.abs(a.fee - b.fee))} lower.`;
+  }).join(' ');
   const cell = (r, get, win) => `<b class="${!r.outside && win(r) ? 'w' : ''}">${get(r)}</b>`;
   const maxR = Math.max(...pool.map(r => r.realised));
   const minF = Math.min(...pool.map(r => r.fee));
   const minP = Math.min(...pool.map(r => r.press));
-  const maxW = Math.max(...pool.map(r => r.weeks));
+  const maxW = Math.max(...pool.map(r => Math.round(r.eff)));
 
   return `
     <div class="bv">
       <div class="bv-head">
         <div>
           <div class="bv-kicker">Better for the business${pool.length > 2 ? ` — best of ${pool.length}` : ''}${flagged.length ? ` · ${flagged.length} set aside` : ''}</div>
-          <div class="bv-name">Scenario ${best.label}
-            <span class="bv-sub">${fmt(best.pay)} every ${best.S.inputs.freq} days · ${best.dates} dates · ${best.weeks} weeks (${monthsLong(best.weeks)}) · fee ${best.feePct.toFixed(2)}%</span></div>
+          <div class="bv-name">${topLevel ? `Scenarios ${pool[0].label} and ${pool[1].label}, level` : `Scenario ${best.label}`}
+            <span class="bv-sub">${fmt(best.pay)} every ${best.S.inputs.freq} days · ${best.dates} dates · ${weeksText(best.S)} (${monthsLong(best.weeks)}) · fee ${best.feePct.toFixed(2)}%</span></div>
         </div>
         <div class="bv-delta">
           <div class="bv-delta-val">${fmt(gap)}</div>
@@ -4642,9 +4845,10 @@ function renderRankedVerdict(list) {
         ${flagged.length > 1 ? 'them' : 'it'} inside the range, or untick <em>Fee moves with the repayment</em>
         and type the real quote.</div>` : ''}
 
+      ${levelLine ? `<div class="bv-level">${levelLine}</div>` : ''}
       <div class="rv-rank">
-        ${rows.map((r, i) => `<span class="rv-row ${i === 0 && !r.outside ? 'top' : ''} ${r.outside ? 'bad' : ''}">
-          <b>${i+1}</b><span class="rv-chip" style="background:${r.accent};">${r.label}</span>
+        ${rows.map((r, i) => `<span class="rv-row ${rankLab[i] === 1 && !r.outside ? 'top' : ''} ${r.outside ? 'bad' : ''}">
+          <b>${rankLab.filter(x => x === rankLab[i]).length > 1 ? '=' : ''}${rankLab[i]}</b><span class="rv-chip" style="background:${r.accent};">${r.label}</span>
           ${fmt(r.pay)} <em>${fmt(r.realised)}</em>${tag(r)}</span>`).join('')}
       </div>
 
@@ -4653,8 +4857,8 @@ function renderRankedVerdict(list) {
         <span>Profit you'd keep <small>(expected)</small></span>${rows.map(r => cell(r, x=>fmt(x.realised), x=>Math.abs(x.realised-maxR)<1)).join('')}
         <span>Floor <small>(whole cycles only)</small></span>${rows.map(r => `<b>${fmt(r.floor)}</b>`).join('')}
         <span>Out every payment</span>${rows.map(r => `<b>${fmt(r.pay)}</b>`).join('')}
-        <span>Payment dates · weeks</span>${rows.map(r => cell(r, x=>`${x.dates} · ${x.weeks}w`, x=>x.weeks===maxW)).join('')}
-        <span>Months <small>(52/12 weeks each)</small></span>${rows.map(r => cell(r, x=>fmtMonths(x.weeks), x=>x.weeks===maxW)).join('')}
+        <span>Payment dates · weeks <small>(effective)</small></span>${rows.map(r => cell(r, x=>`${x.dates} · ${x.weeks}w${Math.abs(x.weeks - x.eff) >= 1 ? ` <small>~${Math.round(x.eff)}w</small>` : ''}`, x=>Math.round(x.eff)===maxW)).join('')}
+        <span>Months <small>(52/12 weeks each)</small></span>${rows.map(r => cell(r, x=>fmtMonths(x.weeks), x=>Math.round(x.eff)===maxW)).join('')}
         <span>Stock cycles</span>${rows.map(r => `<b>${r.cycles.toFixed(2)}</b>`).join('')}
         <span>Fee</span>${rows.map(r => cell(r, x=>`${fmt(x.fee)} <small>${x.feePct.toFixed(2)}%</small>`, x=>Math.abs(x.fee-minF)<0.01)).join('')}
         <span>Pressure</span>${rows.map(r => cell(r, x=>x.press.toFixed(0)+'%', x=>Math.abs(x.press-minP)<0.5)).join('')}
@@ -4666,74 +4870,62 @@ function renderRankedVerdict(list) {
     </div>`;
 }
 
-// Shared facts both the hero and the table use, so they never disagree.
-function comparisonFacts(SA, SB) {
-  const a = SA.P, b = SB.P;
-  const ma = scenarioMetrics(SA), mb = scenarioMetrics(SB);
-  const pressGap = Math.abs(ma.pressurePct - mb.pressurePct);
-  // Worst-case winner = higher conservative net profit; realised winner = higher realised net.
-  const worstWinner = a.netProfit === b.netProfit ? null : (a.netProfit > b.netProfit ? 'A' : 'B');
-  const realisedWinner = Math.abs(ma.realisedNet - mb.realisedNet) < 1 ? null : (ma.realisedNet > mb.realisedNet ? 'A' : 'B');
-  const split = worstWinner && realisedWinner && worstWinner !== realisedWinner;
-  const winners = {
-    overall: ma.score.value === mb.score.value ? null : (ma.score.value > mb.score.value ? 'A' : 'B'),
-    netProfit: worstWinner,
-    realised: realisedWinner,
-    cost: Math.round(ma.cost) === Math.round(mb.cost) ? null : (ma.cost < mb.cost ? 'A' : 'B'),
-    cash: pressGap <= 8 ? null : (ma.pressurePct < mb.pressurePct ? 'A' : 'B'),
-    breakeven: Math.abs(ma.cyclesNeededBE - mb.cyclesNeededBE) < 0.02 ? null : (ma.cyclesNeededBE < mb.cyclesNeededBE ? 'A' : 'B'),
+// The full comparison, one column per scenario in play, in A-B-C order so it
+// lines up with the columns underneath. It used to take only the top two by
+// rank and print them under hard-coded "Scenario A" / "Scenario B" headers —
+// so C never appeared, and the labels were only right when A and B happened to
+// be the top two. Figures come from the same places as the verdict above it.
+function renderComparisonVerdict(list) {
+  const cols = list.map(S => {
+    const M = scenarioMetrics(S);
+    return { S, M, P: S.P, label: S.col ? S.col.label : '?', accent: S.col ? S.col.accent : 'var(--navy)',
+             cost: M.cost, adv: S.inputs.advanced, outside: scenarioOutside(S) };
+  });
+  // Highlight a row's best cell only when one column is strictly best, and
+  // never a scenario that isn't a real quote.
+  const best = (vals, better) => {
+    const idx = vals.map((v, i) => i).filter(i => !cols[i].outside && isFinite(vals[i]));
+    if(idx.length < 2) return -1;
+    const top = idx.reduce((a, b) => better(vals[b], vals[a]) ? b : a);
+    return idx.filter(i => vals[i] === vals[top] || Math.abs(vals[i] - vals[top]) < 0.005).length > 1 ? -1 : top;
   };
-  const cashSimilar = pressGap <= 8;
-  // Recommended = best conservative score; fall back to higher worst-case profit on a tie.
-  const W = winners.overall || worstWinner || 'A';
-  const L = W === 'A' ? 'B' : 'A';
-  const wIsA = W === 'A';
-  return { a, b, ma, mb, winners, W, L, cashSimilar, pressGap, worstWinner, realisedWinner, split,
-    wP: wIsA ? a : b, lP: wIsA ? b : a, wM: wIsA ? ma : mb, lM: wIsA ? mb : ma };
-}
-
-// Detailed head-to-head table (money first) + the conservative-basis caveat.
-function renderComparisonVerdict(SA, SB) {
-  const F = comparisonFacts(SA, SB);
-  const { a, b, ma, mb } = F;
-  const aCost = ma.cost, bCost = mb.cost;
-
-  const row = (label, valA, valB, winner) =>
-    `<tr><td class="dt-label">${label}</td>
-      <td class="${winner==='a'?'cmp-winner':''}" style="color:var(--navy);">${valA}</td>
-      <td class="${winner==='b'?'cmp-winner':''}" style="color:var(--navy);">${valB}</td></tr>`;
-
-  const potNetRow = (S) => S.P.grossProfit + S.inputs.advanced * S.P.roi * Math.max(0, S.P.totalCyclesInLoan - S.P.cycles) - (S.inputs.total - S.inputs.advanced);
-  const aPot = potNetRow(SA), bPot = potNetRow(SB);
+  const hi = (a, b) => a > b, lo = (a, b) => a < b;
+  const row = (label, show, num, better) => {
+    const vals = cols.map(num || (() => NaN));
+    const w = better ? best(vals, better) : -1;
+    return `<tr><td class="dt-label">${label}</td>${cols.map((c, i) =>
+      `<td class="${i === w ? 'cmp-winner' : ''}" style="color:var(--navy);">${show(c)}</td>`).join('')}</tr>`;
+  };
+  const div = t => `<tr class="dt-divider"><td colspan="${cols.length + 1}">${t}</td></tr>`;
 
   const rows = [
-    row('Worst-case Net Profit', fmt(a.netProfit), fmt(b.netProfit), a.netProfit>b.netProfit?'a':b.netProfit>a.netProfit?'b':null),
-    row('Realised-partial Net Profit', fmt(aPot), fmt(bPot), Math.abs(aPot-bPot)<1?null:(aPot>bPot?'a':'b')),
-    row('Total Borrowing Cost', fmt(aCost)+' ('+((aCost/SA.inputs.advanced)*100).toFixed(1)+'%)', fmt(bCost)+' ('+((bCost/SB.inputs.advanced)*100).toFixed(1)+'%)', aCost<bCost?'a':bCost<aCost?'b':null),
-    row('Profit per £1 Borrowed', (ma.profitPerPound*100).toFixed(1)+'p', (mb.profitPerPound*100).toFixed(1)+'p', ma.profitPerPound>mb.profitPerPound?'a':mb.profitPerPound>ma.profitPerPound?'b':null),
-    row('Cycles Needed to Break Even', ma.cyclesNeededBE.toFixed(2), mb.cyclesNeededBE.toFixed(2), ma.cyclesNeededBE<mb.cyclesNeededBE?'a':mb.cyclesNeededBE<ma.cyclesNeededBE?'b':null),
-    row('Completed Cycles Before Loan Ends', a.cycles+' (spans '+a.totalCyclesInLoan.toFixed(2)+')', b.cycles+' (spans '+b.totalCyclesInLoan.toFixed(2)+')', a.cycles>b.cycles?'a':b.cycles>a.cycles?'b':null),
-    row('Repayment Pressure', ma.pressure.lab+' ('+ma.pressurePct.toFixed(0)+'%)', mb.pressure.lab+' ('+mb.pressurePct.toFixed(0)+'%)', ma.pressurePct<mb.pressurePct?'a':mb.pressurePct<ma.pressurePct?'b':null),
-    row('Conservative Score', ma.score.text+'/10 ('+ma.score.band+')', mb.score.text+'/10 ('+mb.score.band+')', ma.score.value>mb.score.value?'a':mb.score.value>ma.score.value?'b':null),
-    row('Realised Score', ma.scoreR.text+'/10 ('+ma.scoreR.band+')', mb.scoreR.text+'/10 ('+mb.scoreR.band+')', ma.scoreR.value>mb.scoreR.value?'a':mb.scoreR.value>ma.scoreR.value?'b':null),
-    `<tr class="dt-divider"><td colspan="3">The real schedule</td></tr>`,
-    row('Payment Dates', SA.SF.n+' dates', SB.SF.n+' dates', SA.SF.n<SB.SF.n?'a':SB.SF.n<SA.SF.n?'b':null),
-    row('Full Payments + Final', `${SA.SF.full} × ${fmt(SA.inputs.payment)}${SA.SF.isPartialFinal?' + '+fmt(SA.SF.finalAmt):''}`, `${SB.SF.full} × ${fmt(SB.inputs.payment)}${SB.SF.isPartialFinal?' + '+fmt(SB.SF.finalAmt):''}`, null),
-    row('First Payment Leaves', fmtDate(SA.SF.firstDate), fmtDate(SB.SF.firstDate), null),
-    row('Exact Payoff Date', fmtDate(SA.SF.finalDate), fmtDate(SB.SF.finalDate), SA.SF.finalDate&&SB.SF.finalDate?(SA.SF.finalDate<SB.SF.finalDate?'a':SB.SF.finalDate<SA.SF.finalDate?'b':null):null),
-    row('Weeks to Clear', `${weeksOf(SA)} weeks`, `${weeksOf(SB)} weeks`, weeksOf(SA)===weeksOf(SB)?null:(weeksOf(SA)>weeksOf(SB)?'a':'b')),
-    `<tr class="dt-divider"><td colspan="3">Mechanics</td></tr>`,
-    row('Gross Profit by Loan End', fmt(a.grossProfit), fmt(b.grossProfit), a.grossProfit>b.grossProfit?'a':b.grossProfit>a.grossProfit?'b':null),
-    row('Loan Duration', a.loanDays+'d ('+Math.round(a.loanDays/7)+'w)', b.loanDays+'d ('+Math.round(b.loanDays/7)+'w)', null),
-    row('Payment Size', fmt(SA.inputs.payment)+' / '+SA.inputs.freq+'d', fmt(SB.inputs.payment)+' / '+SB.inputs.freq+'d', SA.inputs.payment<SB.inputs.payment?'a':SB.inputs.payment<SA.inputs.payment?'b':null),
+    row("Profit you'd keep", c => fmt(c.P.netProfit), c => c.P.netProfit, hi),
+    row('Floor — whole cycles only', c => fmt(c.P.netWhole), c => c.P.netWhole, hi),
+    row('Total borrowing cost', c => `${fmt(c.cost)} (${(c.cost / c.adv * 100).toFixed(2)}%)`, c => c.cost, lo),
+    row('Profit per £1 borrowed', c => (c.M.profitPerPound * 100).toFixed(1) + 'p', c => c.M.profitPerPound, hi),
+    row('Cycles needed to break even', c => c.M.cyclesNeededBE.toFixed(2), c => c.M.cyclesNeededBE, lo),
+    row('Stock cycles', c => `${c.P.totalCyclesInLoan.toFixed(2)} <small>(${c.P.cycles} complete)</small>`, c => c.P.totalCyclesInLoan, hi),
+    row('Repayment pressure', c => `${c.M.pressure.lab} (${c.M.pressurePct.toFixed(0)}%)`, c => c.M.pressurePct, lo),
+    row('Worst-case score', c => `${c.M.score.text}/10 (${c.M.score.band})`, c => c.M.score.value, hi),
+    row('Realised score', c => `${c.M.scoreR.text}/10 (${c.M.scoreR.band})`, c => c.M.scoreR.value, hi),
+    div('The real schedule'),
+    row('Payment dates', c => `${c.S.SF.n} dates`),
+    row('Full payments + final', c => `${c.S.SF.full} × ${fmt(c.S.inputs.payment)}${c.S.SF.isPartialFinal ? ' + ' + fmt(c.S.SF.finalAmt) : ''}`),
+    row('First payment leaves', c => fmtDate(c.S.SF.firstDate)),
+    row('Exact payoff date', c => fmtDate(c.S.SF.finalDate), c => c.S.SF.finalDate ? +c.S.SF.finalDate : NaN, lo),
+    row('Weeks to clear', c => weeksText(c.S)),
+    div('Mechanics'),
+    row('Gross profit by loan end', c => fmt(c.P.grossProfit), c => c.P.grossProfit, hi),
+    row('Loan duration', c => `${c.P.nominalDays}d${c.P.loanDays < c.P.nominalDays - 0.5 ? ` · works like ${Math.round(c.P.loanDays)}d` : ''}`),
+    row('Payment size', c => `${fmt(c.S.inputs.payment)} / ${c.S.inputs.freq}d`, c => c.S.inputs.payment, lo),
   ].join('');
 
-  const cantSee = `<strong>Worst case</strong> counts only fully completed stock cycles. <strong>Realised partial</strong> assumes profit is earned steadily across the loan's ${b.totalCyclesInLoan.toFixed(2)} cycles of time — an upside view, since sales (and the cash from them) can lag. The model can't predict stock that doesn't sell, sells below target ROI, or sells at a loss.`;
+  const cantSee = `<strong>Profit you'd keep</strong> counts the part-finished stock cycle on the basis chosen in the Calculator — cash that has actually landed, by default, the most cautious reading. <strong>The floor</strong> counts only fully completed cycles: what's left if the part-finished one lands nothing. A tiny last payment doesn't count as another full fortnight of working capital. Neither figure can predict stock that doesn't sell, sells below target ROI, or sells at a loss.`;
 
   return `<div class="modal-section">
     <div class="modal-section-title">Full Comparison Table</div>
     <table class="cmp-stat-table">
-      <thead><tr><th></th><th class="cmp-col-a">Scenario A</th><th class="cmp-col-b">Scenario B</th></tr></thead>
+      <thead><tr><th></th>${cols.map(c => `<th style="color:${c.accent};">Scenario ${c.label}</th>`).join('')}</tr></thead>
       <tbody>${rows}</tbody>
     </table>
     <details class="cantsee-box"><summary>Assumptions &amp; limits</summary><div class="cantsee-body">${cantSee}</div></details>
@@ -4775,6 +4967,7 @@ const OFFER_SEED = {
   maxFeePct: '',       // highest fee % you're willing to pay
   points: [
     { r:5516,  fee:7614.92, term:'8 months' },
+    { r:5824,  fee:7192.43, term:'8 months' },
     { r:6272,  fee:6665.48, term:'7 months' },
     { r:6314,  fee:6621.29, term:'7 months' },
     { r:6412,  fee:6518.18, term:'7 months' },
@@ -6139,14 +6332,23 @@ function capTicks(ladder, lo, hi, m, up) {
   if(!el) return;
   const span = hi - lo || 1;
   const rows = ladder.filter(x => x.repayment >= lo && x.repayment <= hi).sort((a,b)=>a.repayment-b.repayment);
-  let lastLabelled = -99;
-  el.innerHTML = rows.map(x => {
-    const pct = ((x.repayment - lo) / span) * 100;
-    const cls = x.N === m.facts.n ? 'active' : (up && x.N === up.N ? 'next' : '');
-    // Boundaries bunch up at the low end, so a label is only drawn when there
-    // is room for it — the tick itself is always there to aim at.
-    const room = pct - lastLabelled > 5.5 || cls;
-    if(room) lastLabelled = pct;
+  // Boundaries bunch up at the low end, so labels are spaced in real pixels.
+  // The notch you're on and the next one always get a label; anything else is
+  // only labelled if it clears every label already placed. (It used to let
+  // those two skip the check, so "30w 28w 26w" printed as one run of text.)
+  const W = ((el.getBoundingClientRect && el.getBoundingClientRect()) || {}).width || 320;   // hidden or detached → assume 320
+  const minGap = (26 / W) * 100;                         // ~26px between label centres
+  const items = rows.map(x => ({ x, pct: ((x.repayment - lo) / span) * 100,
+    cls: x.N === m.facts.n ? 'active' : (up && x.N === up.N ? 'next' : '') }));
+  const clears = it => shown.every(c => Math.abs(c.pct - it.pct) > minGap);
+  const shown = items.filter(it => it.cls === 'active');
+  // The next notch keeps its label only if it clears the one you're on — if
+  // not, its amber mark still shows where it is.
+  const nextIt = items.find(it => it.cls === 'next');
+  if(nextIt && clears(nextIt)) shown.push(nextIt);
+  items.forEach(it => { if(!it.cls && clears(it)) shown.push(it); });
+  el.innerHTML = items.map(({ x, pct, cls }) => {
+    const room = shown.some(c => c.x === x);
     const wk = x.N * Math.round(CAP.freq / 7);
     return `<span class="cap-tick ${cls}" style="left:${pct.toFixed(2)}%;" title="${fmt(x.repayment)} → ${x.N} payment dates, ${wk} weeks">${room?`<b>${x.N}</b><em>${wk}w</em>`:'<b>&nbsp;</b>'}<i></i></span>`;
   }).join('');
@@ -6303,7 +6505,7 @@ function renderCapitalResults() {
       <div class="cap-hl-top">
         <div>
           <div class="cap-stat-lab">Real payment dates</div>
-          <div class="cap-hl-dates">${m.facts.n}<small>payment dates · <b>${m.facts.n * Math.round(CAP.freq/7)} weeks</b> · ${fmtMonths(m.facts.n * Math.round(CAP.freq/7))} ≈ ${monthsLong(m.facts.n * Math.round(CAP.freq/7))}${CAP.theirTerm ? ` · they call it ${CAP.theirTerm}` : ''}</small></div>
+          <div class="cap-hl-dates">${m.facts.n}<small>payment dates · <b>${m.facts.n * Math.round(CAP.freq/7)} weeks</b>${m.facts.n >= 2 && m.facts.finalAmt / m.repayment < 0.93 ? ` (~${Math.round(m.facts.n * Math.round(CAP.freq/7) - CAP.freq * (1 - Math.min(1, m.facts.finalAmt / m.repayment)) / 7)} effective)` : ''} · ${fmtMonths(m.facts.n * Math.round(CAP.freq/7))} ≈ ${monthsLong(m.facts.n * Math.round(CAP.freq/7))}${CAP.theirTerm ? ` · they call it ${CAP.theirTerm}` : ''}</small></div>
           <div class="cap-hl-sub">${scheduleLine(m.payments, m.repayment)} · first ${fmtDate(m.facts.firstDate)} · last <b>${fmtDate(m.facts.finalDate)}</b></div>
         </div>
         <div style="text-align:right;">${srcBadge}
